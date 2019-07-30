@@ -36,12 +36,12 @@ function SignInModal(props: any) {
     // setTimeout(() => {
     setConfirmLoading(false);
 
-    if (data.status === 200) {
+    if (data && data.token !== '') {
       setModalSignInVisible(false);
 
       successLoginModal();
 
-      setUserdata(data.data);
+      setUserdata(data);
     } else {
       errorLoginModal();
     }
@@ -60,7 +60,11 @@ function SignInModal(props: any) {
             onCancel={() => setModalSignInVisible(false)}
             onOk={() => {
               setConfirmLoading(true);
-              handleSignIn(userKey, userPassword).then(data => {
+
+              const username = userKey;
+              const password = userPassword;
+
+              handleSignIn(username, password).then(async data => {
                 checkSignInStatus(data, setUserdata);
               });
             }}>
