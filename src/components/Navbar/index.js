@@ -1,22 +1,18 @@
-import React from 'react';
-import {NavbarContainer, NavbarPart} from './style';
+// @flow
 
-import {Button} from 'antd';
+import * as React from 'react';
 
-import {Link} from 'react-router-dom';
+import Navbar from './Navbar';
 
-function Navbar() {
+function NavbarContainer() {
+  const [modalSignInVisible, setModalSignInVisible] = React.useState(false);
+
   return (
-    <NavbarContainer>
-      <NavbarPart>Logo</NavbarPart>
-      <NavbarPart justifyContent={'center'}>Searchbox</NavbarPart>
-      <NavbarPart justifyContent={'flex-end'}>
-        <Link to="sign-in">
-          <Button type={'primary'}>Sign In</Button>
-        </Link>
-      </NavbarPart>
-    </NavbarContainer>
+    <Navbar
+      modalSignInVisible={modalSignInVisible}
+      setModalSignInVisible={setModalSignInVisible}
+    />
   );
 }
 
-export default Navbar;
+export default NavbarContainer;

@@ -17,6 +17,7 @@ const NavbarPart = styled.div`
   flex: 1;
   display: flex;
   justify-content: ${props => props.justifyContent};
+  align-items: center;
 `;
 
 export {NavbarContainer, NavbarPart};
