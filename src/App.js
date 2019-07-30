@@ -6,12 +6,19 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import 'antd/dist/antd.css';
 
+import ApolloClient from 'apollo-boost';
+
 import Home from './pages/Home';
 import DummyPage from './pages/DummyPage';
 
 import PrivateRoute from './components/PrivateRoute';
 
 import AuthContext from './contexts/AuthContext';
+import {ApolloProvider} from 'react-apollo';
+
+const client = new ApolloClient({
+  uri: 'http://e1973cad.ngrok.io/graphql',
+});
 
 function App() {
   const [userData, setUserdata] = React.useState({});
@@ -23,16 +30,22 @@ function App() {
   });
 
   return (
-    <AuthContext.Provider
-      value={{
-        userdata: userData,
-        setUserdata,
-      }}>
-      <Router>
-        <Route exact path={'/'} component={() => <Home />} />
-        <PrivateRoute exact path={'/profile'} component={() => <DummyPage />} />
-      </Router>
-    </AuthContext.Provider>
+    <ApolloProvider client={client}>
+      <AuthContext.Provider
+        value={{
+          userdata: userData,
+          setUserdata,
+        }}>
+        <Router>
+          <Route exact path={'/'} component={() => <Home />} />
+          <PrivateRoute
+            exact
+            path={'/story/:storyId'}
+            component={() => <DummyPage />}
+          />
+        </Router>
+      </AuthContext.Provider>
+    </ApolloProvider>
   );
 }
 
