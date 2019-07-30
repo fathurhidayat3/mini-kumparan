@@ -3,6 +3,7 @@
 import * as React from 'react';
 import {Modal, Input, Tooltip, Icon} from 'antd';
 import styled from 'styled-components';
+import {withRouter} from 'react-router-dom';
 
 import handleSignIn from '../../utils/handleSignIn';
 
@@ -11,16 +12,53 @@ function SignInModal(props: any) {
 
   const [userKey, setUserKey]: any = React.useState('');
   const [userPassword, setUserPassword]: any = React.useState('');
+  const [confirmLoading, setConfirmLoading]: any = React.useState(false);
+
+  function successLoginModal() {
+    Modal.success({
+      title: 'Login Success',
+      content: 'Now you able to create story, and many more',
+      okText: 'OK, got it',
+    });
+  }
+
+  function errorLoginModal() {
+    Modal.error({
+      title: 'Login Failed',
+      content: 'Now you able to create story, and many more',
+      okText: 'OK, got it',
+    });
+  }
+
+  function checkSignInStatus(data) {
+    setTimeout(() => {
+      setConfirmLoading(false);
+
+      if (data.status === 200) {
+        setModalSignInVisible(false);
+
+        successLoginModal();
+
+        props.history.push('/');
+      } else {
+        errorLoginModal();
+      }
+    }, 1000);
+  }
 
   return (
     <Modal
       title="Sign in to do something cooler"
       centered
       visible={modalSignInVisible}
+      confirmLoading={confirmLoading}
       onCancel={() => setModalSignInVisible(false)}
-      onOk={() =>
-        handleSignIn(userKey, userPassword).then(data => console.log(data))
-      }>
+      onOk={() => {
+        setConfirmLoading(true);
+        handleSignIn(userKey, userPassword).then(data => {
+          checkSignInStatus(data);
+        });
+      }}>
       <FormGroup>
         <Input
           value={userKey}
@@ -56,4 +94,4 @@ const FormGroup = styled.div`
   margin-bottom: 16px;
 `;
 
-export default SignInModal;
+export default withRouter(SignInModal);
