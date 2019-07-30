@@ -3,18 +3,17 @@
 type credentialType = {userKey: string, userPassword: string};
 type dataType = {token: string, payload: any};
 
-export default function(username: string, password: string, email: string) {
+export default function(username: string, password: string) {
   const credential: any = {
     username,
     password,
   };
 
-  const url = 'http://e89f1cc8.ngrok.io/login';
+  const url = 'http://e1973cad.ngrok.io/login';
 
   const body = new FormData();
   body.append('username', username);
   body.append('password', password);
-  body.append('email', email);
 
   return fetch(url, {
     method: 'POST',
