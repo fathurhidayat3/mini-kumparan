@@ -16,8 +16,19 @@ export default function(userKey: string, userPassword: string) {
   })
     .then(res => JSON.stringify(res))
     .then((data: any) => {
-      localStorage.setItem('token', data.token);
+      data = {
+        status: 200,
+        data: {
+          token: '123456',
+          payload: {
+            username: 'fathurhidayat3',
+            name: 'Fathur Hidayat',
+          },
+        },
+      };
 
-      return data.payload;
+      localStorage.setItem('user-data', JSON.stringify(data.data));
+
+      return data;
     });
 }
