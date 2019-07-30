@@ -12,8 +12,9 @@ import handleSignIn from '../../utils/handleSignIn';
 function SignInModal(props: any) {
   const {modalSignInVisible, setModalSignInVisible} = props;
 
-  const [userKey, setUserKey]: any = React.useState('');
-  const [userPassword, setUserPassword]: any = React.useState('');
+  const [username, setUsername]: any = React.useState('');
+  const [password, setPassword]: any = React.useState('');
+
   const [confirmLoading, setConfirmLoading]: any = React.useState(false);
 
   function successLoginModal() {
@@ -61,17 +62,14 @@ function SignInModal(props: any) {
             onOk={() => {
               setConfirmLoading(true);
 
-              const username = userKey;
-              const password = userPassword;
-
               handleSignIn(username, password).then(async data => {
                 checkSignInStatus(data, setUserdata);
               });
             }}>
             <FormGroup>
               <Input
-                value={userKey}
-                onChange={e => setUserKey(e.target.value)}
+                value={username}
+                onChange={e => setUsername(e.target.value)}
                 placeholder="Enter your username/email"
                 prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}} />}
                 suffix={
@@ -87,8 +85,8 @@ function SignInModal(props: any) {
 
             <FormGroup>
               <Input.Password
-                value={userPassword}
-                onChange={e => setUserPassword(e.target.value)}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
                 placeholder="Enter your password"
                 prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}} />}
                 suffix={
