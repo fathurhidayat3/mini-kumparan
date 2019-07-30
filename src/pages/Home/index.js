@@ -4,10 +4,8 @@ import * as React from 'react';
 
 import Home from './Home';
 
-function handleSignIn() {}
-
 function HomeContainer() {
-  return <Home handleSignIn={handleSignIn}></Home>;
+  return <Home></Home>;
 }
 
 export default HomeContainer;
