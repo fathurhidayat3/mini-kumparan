@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import {Button, Avatar, Menu, Dropdown, Typography} from 'antd';
+import {Button, Avatar, Menu, Dropdown, Input} from 'antd';
 import {Link, withRouter} from 'react-router-dom';
 
 import {NavbarContainer, NavbarPart} from './style';
@@ -10,6 +10,8 @@ import SignInModal from '../Modal/SignInModal';
 import handleLogout from '../../utils/handleLogout';
 
 import AuthContext from '../../contexts/AuthContext';
+
+const {Search} = Input;
 
 function Navbar(props: any) {
   const {modalSignInVisible, setModalSignInVisible} = props;
@@ -33,7 +35,15 @@ function Navbar(props: any) {
             <NavbarPart>
               <h3 style={{fontWeight: 'bold'}}>Mini Kumparan</h3>
             </NavbarPart>
-            <NavbarPart justifyContent={'center'}>Searchbox</NavbarPart>
+
+            <NavbarPart justifyContent={'center'}>
+              <Search
+                placeholder="input search text"
+                onSearch={value => console.log(value)}
+                enterButton
+              />
+            </NavbarPart>
+
             <NavbarPart justifyContent={'flex-end'}>
               {userdata ? (
                 <Dropdown
