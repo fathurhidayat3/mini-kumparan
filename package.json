@@ -4,7 +4,12 @@
   "private": true,
   "dependencies": {
     "antd": "^3.20.7",
+    "apollo-boost": "^0.4.3",
+    "dayjs": "^1.8.15",
+    "graphql": "^14.4.2",
+    "graphql-tag": "^2.10.1",
     "react": "^16.8.6",
+    "react-apollo": "^2.5.8",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
     "react-router-dom": "^5.0.1",
