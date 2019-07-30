@@ -4,5 +4,6 @@
   "trailingComma": "es5",
   "tabWidth": 2,
   "bracketSpacing": false,
+  "jsxBracketSameLine": true,
   "parser": "babel-flow"
 }
