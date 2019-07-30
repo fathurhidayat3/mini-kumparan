@@ -1,3 +1,5 @@
+// @flow
+
 export default {
   blue: '#007bff',
   indigo: '#6610f2',
