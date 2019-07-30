@@ -8,9 +8,16 @@ import {colors} from '../../constants';
 const {Header} = Layout;
 
 const NavbarContainer = styled(Header)`
+  position: fixed;
+  top: 0;
+
   display: flex;
 
+  width: 100%;
+
   background: ${colors.white};
+
+  z-index: 10;
 `;
 
 const NavbarPart = styled.div`
