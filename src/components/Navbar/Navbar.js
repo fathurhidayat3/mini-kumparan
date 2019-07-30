@@ -8,6 +8,7 @@ import SignInModal from '../Modal/SignInModal';
 
 function Navbar(props: any) {
   const {modalSignInVisible, setModalSignInVisible} = props;
+
   return (
     <NavbarContainer>
       <NavbarPart>Logo</NavbarPart>
