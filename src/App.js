@@ -22,11 +22,6 @@ function App() {
     setUserdata(savedUserData);
   });
 
-  // function handleLogout() {
-  //   localStorage.removeItem('user-data');
-  // console.log('ok');
-  // }
-
   return (
     <AuthContext.Provider
       value={{
