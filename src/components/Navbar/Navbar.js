@@ -10,6 +10,7 @@ import SignInModal from '../Modal/SignInModal';
 import handleLogout from '../../utils/handleLogout';
 
 import AuthContext from '../../contexts/AuthContext';
+import HeadingText from '../HeadingText';
 
 const {Search} = Input;
 
@@ -38,14 +39,17 @@ function Navbar(props: any) {
         return (
           <NavbarContainer>
             <NavbarPart>
-              <h3 style={{fontWeight: 'bold'}}>Mini Kumparan</h3>
+              <Link to={'/'}>
+                <HeadingText type={'h3'} style={{color: '#00a1b0'}}>
+                  Mini Kumparan
+                </HeadingText>
+              </Link>
             </NavbarPart>
 
             <NavbarPart justifyContent={'center'}>
               <Search
                 placeholder="input search text"
                 onSearch={value => console.log(value)}
-                enterButton
               />
             </NavbarPart>
 
