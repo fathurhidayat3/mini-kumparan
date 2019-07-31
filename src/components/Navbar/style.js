@@ -17,6 +17,8 @@ const NavbarContainer = styled(Header)`
 
   background: ${colors.white};
 
+  border-bottom: 1px solid #e8e8e8;
+
   z-index: 10;
 `;
 
