@@ -5,7 +5,8 @@ import {withRouter, Link} from 'react-router-dom';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import {Card, Divider, Avatar, Tag, List, Typography} from 'antd';
-import {Helmet} from 'react-helmet';
+
+import StoryDetailMeta from './StoryDetailMeta';
 
 import GetPublishedArticles from '../../graphql/Articles/QueryGetPublishedArticles';
 import QueryGetPublishedArticleBySlug from '../../graphql/Articles/QueryGetPublishedArticleBySlug';
@@ -24,138 +25,126 @@ function StoryDetail(props: any) {
 
   return (
     <FilterContext.Consumer>
-      {({filterData, setFilterData}) => {
-        return (
-          <Base>
-            <QueryGetPublishedArticleBySlug
-              query={QueryGetPublishedArticleBySlug.query}
-              variables={{slug}}>
-              {({loading, error, data}) => {
-                if (loading) return 'Loading...';
-                if (error) return `Error! ${error.message}`;
+      {({filterData, setFilterData}) => (
+        <Base>
+          <QueryGetPublishedArticleBySlug
+            query={QueryGetPublishedArticleBySlug.query}
+            variables={{slug}}>
+            {({loading, error, data}) => {
+              if (loading) return 'Loading...';
+              if (error) return `Error! ${error.message}`;
 
-                const dataDetail = data.GetPublishedArticleBySlug;
+              const dataDetail = data.GetPublishedArticleBySlug;
 
-                return (
-                  <StoryPanelContainer>
-                    <Helmet>
-                      <meta charSet="utf-8" />
-                      <meta name="description" content={dataDetail.title} />
+              return (
+                <StoryPanelContainer>
+                  <StoryDetailMeta
+                    title={dataDetail.title}
+                    pathname={pathname}
+                  />
 
-                      <title>{dataDetail.title}</title>
+                  <div>
+                    <HeadingText type={'h1'}>{dataDetail.title}</HeadingText>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginTop: 8,
+                      }}>
+                      <Avatar size={32} icon={'user'} />
 
-                      <link
-                        rel="canonical"
-                        href={`http://mini-kumparan.com/${pathname}`}
-                      />
-                    </Helmet>
-
-                    <div>
-                      <HeadingText type={'h1'}>{dataDetail.title}</HeadingText>
                       <div
                         style={{
                           display: 'flex',
-                          alignItems: 'center',
-                          marginTop: 8,
+                          flexDirection: 'column',
+                          margin: '0 8px',
                         }}>
-                        <Avatar size={32} icon={'user'} />
+                        <HeadingText type={'h4'}>
+                          {dataDetail.user.fullName}
+                        </HeadingText>
 
-                        <div
-                          style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            margin: '0 8px',
-                          }}>
-                          <HeadingText type={'h4'}>
-                            {dataDetail.user.fullName}
-                          </HeadingText>
-
-                          <Text>{`Published at : ${dayjs(
-                            dataDetail.createdAt
-                          ).format('DD/MM/YYYY HH:mm')}`}</Text>
-                        </div>
+                        <Text>{`Published at : ${dayjs(
+                          dataDetail.createdAt
+                        ).format('DD/MM/YYYY HH:mm')}`}</Text>
                       </div>
                     </div>
+                  </div>
 
-                    <Divider />
+                  <Divider />
 
-                    <div style={{margin: '16px 0'}}>
-                      {/* <img
+                  <div style={{margin: '16px 0'}}>
+                    {/* <img
                         src={dataDetail.thumbnail}
                         style={{width: '100%', borderRadius: 8}}
                       /> */}
 
-                      <Avatar
-                        shape="square"
-                        // size={100}
-                        src={dataDetail.thumbnail}
-                        style={{
-                          height: 'auto',
-                          width: '100%',
-                          objectFit: 'contain',
-                        }}
-                        icon={'file-image'}
-                      />
-                    </div>
+                    <Avatar
+                      shape="square"
+                      src={dataDetail.thumbnail}
+                      style={{
+                        height: 'auto',
+                        width: '100%',
+                        objectFit: 'contain',
+                      }}
+                      icon={'file-image'}
+                    />
+                  </div>
 
-                    <div>
-                      <Text>{dataDetail.body}</Text>
-                    </div>
-                    <Divider />
-                    <div>
-                      {dataDetail.categories.map((categoriItem: any) => {
-                        return (
-                          <Link
-                            to={`/category/${categoriItem.toLowerCase()}`}
-                            key={categoriItem}>
-                            <Tag
-                              onClick={() =>
-                                setFilterData({category: categoriItem})
-                              }>
-                              {categoriItem}
-                            </Tag>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </StoryPanelContainer>
-                );
-              }}
-            </QueryGetPublishedArticleBySlug>
+                  <div>
+                    <Text>{dataDetail.body}</Text>
+                  </div>
+                  <Divider />
+                  <div>
+                    {dataDetail.categories.map((categoriItem: any) => (
+                      <Link
+                        to={`/category/${categoriItem.toLowerCase()}`}
+                        key={categoriItem}>
+                        <Tag
+                          onClick={() =>
+                            setFilterData({category: categoriItem})
+                          }>
+                          {categoriItem}
+                        </Tag>
+                      </Link>
+                    ))}
+                  </div>
+                </StoryPanelContainer>
+              );
+            }}
+          </QueryGetPublishedArticleBySlug>
 
-            <Divider />
+          <Divider />
 
-            <div style={{marginTop: 24}}>
-              <HeadingText type={'h3'}>Related Story</HeadingText>
+          <div style={{marginTop: 24}}>
+            <HeadingText type={'h3'}>Related Story</HeadingText>
 
-              <div style={{marginTop: 16}}>
-                <GetPublishedArticles
-                  query={GetPublishedArticles.query}
-                  variables={{category: filterData.category}}>
-                  {({loading, error, data}) => {
-                    if (loading) return 'Loading...';
-                    if (error) return `Error! ${error.message}`;
+            <div style={{marginTop: 16}}>
+              <GetPublishedArticles
+                query={GetPublishedArticles.query}
+                variables={{category: filterData.category}}>
+                {({loading, error, data}) => {
+                  if (loading) return 'Loading...';
+                  if (error) return `Error! ${error.message}`;
 
-                    return (
-                      <List
-                        itemLayout="vertical"
-                        size="large"
-                        dataSource={data.GetPublishedArticlesByCategory}
-                        // data.GetPublishedArticles
-                        renderItem={item => (
-                          <Link to={`/story/${item.slug}`}>
-                            <StoryCard {...item} />
-                          </Link>
-                        )}
-                      />
-                    );
-                  }}
-                </GetPublishedArticles>
-              </div>
+                  return (
+                    <List
+                      itemLayout="vertical"
+                      size="large"
+                      dataSource={data.GetPublishedArticlesByCategory}
+                      // data.GetPublishedArticles
+                      renderItem={item => (
+                        <Link to={`/story/${item.slug}`}>
+                          <StoryCard {...item} />
+                        </Link>
+                      )}
+                    />
+                  );
+                }}
+              </GetPublishedArticles>
             </div>
-          </Base>
-        );
-      }}
+          </div>
+        </Base>
+      )}
     </FilterContext.Consumer>
   );
 }
