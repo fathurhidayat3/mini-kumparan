@@ -26,6 +26,8 @@ for (let i = 0; i < 23; i++) {
       'Ant Design, a design language for background applications, is refined by Ant UED Team.',
     createdAt: '30 July 2019',
     author: 'Joni Hermanto',
+    like: 156,
+    comment: 23,
   });
 }
 

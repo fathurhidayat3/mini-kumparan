@@ -23,6 +23,8 @@ export default function StoryCard({
   author,
   avatar,
   thumbnail,
+  like,
+  comment,
 }: any) {
   return (
     <StoryCardContainer>
@@ -45,8 +47,8 @@ export default function StoryCard({
           </StoryCardTopWrapper>
 
           <StoryCardBottomWrapper>
-            <IconText type="like-o" text="23" />
-            <IconText type="like-o" text="156" />
+            <IconText type="like-o" text={like} />
+            <IconText type="wechat" text={comment} />
           </StoryCardBottomWrapper>
         </StoryCardContentWrapper>
         <Avatar
