@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import {Modal, Input, Tooltip, Icon} from 'antd';
+import {Modal, Input, Tooltip, Icon, Typography} from 'antd';
 import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
 
@@ -9,11 +9,14 @@ import AuthContext from '../../contexts/AuthContext';
 
 import handleSignIn from '../../utils/handleSignIn';
 
+const {Text} = Typography;
+
 function SignInModal(props: any) {
   const {modalSignInVisible, setModalSignInVisible} = props;
 
   const [username, setUsername]: any = React.useState('');
   const [password, setPassword]: any = React.useState('');
+  const [showRegister, setShowRegister]: any = React.useState(false);
 
   const [confirmLoading, setConfirmLoading]: any = React.useState(false);
 
@@ -36,14 +39,18 @@ function SignInModal(props: any) {
   function checkSignInStatus(data, setUserdata) {
     setConfirmLoading(false);
 
-    if (data && data.token !== '') {
+    if (data && data.token) {
       setModalSignInVisible(false);
 
       successLoginModal();
 
+      localStorage.setItem('user-data', JSON.stringify(data));
+
       setUserdata(data);
     } else {
       errorLoginModal();
+
+      setShowRegister(true);
     }
   }
 
@@ -97,6 +104,8 @@ function SignInModal(props: any) {
                 }
               />
             </FormGroup>
+
+            {showRegister && <Text>Register here</Text>}
           </Modal>
         );
       }}
