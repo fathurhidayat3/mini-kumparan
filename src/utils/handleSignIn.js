@@ -9,7 +9,7 @@ export default function(username: string, password: string) {
     password,
   };
 
-  const url = 'http://e1973cad.ngrok.io/login';
+  const url = 'http://c7558f2b.ngrok.io/login';
 
   const body = new FormData();
   body.append('username', username);
@@ -22,7 +22,9 @@ export default function(username: string, password: string) {
     },
     body,
   })
-    .then(res => JSON.stringify(res))
+    .then(res => {
+      return res.json();
+    })
     .then((data: any) => {
       localStorage.setItem('user-data', JSON.stringify(data));
 
