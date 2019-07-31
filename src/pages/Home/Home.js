@@ -39,7 +39,6 @@ function Home() {
                       itemLayout="vertical"
                       size="large"
                       dataSource={data.GetPublishedArticlesByCategory}
-                      // data.GetPublishedArticles
                       renderItem={item => (
                         <Link to={`/story/${item.slug}`}>
                           <StoryCard {...item} />
