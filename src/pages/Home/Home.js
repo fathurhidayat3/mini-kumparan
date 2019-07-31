@@ -2,18 +2,13 @@
 
 import * as React from 'react';
 
-import {List, Row, Col} from 'antd';
-import dayjs from 'dayjs';
+import {List} from 'antd';
 import {Link} from 'react-router-dom';
-
-import {Layout, Content, Footer} from '../../components/Base';
-import Navbar from '../../components/Navbar/';
-import StoryCard from '../../components/StoryCard';
-
 import {Query} from 'react-apollo';
-
 import gql from 'graphql-tag';
-import HeadingText from '../../components/HeadingText';
+
+import Base from '../../components/Base';
+import StoryCard from '../../components/StoryCard';
 
 const listData = [];
 for (let i = 0; i < 23; i++) {
@@ -37,69 +32,39 @@ const GET_PUBLISHED_ARTICLES = gql`
     GetPublishedArticles {
       id
       title
+      slug
       createdAt
-      userId
+      user {
+        fullName
+      }
     }
   }
 `;
 
-const data = ['News', 'Politik', 'Entertainment', 'Otomotif'];
-
 function Home() {
   return (
-    <Layout>
-      <Navbar />
+    <Base>
+      <Query query={GET_PUBLISHED_ARTICLES}>
+        {({loading, error, data}) => {
+          if (loading) return 'Loading...';
+          if (error) return `Error! ${error.message}`;
 
-      <Content style={{margin: '88px 0 36px 0'}}>
-        <Row type={'flex'} justify={'center'}>
-          <Col span={5}>
+          return (
             <List
-              size="small"
-              header={
-                <div>
-                  <HeadingText type={'h4'}>Categories</HeadingText>
-                </div>
-              }
-              bordered
-              dataSource={data}
-              renderItem={item => <List.Item>{item}</List.Item>}
-              style={{background: 'white'}}
+              itemLayout="vertical"
+              size="large"
+              dataSource={data.GetPublishedArticles}
+              // data.GetPublishedArticles
+              renderItem={item => (
+                <Link to={`/story/${item.slug}`}>
+                  <StoryCard {...item} />
+                </Link>
+              )}
             />
-          </Col>
-
-          <Col span={9} offset={1}>
-            <Query query={GET_PUBLISHED_ARTICLES}>
-              {({loading, error, data}) => {
-                // if (loading) return 'Loading...';
-                // if (error) return `Error! ${error.message}`;
-
-                return (
-                  <List
-                    itemLayout="vertical"
-                    size="large"
-                    dataSource={data.GetPublishedArticles}
-                    // data.GetPublishedArticles
-                    renderItem={item => (
-                      <Link to={`/story/${item.id}`}>
-                        <StoryCard
-                          createdAt={`Published at : ${dayjs(
-                            item.createdAt
-                          ).format('DD/MM/YYYY HH:mm')}`}
-                          {...item}
-                        />
-                      </Link>
-                    )}
-                  />
-                );
-              }}
-            </Query>
-          </Col>
-
-          <Col span={5} offset={1}></Col>
-        </Row>
-      </Content>
-      <Footer>by siapa aja</Footer>
-    </Layout>
+          );
+        }}
+      </Query>
+    </Base>
   );
 }
 
