@@ -6,6 +6,7 @@ import {List} from 'antd';
 import {Link} from 'react-router-dom';
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
+import {Helmet} from 'react-helmet';
 
 import FilterContext from '../../contexts/FilterContext';
 
@@ -47,7 +48,7 @@ const GET_PUBLISHED_ARTICLES = gql`
 function Home() {
   return (
     <FilterContext.Consumer>
-      {({filterData, setFilterData}) => {
+      {({filterData}) => {
         return (
           <Base>
             <Query
@@ -58,17 +59,26 @@ function Home() {
                 if (error) return `Error! ${error.message}`;
 
                 return (
-                  <List
-                    itemLayout="vertical"
-                    size="large"
-                    dataSource={data.GetPublishedArticlesByCategory}
-                    // data.GetPublishedArticles
-                    renderItem={item => (
-                      <Link to={`/story/${item.slug}`}>
-                        <StoryCard {...item} />
-                      </Link>
-                    )}
-                  />
+                  <>
+                    <Helmet>
+                      <meta charSet="utf-8" />
+                      <meta name="description" content="Mini Kumparan" />
+
+                      <title>Mini Kumparan</title>
+                      <link rel="canonical" href={`http://mini-kumparan.com`} />
+                    </Helmet>
+                    <List
+                      itemLayout="vertical"
+                      size="large"
+                      dataSource={data.GetPublishedArticlesByCategory}
+                      // data.GetPublishedArticles
+                      renderItem={item => (
+                        <Link to={`/story/${item.slug}`}>
+                          <StoryCard {...item} />
+                        </Link>
+                      )}
+                    />
+                  </>
                 );
               }}
             </Query>

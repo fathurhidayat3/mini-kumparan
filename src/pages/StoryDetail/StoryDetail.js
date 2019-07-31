@@ -7,6 +7,7 @@ import gql from 'graphql-tag';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import {Card, Divider, Avatar, Tag} from 'antd';
+import {Helmet} from 'react-helmet';
 
 import FilterContext from '../../contexts/FilterContext';
 
@@ -34,7 +35,8 @@ const GET_PUBLISHED_ARTICLE_BY_SLUG = gql`
 `;
 
 function StoryDetail(props: any) {
-  const slug = props.history.location.pathname.split('/')[2];
+  const pathname = props.history.location.pathname;
+  const slug = pathname.split('/')[2];
 
   return (
     <FilterContext.Consumer>
@@ -50,6 +52,18 @@ function StoryDetail(props: any) {
 
                 return (
                   <StoryPanelContainer>
+                    <Helmet>
+                      <meta charSet="utf-8" />
+                      <meta name="description" content={dataDetail.title} />
+
+                      <title>{dataDetail.title}</title>
+
+                      <link
+                        rel="canonical"
+                        href={`http://mini-kumparan.com/${pathname}`}
+                      />
+                    </Helmet>
+
                     <div>
                       <HeadingText type={'h1'}>{dataDetail.title}</HeadingText>
                       <div
@@ -76,15 +90,11 @@ function StoryDetail(props: any) {
                         </div>
                       </div>
                     </div>
-
                     <Divider />
-
                     <div>
                       <Text>{dataDetail.body}</Text>
                     </div>
-
                     <Divider />
-
                     <div>
                       {dataDetail.categories.map((categoriItem: any) => {
                         return (
