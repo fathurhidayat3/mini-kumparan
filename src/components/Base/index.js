@@ -1,15 +1,16 @@
 // @flow
 
 import React from 'react';
-import {Row, Col, List} from 'antd';
+import {Row, Col} from 'antd';
+
+import type {baseType} from './type';
 
 import {Layout, Content, Footer} from './style';
 
 import Navbar from '../Navbar';
-
 import CategoryList from '../CategoryList';
 
-function Base(props: any) {
+function Base(props: baseType) {
   const {children} = props;
 
   const data = ['News', 'Politik', 'Entertainment', 'Otomotif'];
