@@ -13,7 +13,9 @@ const StyledLayout = styled(Layout)`
   background: ${colors.light};
 `;
 
-const StyledContent = styled(Content)``;
+const StyledContent = styled(Content)`
+  margin: 88px 0 36px 0;
+`;
 
 const StyledFooter = styled(Footer)``;
 
