@@ -13,6 +13,7 @@ import StoryCard from '../../components/StoryCard';
 import {Query} from 'react-apollo';
 
 import gql from 'graphql-tag';
+import HeadingText from '../../components/HeadingText';
 
 const listData = [];
 for (let i = 0; i < 23; i++) {
@@ -42,24 +43,41 @@ const GET_PUBLISHED_ARTICLES = gql`
   }
 `;
 
+const data = ['News', 'Politik', 'Entertainment', 'Otomotif'];
+
 function Home() {
   return (
     <Layout>
       <Navbar />
 
       <Content style={{margin: '88px 0 36px 0'}}>
-        <Row type="flex" justify="center">
-          <Query query={GET_PUBLISHED_ARTICLES}>
-            {({loading, error, data}) => {
-              // if (loading) return 'Loading...';
-              // if (error) return `Error! ${error.message}`;
+        <Row type={'flex'} justify={'center'}>
+          <Col span={5}>
+            <List
+              size="small"
+              header={
+                <div>
+                  <HeadingText type={'h4'}>Categories</HeadingText>
+                </div>
+              }
+              bordered
+              dataSource={data}
+              renderItem={item => <List.Item>{item}</List.Item>}
+              style={{background: 'white'}}
+            />
+          </Col>
 
-              return (
-                <Col span={9}>
+          <Col span={9} offset={1}>
+            <Query query={GET_PUBLISHED_ARTICLES}>
+              {({loading, error, data}) => {
+                // if (loading) return 'Loading...';
+                // if (error) return `Error! ${error.message}`;
+
+                return (
                   <List
                     itemLayout="vertical"
                     size="large"
-                    dataSource={listData}
+                    dataSource={data.GetPublishedArticles}
                     // data.GetPublishedArticles
                     renderItem={item => (
                       <Link to={`/story/${item.id}`}>
@@ -72,10 +90,12 @@ function Home() {
                       </Link>
                     )}
                   />
-                </Col>
-              );
-            }}
-          </Query>
+                );
+              }}
+            </Query>
+          </Col>
+
+          <Col span={5} offset={1}></Col>
         </Row>
       </Content>
       <Footer>by siapa aja</Footer>
