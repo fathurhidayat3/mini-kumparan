@@ -6,14 +6,15 @@ import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import {Card, Divider, Avatar, Tag} from 'antd';
+import {Card, Divider, Avatar, Tag, List} from 'antd';
+import Text from 'antd/lib/typography/Text';
 import {Helmet} from 'react-helmet';
 
 import FilterContext from '../../contexts/FilterContext';
 
 import Base from '../../components/Base';
 import HeadingText from '../../components/HeadingText';
-import Text from 'antd/lib/typography/Text';
+import StoryCard from '../../components/StoryCard';
 
 const GET_PUBLISHED_ARTICLE_BY_SLUG = gql`
   query QueryGetPublishedArticleBySlug($slug: String!) {
@@ -27,6 +28,21 @@ const GET_PUBLISHED_ARTICLE_BY_SLUG = gql`
       createdAt
       updatedAt
       categories
+      user {
+        fullName
+      }
+    }
+  }
+`;
+
+const GET_PUBLISHED_ARTICLES = gql`
+  query QueryGetPublishedArticlesByCategory($category: String!) {
+    GetPublishedArticlesByCategory(category: $category) {
+      id
+      title
+      slug
+      thumbnail
+      createdAt
       user {
         fullName
       }
@@ -90,7 +106,16 @@ function StoryDetail(props: any) {
                         </div>
                       </div>
                     </div>
+
                     <Divider />
+
+                    <div style={{margin: '16px 0'}}>
+                      <img
+                        src={dataDetail.thumbnail}
+                        style={{width: '100%', borderRadius: 8}}
+                      />
+                    </div>
+
                     <div>
                       <Text>{dataDetail.body}</Text>
                     </div>
@@ -113,6 +138,37 @@ function StoryDetail(props: any) {
                 );
               }}
             </Query>
+
+            <Divider />
+
+            <div style={{marginTop: 24}}>
+              <HeadingText type={'h3'}>Related Story</HeadingText>
+
+              <div style={{marginTop: 16}}>
+                <Query
+                  query={GET_PUBLISHED_ARTICLES}
+                  variables={{category: filterData.category}}>
+                  {({loading, error, data}) => {
+                    if (loading) return 'Loading...';
+                    if (error) return `Error! ${error.message}`;
+
+                    return (
+                      <List
+                        itemLayout="vertical"
+                        size="large"
+                        dataSource={data.GetPublishedArticlesByCategory}
+                        // data.GetPublishedArticles
+                        renderItem={item => (
+                          <Link to={`/story/${item.slug}`}>
+                            <StoryCard {...item} />
+                          </Link>
+                        )}
+                      />
+                    );
+                  }}
+                </Query>
+              </div>
+            </div>
           </Base>
         );
       }}
