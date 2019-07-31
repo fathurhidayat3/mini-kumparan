@@ -7,6 +7,8 @@ import {Link} from 'react-router-dom';
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
 
+import FilterContext from '../../contexts/FilterContext';
+
 import Base from '../../components/Base';
 import StoryCard from '../../components/StoryCard';
 
@@ -28,8 +30,8 @@ for (let i = 0; i < 23; i++) {
 }
 
 const GET_PUBLISHED_ARTICLES = gql`
-  query {
-    GetPublishedArticles {
+  query QueryGetPublishedArticlesByCategory($category: String!) {
+    GetPublishedArticlesByCategory(category: $category) {
       id
       title
       slug
@@ -43,28 +45,38 @@ const GET_PUBLISHED_ARTICLES = gql`
 
 function Home() {
   return (
-    <Base>
-      <Query query={GET_PUBLISHED_ARTICLES}>
-        {({loading, error, data}) => {
-          if (loading) return 'Loading...';
-          if (error) return `Error! ${error.message}`;
+    <FilterContext.Consumer>
+      {({filterData, setFilterData}) => {
+        console.log(filterData);
 
-          return (
-            <List
-              itemLayout="vertical"
-              size="large"
-              dataSource={data.GetPublishedArticles}
-              // data.GetPublishedArticles
-              renderItem={item => (
-                <Link to={`/story/${item.slug}`}>
-                  <StoryCard {...item} />
-                </Link>
-              )}
-            />
-          );
-        }}
-      </Query>
-    </Base>
+        return (
+          <Base>
+            <Query
+              query={GET_PUBLISHED_ARTICLES}
+              variables={{category: filterData.category}}>
+              {({loading, error, data}) => {
+                if (loading) return 'Loading...';
+                if (error) return `Error! ${error.message}`;
+
+                return (
+                  <List
+                    itemLayout="vertical"
+                    size="large"
+                    dataSource={data.GetPublishedArticlesByCategory}
+                    // data.GetPublishedArticles
+                    renderItem={item => (
+                      <Link to={`/story/${item.slug}`}>
+                        <StoryCard {...item} />
+                      </Link>
+                    )}
+                  />
+                );
+              }}
+            </Query>
+          </Base>
+        );
+      }}
+    </FilterContext.Consumer>
   );
 }
 

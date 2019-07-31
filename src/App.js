@@ -7,6 +7,7 @@ import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import 'antd/dist/antd.css';
 
 import ApolloClient from 'apollo-boost';
+import {ApolloProvider} from 'react-apollo';
 
 import Home from './pages/Home';
 import StoryDetail from './pages/StoryDetail';
@@ -15,7 +16,7 @@ import DummyPage from './pages/DummyPage';
 import PrivateRoute from './components/PrivateRoute';
 
 import AuthContext from './contexts/AuthContext';
-import {ApolloProvider} from 'react-apollo';
+import FilterContext from './contexts/FilterContext';
 
 const client = new ApolloClient({
   // $FlowFixMe
@@ -24,6 +25,10 @@ const client = new ApolloClient({
 
 function App() {
   const [userData, setUserdata] = React.useState({});
+  const [filterData, setFilterData] = React.useState({
+    category: '',
+    keyword: '',
+  });
 
   React.useEffect(() => {
     const savedUserData = localStorage.getItem('user-data');
@@ -38,21 +43,23 @@ function App() {
           userdata: userData,
           setUserdata,
         }}>
-        <Router>
-          <Route exact path={'/'} component={() => <Home />} />
+        <FilterContext.Provider value={{filterData, setFilterData}}>
+          <Router>
+            <Route exact path={'/'} component={() => <Home />} />
 
-          <Route
-            exact
-            path={'/story/:storyId'}
-            component={() => <StoryDetail />}
-          />
+            <Route
+              exact
+              path={'/story/:storyId'}
+              component={() => <StoryDetail />}
+            />
 
-          <PrivateRoute
-            exact
-            path={'/private'}
-            component={() => <DummyPage />}
-          />
-        </Router>
+            <PrivateRoute
+              exact
+              path={'/private'}
+              component={() => <DummyPage />}
+            />
+          </Router>
+        </FilterContext.Provider>
       </AuthContext.Provider>
     </ApolloProvider>
   );
