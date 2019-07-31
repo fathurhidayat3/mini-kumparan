@@ -2,13 +2,14 @@
 
 import * as React from 'react';
 
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 
 import 'antd/dist/antd.css';
 
 import ApolloClient from 'apollo-boost';
 
 import Home from './pages/Home';
+import StoryDetail from './pages/StoryDetail';
 import DummyPage from './pages/DummyPage';
 
 import PrivateRoute from './components/PrivateRoute';
@@ -39,9 +40,16 @@ function App() {
         }}>
         <Router>
           <Route exact path={'/'} component={() => <Home />} />
-          <PrivateRoute
+
+          <Route
             exact
             path={'/story/:storyId'}
+            component={() => <StoryDetail />}
+          />
+
+          <PrivateRoute
+            exact
+            path={'/private'}
             component={() => <DummyPage />}
           />
         </Router>
