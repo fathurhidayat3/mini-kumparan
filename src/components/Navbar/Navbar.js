@@ -10,6 +10,8 @@ import SignInModal from '../Modal/SignInModal';
 import handleLogout from '../../utils/handleLogout';
 
 import AuthContext from '../../contexts/AuthContext';
+import FilterContext from '../../contexts/FilterContext';
+
 import HeadingText from '../HeadingText';
 
 const {Search} = Input;
@@ -37,53 +39,63 @@ function Navbar(props: any) {
     <AuthContext.Consumer>
       {({userdata, setUserdata}) => {
         return (
-          <NavbarContainer>
-            <NavbarPart>
-              <Link to={'/'}>
-                <HeadingText type={'h3'} style={{color: '#00a1b0'}}>
-                  Mini Kumparan
-                </HeadingText>
-              </Link>
-            </NavbarPart>
+          <FilterContext.Consumer>
+            {({setFilterData}) => {
+              return (
+                <NavbarContainer>
+                  <NavbarPart>
+                    <HeadingText
+                      type={'h3'}
+                      style={{color: '#00a1b0', cursor: 'pointer'}}
+                      onClick={() => {
+                        setFilterData({category: ''});
+                        props.history.push('/');
+                      }}>
+                      Mini Kumparan
+                    </HeadingText>
+                  </NavbarPart>
 
-            <NavbarPart justifyContent={'center'}>
-              <Search
-                placeholder="input search text"
-                onSearch={value => console.log(value)}
-              />
-            </NavbarPart>
+                  <NavbarPart justifyContent={'center'}>
+                    <Search
+                      placeholder="input search text"
+                      onSearch={value => console.log(value)}
+                    />
+                  </NavbarPart>
 
-            <NavbarPart justifyContent={'flex-end'}>
-              {userdata ? (
-                <>
-                  <Button
-                    type={'primary'}
-                    onClick={() => setModalSignInVisible(true)}
-                    style={{marginRight: 16}}>
-                    Write Story
-                  </Button>
-                  <Dropdown
-                    overlay={() => menuItems(setUserdata)}
-                    placement="bottomRight">
-                    <Avatar icon="user" />
-                  </Dropdown>
-                </>
-              ) : (
-                <Button
-                  type={'primary'}
-                  onClick={() => setModalSignInVisible(true)}>
-                  Sign In
-                </Button>
-              )}
-            </NavbarPart>
+                  <NavbarPart justifyContent={'flex-end'}>
+                    {userdata ? (
+                      <>
+                        <Button
+                          type={'primary'}
+                          onClick={() => setModalSignInVisible(true)}
+                          style={{marginRight: 16}}>
+                          Write Story
+                        </Button>
+                        <Dropdown
+                          overlay={() => menuItems(setUserdata)}
+                          placement="bottomRight">
+                          <Avatar icon="user" />
+                        </Dropdown>
+                      </>
+                    ) : (
+                      <Button
+                        type={'primary'}
+                        onClick={() => setModalSignInVisible(true)}>
+                        Sign In
+                      </Button>
+                    )}
+                  </NavbarPart>
 
-            <SignInModal
-              modalSignInVisible={modalSignInVisible}
-              setModalSignInVisible={setModalSignInVisible}
-              modalRegisterVisible={modalRegisterVisible}
-              setModalRegisterVisible={setModalRegisterVisible}
-            />
-          </NavbarContainer>
+                  <SignInModal
+                    modalSignInVisible={modalSignInVisible}
+                    setModalSignInVisible={setModalSignInVisible}
+                    modalRegisterVisible={modalRegisterVisible}
+                    setModalRegisterVisible={setModalRegisterVisible}
+                  />
+                </NavbarContainer>
+              );
+            }}
+          </FilterContext.Consumer>
         );
       }}
     </AuthContext.Consumer>
