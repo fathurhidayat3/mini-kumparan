@@ -15,6 +15,7 @@ const StoryCardHeader = styled.div`
 const StoryCardInnerBody = styled.div`
   flex: 1;
   display: flex;
+  justify-content: space-between;
 
   margin-top: 8px;
 
