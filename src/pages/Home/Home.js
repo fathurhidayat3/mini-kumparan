@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import {List, Avatar, Icon, Row, Col, Card} from 'antd';
+import {List, Row, Col} from 'antd';
 import dayjs from 'dayjs';
 import {Link} from 'react-router-dom';
 
@@ -20,19 +20,14 @@ for (let i = 0; i < 23; i++) {
     href: 'http://ant.design',
     title: `Story ke ${i + 1} created in North Pole with my Friend`,
     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+    thumbnail:
+      'https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1564395669/kyfxbaax1mihfankpebg.jpg',
     description:
       'Ant Design, a design language for background applications, is refined by Ant UED Team.',
     createdAt: '30 July 2019',
-    author: 'Joni',
+    author: 'Joni Hermanto',
   });
 }
-
-const IconText = ({type, text}: any) => (
-  <span>
-    <Icon type={type} style={{marginRight: 8}} />
-    {text}
-  </span>
-);
 
 const GET_PUBLISHED_ARTICLES = gql`
   query {
@@ -48,44 +43,40 @@ const GET_PUBLISHED_ARTICLES = gql`
 function Home() {
   return (
     <Layout>
-      {/* <Layout.Sider>Sider</Layout.Sider> */}
+      <Navbar />
 
-      <Layout>
-        <Navbar />
-        <Content style={{margin: '88px 0 36px 0'}}>
-          <Row type="flex" justify="center">
-            <Query query={GET_PUBLISHED_ARTICLES}>
-              {({loading, error, data}) => {
-                if (loading) return 'Loading...';
-                if (error) return `Error! ${error.message}`;
+      <Content style={{margin: '88px 0 36px 0'}}>
+        <Row type="flex" justify="center">
+          <Query query={GET_PUBLISHED_ARTICLES}>
+            {({loading, error, data}) => {
+              // if (loading) return 'Loading...';
+              // if (error) return `Error! ${error.message}`;
 
-                console.log(data);
-                return (
-                  <Col span={9}>
-                    <List
-                      itemLayout="vertical"
-                      size="large"
-                      dataSource={data.GetPublishedArticles}
-                      renderItem={item => (
-                        <Link to={`/story/${item.id}`}>
-                          <StoryCard
-                            title={item.title}
-                            createdAt={`Published at : ${dayjs(
-                              item.createdAt
-                            ).format('DD-MM-YYYY HH:mm')}`}
-                            author={item.author}
-                          />
-                        </Link>
-                      )}
-                    />
-                  </Col>
-                );
-              }}
-            </Query>
-          </Row>
-        </Content>
-        <Footer>by siapa aja</Footer>
-      </Layout>
+              return (
+                <Col span={9}>
+                  <List
+                    itemLayout="vertical"
+                    size="large"
+                    dataSource={listData}
+                    // data.GetPublishedArticles
+                    renderItem={item => (
+                      <Link to={`/story/${item.id}`}>
+                        <StoryCard
+                          createdAt={`Published at : ${dayjs(
+                            item.createdAt
+                          ).format('DD/MM/YYYY HH:mm')}`}
+                          {...item}
+                        />
+                      </Link>
+                    )}
+                  />
+                </Col>
+              );
+            }}
+          </Query>
+        </Row>
+      </Content>
+      <Footer>by siapa aja</Footer>
     </Layout>
   );
 }
