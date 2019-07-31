@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {Avatar, Typography} from 'antd';
+import dayjs from 'dayjs';
 
 import {
   StoryCardContainer,
@@ -20,7 +21,7 @@ const {Text} = Typography;
 export default function StoryCard({
   title,
   createdAt,
-  author,
+  user,
   avatar,
   thumbnail,
   like,
@@ -29,15 +30,17 @@ export default function StoryCard({
   return (
     <StoryCardContainer>
       <StoryCardHeader>
-        <Avatar size={25} src={avatar} />
+        <Avatar size={28} src={avatar} icon={'user'} />
 
         <HeadingText
           type={'h4'}
           style={{display: 'inline-block', margin: '0 8px'}}>
-          {author}
+          {user.fullName}
         </HeadingText>
 
-        <Text>{createdAt}</Text>
+        <Text>{`Published at : ${dayjs(createdAt).format(
+          'DD/MM/YYYY HH:mm'
+        )}`}</Text>
       </StoryCardHeader>
 
       <StoryCardInnerBody>
@@ -47,8 +50,11 @@ export default function StoryCard({
           </StoryCardTopWrapper>
 
           <StoryCardBottomWrapper>
-            <IconText type="like-o" text={like} />
-            <IconText type="wechat" text={comment} />
+            {/* {like &&  */}
+            <IconText type="like-o" text={like || 0} />
+            {/* }{comment &&  */}
+            <IconText type="wechat" text={comment || 0} />
+            {/* } */}
           </StoryCardBottomWrapper>
         </StoryCardContentWrapper>
         <Avatar
