@@ -14,7 +14,12 @@ import AuthContext from '../../contexts/AuthContext';
 const {Search} = Input;
 
 function Navbar(props: any) {
-  const {modalSignInVisible, setModalSignInVisible} = props;
+  const {
+    modalSignInVisible,
+    setModalSignInVisible,
+    modalRegisterVisible,
+    setModalRegisterVisible,
+  } = props;
 
   const menuItems = setUserdata => (
     <Menu>
@@ -71,6 +76,8 @@ function Navbar(props: any) {
             <SignInModal
               modalSignInVisible={modalSignInVisible}
               setModalSignInVisible={setModalSignInVisible}
+              modalRegisterVisible={modalRegisterVisible}
+              setModalRegisterVisible={setModalRegisterVisible}
             />
           </NavbarContainer>
         );
