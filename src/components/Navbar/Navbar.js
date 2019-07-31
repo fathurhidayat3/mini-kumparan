@@ -46,11 +46,19 @@ function Navbar(props: any) {
 
             <NavbarPart justifyContent={'flex-end'}>
               {userdata ? (
-                <Dropdown
-                  overlay={() => menuItems(setUserdata)}
-                  placement="bottomRight">
-                  <Avatar icon="user" />
-                </Dropdown>
+                <>
+                  <Button
+                    type={'primary'}
+                    onClick={() => setModalSignInVisible(true)}
+                    style={{marginRight: 16}}>
+                    Write Story
+                  </Button>
+                  <Dropdown
+                    overlay={() => menuItems(setUserdata)}
+                    placement="bottomRight">
+                    <Avatar icon="user" />
+                  </Dropdown>
+                </>
               ) : (
                 <Button
                   type={'primary'}
