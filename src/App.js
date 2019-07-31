@@ -49,6 +49,12 @@ function App() {
 
             <Route
               exact
+              path={'/category/:categoryName'}
+              component={() => <Home />}
+            />
+
+            <Route
+              exact
               path={'/story/:storyId'}
               component={() => <StoryDetail />}
             />

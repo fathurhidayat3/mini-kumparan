@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import {List} from 'antd';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import {Helmet} from 'react-helmet';
 
 import GetPublishedArticles from '../../graphql/Articles/QueryGetPublishedArticles';
@@ -13,7 +13,11 @@ import FilterContext from '../../contexts/FilterContext';
 import Base from '../../components/Base';
 import StoryCard from '../../components/StoryCard';
 
-function Home() {
+function Home(props: any) {
+  const pathname = props.history.location.pathname;
+  const categoryName =
+    (pathname.split('/')[2] && pathname.split('/')[2].toUpperCase()) || '';
+
   return (
     <FilterContext.Consumer>
       {({filterData}) => {
@@ -21,7 +25,7 @@ function Home() {
           <Base>
             <GetPublishedArticles
               query={GetPublishedArticles.query}
-              variables={{category: filterData.category}}>
+              variables={{category: filterData.category || categoryName}}>
               {({loading, error, data}) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
@@ -35,6 +39,7 @@ function Home() {
                       <title>Mini Kumparan</title>
                       <link rel="canonical" href={`http://mini-kumparan.com`} />
                     </Helmet>
+
                     <List
                       itemLayout="vertical"
                       size="large"
@@ -56,4 +61,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withRouter(Home);
