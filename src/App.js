@@ -2,21 +2,20 @@
 
 import * as React from 'react';
 
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import ApolloClient from 'apollo-boost';
+import {ApolloProvider} from 'react-apollo';
 
 import 'antd/dist/antd.css';
 
-import ApolloClient from 'apollo-boost';
-import {ApolloProvider} from 'react-apollo';
+import AuthContext from './contexts/AuthContext';
+import FilterContext from './contexts/FilterContext';
 
 import Home from './pages/Home';
 import StoryDetail from './pages/StoryDetail';
 import DummyPage from './pages/DummyPage';
 
 import PrivateRoute from './components/PrivateRoute';
-
-import AuthContext from './contexts/AuthContext';
-import FilterContext from './contexts/FilterContext';
 
 const client = new ApolloClient({
   // $FlowFixMe
@@ -34,7 +33,7 @@ function App() {
     const savedUserData = localStorage.getItem('user-data');
 
     setUserdata(savedUserData);
-  });
+  }, []);
 
   return (
     <ApolloProvider client={client}>
