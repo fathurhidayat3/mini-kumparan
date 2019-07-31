@@ -2,6 +2,8 @@
 
 import React from 'react';
 import {Row, Col, List} from 'antd';
+import {withRouter} from 'react-router-dom';
+
 import {Layout, Content, Footer} from './style';
 
 import Navbar from '../Navbar';
@@ -46,17 +48,22 @@ function Base(props: any) {
                             'bold',
                           cursor: 'pointer',
                         }}
-                        onClick={() =>
-                          setFilterData({category: item.toUpperCase()})
-                        }>
+                        onClick={() => {
+                          setFilterData({category: item.toUpperCase()});
+                          props.history.push('/');
+                        }}>
                         {item}
                       </List.Item>
                     )}
-                    style={{background: 'white'}}
+                    style={{
+                      background: 'white',
+                      borderColor: '#e8e8e8',
+                      borderRadius: 2,
+                    }}
                   />
                 </Col>
 
-                <Col span={9} offset={1}>
+                <Col span={10} offset={1}>
                   {children}
                 </Col>
 
@@ -72,4 +79,4 @@ function Base(props: any) {
   );
 }
 
-export default Base;
+export default withRouter(Base);
