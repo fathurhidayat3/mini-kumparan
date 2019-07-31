@@ -9,14 +9,12 @@ import FilterContext from '../../contexts/FilterContext';
 
 import HeadingText from '../HeadingText';
 
-import {colors} from '../../constants';
-
 function CategoryList(props: any) {
   const {data} = props;
 
   return (
     <FilterContext.Consumer>
-      {({filterData, setFilterData}) => {
+      {({setFilterData}) => {
         return (
           <List
             size="small"
@@ -30,16 +28,11 @@ function CategoryList(props: any) {
             renderItem={item => (
               <List.Item
                 style={{
-                  color:
-                    filterData.category === item.toUpperCase() &&
-                    colors.primary,
-                  fontWeight:
-                    filterData.category === item.toUpperCase() && 'bold',
                   cursor: 'pointer',
                 }}
                 onClick={() => {
                   setFilterData({category: item.toUpperCase()});
-                  props.history.push('/');
+                  props.history.push(`/category/${item.toLowerCase()}`);
                 }}>
                 {item}
               </List.Item>
