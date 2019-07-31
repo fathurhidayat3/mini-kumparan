@@ -62,6 +62,7 @@ export default function StoryCard({
           size={100}
           src={thumbnail}
           style={{objectFit: 'contain'}}
+          icon={'file-image'}
         />
       </StoryCardInnerBody>
     </StoryCardContainer>
