@@ -4,8 +4,7 @@ import React from 'react';
 import {withRouter, Link} from 'react-router-dom';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import {Card, Divider, Avatar, Tag, List} from 'antd';
-import Text from 'antd/lib/typography/Text';
+import {Card, Divider, Avatar, Tag, List, Typography} from 'antd';
 import {Helmet} from 'react-helmet';
 
 import GetPublishedArticles from '../../graphql/Articles/QueryGetPublishedArticles';
@@ -16,6 +15,8 @@ import FilterContext from '../../contexts/FilterContext';
 import Base from '../../components/Base';
 import HeadingText from '../../components/HeadingText';
 import StoryCard from '../../components/StoryCard';
+
+const {Text} = Typography;
 
 function StoryDetail(props: any) {
   const pathname = props.history.location.pathname;
@@ -79,9 +80,21 @@ function StoryDetail(props: any) {
                     <Divider />
 
                     <div style={{margin: '16px 0'}}>
-                      <img
+                      {/* <img
                         src={dataDetail.thumbnail}
                         style={{width: '100%', borderRadius: 8}}
+                      /> */}
+
+                      <Avatar
+                        shape="square"
+                        // size={100}
+                        src={dataDetail.thumbnail}
+                        style={{
+                          height: 'auto',
+                          width: '100%',
+                          objectFit: 'contain',
+                        }}
+                        icon={'file-image'}
                       />
                     </div>
 
@@ -92,7 +105,9 @@ function StoryDetail(props: any) {
                     <div>
                       {dataDetail.categories.map((categoriItem: any) => {
                         return (
-                          <Link to={'/'} key={categoriItem}>
+                          <Link
+                            to={`/category/${categoriItem.toLowerCase()}`}
+                            key={categoriItem}>
                             <Tag
                               onClick={() =>
                                 setFilterData({category: categoriItem})
