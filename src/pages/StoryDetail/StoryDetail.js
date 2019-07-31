@@ -2,53 +2,20 @@
 
 import React from 'react';
 import {withRouter, Link} from 'react-router-dom';
-import {Query} from 'react-apollo';
-import gql from 'graphql-tag';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import {Card, Divider, Avatar, Tag, List} from 'antd';
 import Text from 'antd/lib/typography/Text';
 import {Helmet} from 'react-helmet';
 
+import GetPublishedArticles from '../../graphql/Articles/QueryGetPublishedArticles';
+import QueryGetPublishedArticleBySlug from '../../graphql/Articles/QueryGetPublishedArticleBySlug';
+
 import FilterContext from '../../contexts/FilterContext';
 
 import Base from '../../components/Base';
 import HeadingText from '../../components/HeadingText';
 import StoryCard from '../../components/StoryCard';
-
-const GET_PUBLISHED_ARTICLE_BY_SLUG = gql`
-  query QueryGetPublishedArticleBySlug($slug: String!) {
-    GetPublishedArticleBySlug(slug: $slug) {
-      id
-      title
-      slug
-      body
-      thumbnail
-      status
-      createdAt
-      updatedAt
-      categories
-      user {
-        fullName
-      }
-    }
-  }
-`;
-
-const GET_PUBLISHED_ARTICLES = gql`
-  query QueryGetPublishedArticlesByCategory($category: String!) {
-    GetPublishedArticlesByCategory(category: $category) {
-      id
-      title
-      slug
-      thumbnail
-      createdAt
-      user {
-        fullName
-      }
-    }
-  }
-`;
 
 function StoryDetail(props: any) {
   const pathname = props.history.location.pathname;
@@ -59,7 +26,9 @@ function StoryDetail(props: any) {
       {({filterData, setFilterData}) => {
         return (
           <Base>
-            <Query query={GET_PUBLISHED_ARTICLE_BY_SLUG} variables={{slug}}>
+            <QueryGetPublishedArticleBySlug
+              query={QueryGetPublishedArticleBySlug.query}
+              variables={{slug}}>
               {({loading, error, data}) => {
                 if (loading) return 'Loading...';
                 if (error) return `Error! ${error.message}`;
@@ -137,7 +106,7 @@ function StoryDetail(props: any) {
                   </StoryPanelContainer>
                 );
               }}
-            </Query>
+            </QueryGetPublishedArticleBySlug>
 
             <Divider />
 
@@ -145,8 +114,8 @@ function StoryDetail(props: any) {
               <HeadingText type={'h3'}>Related Story</HeadingText>
 
               <div style={{marginTop: 16}}>
-                <Query
-                  query={GET_PUBLISHED_ARTICLES}
+                <GetPublishedArticles
+                  query={GetPublishedArticles.query}
                   variables={{category: filterData.category}}>
                   {({loading, error, data}) => {
                     if (loading) return 'Loading...';
@@ -166,7 +135,7 @@ function StoryDetail(props: any) {
                       />
                     );
                   }}
-                </Query>
+                </GetPublishedArticles>
               </div>
             </div>
           </Base>
