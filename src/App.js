@@ -17,7 +17,7 @@ import AuthContext from './contexts/AuthContext';
 import {ApolloProvider} from 'react-apollo';
 
 const client = new ApolloClient({
-  uri: 'http://e1973cad.ngrok.io/graphql',
+  uri: 'http://c7558f2b.ngrok.io/graphql',
 });
 
 function App() {

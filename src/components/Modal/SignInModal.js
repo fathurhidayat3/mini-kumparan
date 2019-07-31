@@ -34,7 +34,6 @@ function SignInModal(props: any) {
   }
 
   function checkSignInStatus(data, setUserdata) {
-    // setTimeout(() => {
     setConfirmLoading(false);
 
     if (data && data.token !== '') {
@@ -46,7 +45,6 @@ function SignInModal(props: any) {
     } else {
       errorLoginModal();
     }
-    // }, 1000);
   }
 
   return (
