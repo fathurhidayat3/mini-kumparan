@@ -9,7 +9,8 @@ export default function(username: string, password: string) {
     password,
   };
 
-  const url = 'http://c7558f2b.ngrok.io/login';
+  // $FlowFixMe
+  const url = `${process.env.REACT_APP_GQL_URL}/user/login`;
 
   const body = new FormData();
   body.append('username', username);
@@ -21,13 +22,7 @@ export default function(username: string, password: string) {
       Accept: 'application/json',
     },
     body,
-  })
-    .then(res => {
-      return res.json();
-    })
-    .then((data: any) => {
-      localStorage.setItem('user-data', JSON.stringify(data));
-
-      return data;
-    });
+  }).then(res => {
+    return res.json();
+  });
 }

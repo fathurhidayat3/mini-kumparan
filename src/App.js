@@ -17,7 +17,8 @@ import AuthContext from './contexts/AuthContext';
 import {ApolloProvider} from 'react-apollo';
 
 const client = new ApolloClient({
-  uri: 'http://c7558f2b.ngrok.io/graphql',
+  // $FlowFixMe
+  uri: `${process.env.REACT_APP_GQL_URL}/graphql`,
 });
 
 function App() {
