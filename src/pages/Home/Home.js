@@ -35,6 +35,7 @@ const GET_PUBLISHED_ARTICLES = gql`
       id
       title
       slug
+      thumbnail
       createdAt
       user {
         fullName
@@ -47,8 +48,6 @@ function Home() {
   return (
     <FilterContext.Consumer>
       {({filterData, setFilterData}) => {
-        console.log(filterData);
-
         return (
           <Base>
             <Query
