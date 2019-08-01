@@ -20,6 +20,15 @@ import PrivateRoute from './components/PrivateRoute';
 const client = new ApolloClient({
   // $FlowFixMe
   uri: `${process.env.REACT_APP_GQL_URL}/graphql`,
+  request: async operation => {
+    const token = JSON.parse(localStorage.getItem('user-data')).token;
+
+    operation.setContext({
+      headers: {
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+    });
+  },
 });
 
 function App() {
@@ -63,6 +72,8 @@ function App() {
               path={'/private'}
               component={() => <DummyPage />}
             />
+
+            <Route exact path={'/dummy'} component={() => <DummyPage />} />
           </Router>
         </FilterContext.Provider>
       </AuthContext.Provider>
