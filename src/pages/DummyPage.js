@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import {Editor, EditorState, convertToRaw} from 'draft-js';
+import {Editor, EditorState, convertToRaw, RichUtils} from 'draft-js';
 import {Card, Button, Input} from 'antd';
 import gql from 'graphql-tag';
 import {Mutation} from 'react-apollo';
@@ -35,6 +35,15 @@ export default function DummyPage() {
     EditorState.createEmpty()
   );
 
+  function handleKeyCommand(command, editorState) {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+    if (newState) {
+      this.onChange(newState);
+      return 'handled';
+    }
+    return 'not-handled';
+  }
+
   function handleTitleChange(e) {
     setTitle(e.target.value);
     setSlug(generateSlug(e.target.value));
@@ -66,8 +75,12 @@ export default function DummyPage() {
             />
           </div>
 
-          <Card>
-            <Editor editorState={editorState} onChange={setEditorState} />
+          <Card bodyStyle={{padding: 16}}>
+            <Editor
+              editorState={editorState}
+              handleKeyCommand={handleKeyCommand}
+              onChange={setEditorState}
+            />
           </Card>
 
           <div style={{marginTop: 16}}>
