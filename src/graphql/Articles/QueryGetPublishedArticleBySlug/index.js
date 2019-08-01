@@ -16,7 +16,12 @@ const query = gql`
       updatedAt
       categories
       user {
-        fullName
+        fullname
+      }
+      totalComments
+      comments {
+        fullname
+        message
       }
     }
   }
