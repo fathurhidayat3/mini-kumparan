@@ -2,39 +2,90 @@
 
 import React from 'react';
 import {Form, Input, Button} from 'antd';
+import gql from 'graphql-tag';
+import {Mutation} from 'react-apollo';
+
+import QueryGetPublishedArticleBySlug from '../../graphql/Articles/QueryGetPublishedArticleBySlug';
 
 const {TextArea} = Input;
 
+const CREATE_COMMENT = gql`
+  mutation QCreateComment(
+    $articleID: String!
+    $fullname: String!
+    $username: String!
+    $message: String!
+  ) {
+    CreateComment(
+      comment: {
+        articleID: $articleID
+        fullname: $fullname
+        message: $message
+        username: $username
+      }
+    ) {
+      message
+      articleID
+    }
+  }
+`;
+
 function CommentForm(props: any) {
-  const {onChange, onSubmit, submitting, value} = props;
+  const {
+    onChange,
+    onSubmit,
+    submitting,
+    value,
+    userData,
+    dataDetail,
+    slug,
+  } = props;
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-end',
-        marginTop: 16,
-      }}>
-      <Form.Item style={{width: '100%'}}>
-        <TextArea
-          rows={4}
-          onChange={onChange}
-          value={value}
-          style={{padding: 16, width: '100%'}}
-        />
-      </Form.Item>
+    <Mutation
+      mutation={CREATE_COMMENT}
+      variables={{
+        articleID: dataDetail.id,
+        fullname: userData.fullname,
+        username: userData.username,
+        message: value,
+      }}
+      refetchQueries={[
+        {
+          query: QueryGetPublishedArticleBySlug.query,
+          variables: {slug},
+        },
+      ]}>
+      {CreateComment => (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            marginTop: 16,
+          }}>
+          {/* {console.log(CreateComment)} */}
+          <Form.Item style={{width: '100%'}}>
+            <TextArea
+              rows={4}
+              onChange={onChange}
+              value={value}
+              style={{padding: 16, width: '100%'}}
+            />
+          </Form.Item>
 
-      <Form.Item>
-        <Button
-          htmlType="submit"
-          loading={submitting}
-          onClick={onSubmit}
-          type="primary">
-          Add Comment
-        </Button>
-      </Form.Item>
-    </div>
+          <Form.Item>
+            <Button
+              htmlType="submit"
+              // loading={submitting}
+              onClick={CreateComment}
+              type="primary">
+              Add Comment
+            </Button>
+          </Form.Item>
+        </div>
+      )}
+    </Mutation>
   );
 }
 
