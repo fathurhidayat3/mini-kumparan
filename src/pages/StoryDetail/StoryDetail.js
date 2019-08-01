@@ -37,7 +37,7 @@ function MyEditor(props: any) {
     <Editor
       editorState={editorState}
       onChange={setEditorState}
-      // readOnly={true}
+      readOnly={true}
     />
   );
 }
