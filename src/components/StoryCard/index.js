@@ -55,11 +55,12 @@ export default function StoryCard({
             <IconText type="wechat" text={totalComments} />
           </StoryCardBottomWrapper>
         </StoryCardContentWrapper>
+
         <Avatar
           shape="square"
           size={100}
           src={thumbnail}
-          style={{objectFit: 'contain'}}
+          style={{minWidth: 100, objectFit: 'cover'}}
           icon={'file-image'}
         />
       </StoryCardInnerBody>
