@@ -7,17 +7,14 @@ import styled from 'styled-components';
 
 import StoryDetailMeta from './StoryDetailMeta';
 
-import {
-  StoryDetailContainer,
-  StoryDetailHeader,
-  StoryImageThumbnail,
-  StoryDetailBody,
-  StoryDetailCategories,
-} from './style';
+import {StoryDetailContainer, StoryImageThumbnail} from './style';
+
+import StoryDetailHeader from './StoryDetailHeader';
+import StoryDetailBody from './StoryDetailBody';
+import StoryDetailCategories from './StoryDetailCategories';
+import RelatedStoryList from './RelatedStoryList';
 
 import QueryGetPublishedArticleBySlug from '../../graphql/Articles/QueryGetPublishedArticleBySlug';
-
-import RelatedStoryList from './RelatedStoryList';
 
 import Base from '../../components/Base';
 import HeadingText from '../../components/HeadingText';

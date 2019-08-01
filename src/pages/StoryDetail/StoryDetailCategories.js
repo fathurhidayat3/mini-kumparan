@@ -1,7 +1,8 @@
 // @flow
 
 import React from 'react';
-import {Link, Tag} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import {Tag} from 'antd';
 
 import {StoryDetailCategoriesContainer} from './style';
 
