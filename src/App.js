@@ -21,11 +21,11 @@ const client = new ApolloClient({
   // $FlowFixMe
   uri: `${process.env.REACT_APP_GQL_URL}/graphql`,
   request: async operation => {
-    const token = JSON.parse(localStorage.getItem('user-data')).token;
+    const userData = JSON.parse(localStorage.getItem('user-data'));
 
     operation.setContext({
       headers: {
-        Authorization: token ? `Bearer ${token}` : '',
+        Authorization: userData ? `Bearer ${userData.token}` : '',
       },
     });
   },
