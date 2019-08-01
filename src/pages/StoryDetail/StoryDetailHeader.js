@@ -24,7 +24,7 @@ function StoryDetailHeader(props: any) {
       <StoryDetailHeaderInfoContainer>
         <Avatar size={32} icon={'user'} />
 
-        <StoryDetailHeaderUserContainer>
+        <StoryDetailHeaderUserContainer style={{flex: 1}}>
           <HeadingText type={'h4'}>{dataDetail.user.fullname}</HeadingText>
 
           <Text>{`Published at : ${dayjs(dataDetail.createdAt).format(
