@@ -24,13 +24,20 @@ function Navbar(props: any) {
     setModalRegisterVisible,
   } = props;
 
-  const menuItems = setUserdata => (
+  const menuItems = (userdata, setUserdata) => (
     <Menu>
       <Menu.Item>
-        <Link to={'/profile'}>Profile</Link>
+        <Link to={`/profile/${userdata.username}`}>Profile</Link>
       </Menu.Item>
       <Menu.Item>
-        <Button onClick={() => handleLogout(setUserdata({}))}>Logout</Button>
+        <Button
+          onClick={() =>
+            handleLogout(() => {
+              setUserdata({});
+            })
+          }>
+          Logout
+        </Button>
       </Menu.Item>
     </Menu>
   );
@@ -63,16 +70,16 @@ function Navbar(props: any) {
                   </NavbarPart>
 
                   <NavbarPart justifyContent={'flex-end'}>
-                    {userdata ? (
+                    {userdata && userdata.token ? (
                       <>
                         <Button
                           type={'primary'}
-                          onClick={() => setModalSignInVisible(true)}
+                          onClick={() => props.history.push('/dummy')}
                           style={{marginRight: 16}}>
                           Write Story
                         </Button>
                         <Dropdown
-                          overlay={() => menuItems(setUserdata)}
+                          overlay={() => menuItems(userdata, setUserdata)}
                           placement="bottomRight">
                           <Avatar icon="user" />
                         </Dropdown>
