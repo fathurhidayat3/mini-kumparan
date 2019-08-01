@@ -4,6 +4,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import {Divider} from 'antd';
 import styled from 'styled-components';
+import {Editor, EditorState, convertFromRaw} from 'draft-js';
 
 import StoryDetailMeta from './StoryDetailMeta';
 
@@ -21,6 +22,27 @@ import Base from '../../components/Base';
 import HeadingText from '../../components/HeadingText';
 import CommentList from '../../components/CommentList';
 import CommentForm from '../../components/CommentForm';
+
+const dummyBody =
+  '{"blocks":[{"key":"5fjf8","text":"Penggemar Mobile Legends: Bang Bang bersiaplah untuk kedatangan sekuel dari game tersebut. Moonton telah mengumumkan bakal meluncurkan game Mobile Legends: Adventure pada 1 Agustus mendatang.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[{"offset":10,"length":14,"key":0}],"data":{}},{"key":"b3a5b","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"fbp5i","text":"Berbeda dengan Mobile Legends: Bang Bang yang mengusung genre MOBA (Multiplayer Online Battle Arena), Mobile Legends: Adventure memiliki konsep strategy card. Tapi, di dalamnya tetap bakal tampil hero-hero yang telah kita kenal dari Mobile Legends: Bang Bang, seperti Miya, Tigreal, Layla, dan lain-lain.","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":68,"length":31,"style":"ITALIC"},{"offset":144,"length":13,"style":"ITALIC"},{"offset":196,"length":4,"style":"ITALIC"},{"offset":201,"length":5,"style":"ITALIC"}],"entityRanges":[],"data":{}},{"key":"f8i2","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"fsdru","text":"Pemain dapat melakukan pra-registrasi di Google Play Store mulai 18 Juli 2019 sampai 1 Agustus 2019 untuk mendapatkan hadiah berupa Premium Summon Scroll dan 100.000 Battle Points.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{"0":{"type":"LINK","mutability":"MUTABLE","data":{"href":"https://kumparan.com/topic/mobile-legends","rel":"noopener noreferrer","target":"_blank","url":"https://kumparan.com/topic/mobile-legends"}}}}';
+
+function MyEditor(props: any) {
+  // "{\"blocks\":[{\"key\":\"5fjf8\",\"text\":\"This is just its content, with a bold and italic but without underline\",\"type\":\"unstyled\",\"depth\":0,\"inlineStyleRanges\":[{\"offset\":33,\"length\":5,\"style\":\"BOLD\"},{\"offset\":42,\"length\":6,\"style\":\"ITALIC\"},{\"offset\":61,\"length\":9,\"style\":\"UNDERLINE\"}],\"entityRanges\":[],\"data\":{}}],\"entityMap\":{}}"
+
+  const [editorState, setEditorState] = React.useState(
+    EditorState.createWithContent(convertFromRaw(JSON.parse(props.body)))
+
+    // EditorState.createEmpty()
+  );
+
+  return (
+    <Editor
+      editorState={editorState}
+      onChange={setEditorState}
+      // readOnly={true}
+    />
+  );
+}
 
 function StoryDetail(props: any) {
   const {filterData, setFilterData} = props;
@@ -81,10 +103,10 @@ function StoryDetail(props: any) {
         query={QueryGetPublishedArticleBySlug.query}
         variables={{slug}}>
         {({loading, error, data}) => {
-          // if (loading) return 'Loading...';
-          // if (error) return `Error! ${error.message}`;
+          if (loading) return 'Loading...';
+          if (error) return `Error! ${error.message}`;
 
-          // const dataDetail = data.GetPublishedArticleBySlug;
+          const dataDetail = data.GetPublishedArticleBySlug;
 
           return (
             <>
@@ -101,7 +123,9 @@ function StoryDetail(props: any) {
                   icon={'file-image'}
                 />
 
-                <StoryDetailBody dataDetail={dataDetail}></StoryDetailBody>
+                {/* <StoryDetailBody dataDetail={dataDetail}></StoryDetailBody> */}
+
+                <MyEditor body={dataDetail && dataDetail.body} />
 
                 <Divider />
 
