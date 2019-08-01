@@ -11,8 +11,9 @@ const query = gql`
       slug
       thumbnail
       createdAt
+      totalComments
       user {
-        fullName
+        fullname
       }
     }
   }

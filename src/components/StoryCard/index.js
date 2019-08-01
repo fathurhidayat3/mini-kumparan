@@ -25,7 +25,7 @@ export default function StoryCard({
   avatar,
   thumbnail,
   like,
-  comment,
+  totalComments,
 }: any) {
   return (
     <StoryCardContainer>
@@ -52,9 +52,7 @@ export default function StoryCard({
           <StoryCardBottomWrapper>
             {/* {like &&  */}
             <IconText type="like-o" text={like || 0} />
-            {/* }{comment &&  */}
-            <IconText type="wechat" text={comment || 0} />
-            {/* } */}
+            <IconText type="wechat" text={totalComments} />
           </StoryCardBottomWrapper>
         </StoryCardContentWrapper>
         <Avatar
