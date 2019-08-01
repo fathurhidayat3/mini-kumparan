@@ -13,6 +13,7 @@ import FilterContext from './contexts/FilterContext';
 
 import Home from './pages/Home';
 import StoryDetail from './pages/StoryDetail';
+import Profile from './pages/Profile';
 import DummyPage from './pages/DummyPage';
 
 import PrivateRoute from './components/PrivateRoute';
@@ -39,7 +40,7 @@ function App() {
   });
 
   React.useEffect(() => {
-    const savedUserData = localStorage.getItem('user-data');
+    const savedUserData = JSON.parse(localStorage.getItem('user-data'));
 
     setUserdata(savedUserData);
   }, []);
@@ -65,6 +66,12 @@ function App() {
               exact
               path={'/story/:storyId'}
               component={() => <StoryDetail />}
+            />
+
+            <PrivateRoute
+              exact
+              path={'/profile/:username'}
+              component={() => <Profile />}
             />
 
             <PrivateRoute

@@ -37,6 +37,7 @@ function CommentForm(props: any) {
     submitting,
     value,
     userData,
+    setEditorState,
     dataDetail,
     slug,
   } = props;
@@ -50,6 +51,7 @@ function CommentForm(props: any) {
         username: userData.username,
         message: value,
       }}
+      // onCompleted={() => setEditorState('')}
       refetchQueries={[
         {
           query: QueryGetPublishedArticleBySlug.query,
