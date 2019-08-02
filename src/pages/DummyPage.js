@@ -2,15 +2,18 @@
 
 import * as React from 'react';
 import {Editor, EditorState, convertToRaw, RichUtils} from 'draft-js';
-import {Card, Button, Input, Col, Row, Divider, Tag, Tooltip, Icon} from 'antd';
+import {Card, Button, Input, Col, Row, Divider} from 'antd';
+import styled from 'styled-components';
 
 import MutationCreateArticle from '../graphql/Articles/MutationCreateArticle';
 
 import Navbar from '../components/Navbar';
 import {Layout, Content} from '../components/Base/style';
 import HeadingText from '../components/HeadingText';
+import CategoryForm from '../components/CategoryForm';
 
 import generateSlug from '../utils/generateSlug';
+import useFocus from '../utils/useFocus';
 
 export default function DummyPage() {
   const [title, setTitle] = React.useState('');
@@ -18,6 +21,8 @@ export default function DummyPage() {
   const [editorState, setEditorState] = React.useState(
     EditorState.createEmpty()
   );
+  const [titleInputRef, setTitleInputFocus] = useFocus();
+  const [contentInputRef, setContentInputFocus] = useFocus();
 
   function handleKeyCommand(command, editorState) {
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -32,6 +37,10 @@ export default function DummyPage() {
     setTitle(e.target.value);
     setSlug(generateSlug(e.target.value));
   }
+
+  React.useEffect(() => {
+    setTitleInputFocus();
+  }, [titleInputRef]);
 
   return (
     <Layout>
@@ -51,8 +60,9 @@ export default function DummyPage() {
               {CreateArticle => (
                 <div style={{padding: 16}}>
                   <div style={{margin: '0'}}>
-                    <Input
+                    <CustomInputTitle
                       value={title}
+                      ref={titleInputRef}
                       onChange={e => handleTitleChange(e)}
                       placeholder="Title"
                     />
@@ -66,8 +76,11 @@ export default function DummyPage() {
                     />
                   </div>
 
-                  <Card bodyStyle={{padding: 16, minHeight: 530}}>
+                  <Card
+                    bodyStyle={{padding: 16, minHeight: 530}}
+                    onClick={setContentInputFocus}>
                     <Editor
+                      ref={contentInputRef}
                       editorState={editorState}
                       handleKeyCommand={handleKeyCommand}
                       onChange={setEditorState}
@@ -78,8 +91,10 @@ export default function DummyPage() {
                     <Col span={12}>
                       <Card>
                         <HeadingText type={'h4'}>Category</HeadingText>
+
                         <Divider />
-                        <EditableTagGroup />
+
+                        <CategoryForm />
                       </Card>
                     </Col>
                   </Row>
@@ -97,90 +112,13 @@ export default function DummyPage() {
   );
 }
 
-class EditableTagGroup extends React.Component {
-  state = {
-    tags: ['Unremovable', 'Tag 2', 'Tag 3'],
-    inputVisible: false,
-    inputValue: '',
-  };
+const CustomInputTitle = styled.input`
+  width: 100%;
 
-  handleClose = removedTag => {
-    const tags = this.state.tags.filter(tag => tag !== removedTag);
-    console.log(tags);
-    this.setState({tags});
-  };
+  background: transparent;
+  border: none !important;
+  outline: none !important;
 
-  showInput = () => {
-    this.setState({inputVisible: true}, () => this.input.focus());
-  };
-
-  handleInputChange = e => {
-    this.setState({inputValue: e.target.value});
-  };
-
-  handleInputConfirm = () => {
-    const {inputValue} = this.state;
-    let {tags} = this.state;
-    if (inputValue && tags.indexOf(inputValue) === -1) {
-      tags = [...tags, inputValue];
-    }
-    console.log(tags);
-    this.setState({
-      tags,
-      inputVisible: false,
-      inputValue: '',
-    });
-  };
-
-  saveInputRef = input => (this.input = input);
-
-  render() {
-    const {tags, inputVisible, inputValue} = this.state;
-    return (
-      <div>
-        {tags.map((tag, index) => {
-          const isLongTag = tag.length > 20;
-          const tagElem = (
-            <Tag
-              key={tag}
-              closable={index !== 0}
-              onClose={() => this.handleClose(tag)}
-              style={{marginBottom: 16}}>
-              {isLongTag ? `${tag.slice(0, 20)}...` : tag}
-            </Tag>
-          );
-          return isLongTag ? (
-            <Tooltip title={tag} key={tag}>
-              {tagElem}
-            </Tooltip>
-          ) : (
-            tagElem
-          );
-        })}
-        {inputVisible && (
-          <Input
-            ref={this.saveInputRef}
-            type="text"
-            size="small"
-            style={{width: 78}}
-            value={inputValue}
-            onChange={this.handleInputChange}
-            onBlur={this.handleInputConfirm}
-            onPressEnter={this.handleInputConfirm}
-          />
-        )}
-        {!inputVisible && (
-          <Tag
-            onClick={this.showInput}
-            style={{
-              background: '#fff',
-              borderStyle: 'dashed',
-              marginBottom: 16,
-            }}>
-            <Icon type="plus" /> New Tag
-          </Tag>
-        )}
-      </div>
-    );
-  }
-}
+  font-size: 1.5rem;
+  font-weight: bold;
+`;
