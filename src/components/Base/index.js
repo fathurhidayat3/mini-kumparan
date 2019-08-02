@@ -20,16 +20,14 @@ function Base(props: baseType) {
       <Navbar />
 
       <Content>
-        <Row type={'flex'} justify={'center'}>
+        <Row type={'flex'} justify={'center'} gutter={48}>
           <Col span={5}>
             <CategoryList data={data} />
           </Col>
 
-          <Col span={10} offset={1}>
-            {children}
-          </Col>
+          <Col span={11}>{children}</Col>
 
-          <Col span={5} offset={1}></Col>
+          <Col span={5}></Col>
         </Row>
       </Content>
 
