@@ -68,7 +68,7 @@ function App() {
               component={() => <StoryDetail />}
             />
 
-            <PrivateRoute
+            <Route
               exact
               path={'/profile/:username'}
               component={() => <Profile />}
