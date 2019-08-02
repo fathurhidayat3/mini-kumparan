@@ -2,8 +2,7 @@
 
 import * as React from 'react';
 
-import {List, Card, Skeleton} from 'antd';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 import HomeMeta from './HomeMeta';
 
@@ -11,7 +10,8 @@ import GetPublishedArticles from '../../graphql/Articles/QueryGetPublishedArticl
 import FilterContext from '../../contexts/FilterContext';
 
 import Base from '../../components/Base';
-import StoryCard from '../../components/StoryCard';
+import ArticleList from './ArticleList';
+import SkeletonLoaderList from '../../components/SkeletonLoaderList';
 
 function Home(props: any) {
   const pathname = props.history.location.pathname;
@@ -30,32 +30,13 @@ function Home(props: any) {
               // if (error) return `Error! ${error.message}`;
 
               if (loading || error) {
-                return [0, 1, 2, 3].map((item, index) => (
-                  <Card style={{marginBottom: 16}} key={index}>
-                    <Skeleton
-                      avatar
-                      paragraph={{rows: 2}}
-                      loading={true}
-                      active
-                    />
-                  </Card>
-                ));
+                return <SkeletonLoaderList length={4} />;
               }
 
               return (
                 <>
                   <HomeMeta />
-
-                  <List
-                    itemLayout="vertical"
-                    size="large"
-                    dataSource={data.GetPublishedArticlesByCategory}
-                    renderItem={item => (
-                      <Link to={`/story/${item.slug}`}>
-                        <StoryCard {...item} />
-                      </Link>
-                    )}
-                  />
+                  <ArticleList data={data.GetPublishedArticlesByCategory} />
                 </>
               );
             }}
