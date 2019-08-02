@@ -2,35 +2,17 @@
 
 import * as React from 'react';
 
-import {BrowserRouter as Router, Route} from 'react-router-dom';
-import ApolloClient from 'apollo-boost';
 import {ApolloProvider} from 'react-apollo';
 
 import 'antd/dist/antd.css';
 
+import apolloConfig from './graphql/apolloConfig';
+import Routes from './Routes';
+
 import AuthContext from './contexts/AuthContext';
 import FilterContext from './contexts/FilterContext';
 
-import Home from './pages/Home';
-import StoryDetail from './pages/StoryDetail';
-import Profile from './pages/Profile';
-import DummyPage from './pages/DummyPage';
-
-import PrivateRoute from './components/PrivateRoute';
-
-const client = new ApolloClient({
-  // $FlowFixMe
-  uri: `${process.env.REACT_APP_GQL_URL}/graphql`,
-  request: async operation => {
-    const userData = JSON.parse(localStorage.getItem('user-data'));
-
-    operation.setContext({
-      headers: {
-        Authorization: userData ? `Bearer ${userData.token}` : '',
-      },
-    });
-  },
-});
+const client = apolloConfig;
 
 function App() {
   const [userData, setUserdata] = React.useState({});
@@ -40,6 +22,7 @@ function App() {
   });
 
   React.useEffect(() => {
+    // $FlowFixMe
     const savedUserData = JSON.parse(localStorage.getItem('user-data'));
 
     setUserdata(savedUserData);
@@ -53,35 +36,7 @@ function App() {
           setUserdata,
         }}>
         <FilterContext.Provider value={{filterData, setFilterData}}>
-          <Router>
-            <Route exact path={'/'} component={() => <Home />} />
-
-            <Route
-              exact
-              path={'/category/:categoryName'}
-              component={() => <Home />}
-            />
-
-            <Route
-              exact
-              path={'/story/:storyId'}
-              component={() => <StoryDetail />}
-            />
-
-            <Route
-              exact
-              path={'/profile/:username'}
-              component={() => <Profile />}
-            />
-
-            <PrivateRoute
-              exact
-              path={'/private'}
-              component={() => <DummyPage />}
-            />
-
-            <Route exact path={'/dummy'} component={() => <DummyPage />} />
-          </Router>
+          <Routes />
         </FilterContext.Provider>
       </AuthContext.Provider>
     </ApolloProvider>
