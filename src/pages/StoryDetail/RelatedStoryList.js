@@ -3,7 +3,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
-import {List} from 'antd';
+import {List, Card, Skeleton} from 'antd';
 
 import GetPublishedArticles from '../../graphql/Articles/QueryGetPublishedArticles';
 
@@ -18,8 +18,16 @@ function RelatedStoryList(props: any) {
         query={GetPublishedArticles.query}
         variables={{category: filterData.category}}>
         {({loading, error, data}) => {
-          if (loading) return 'Loading...';
-          if (error) return `Error! ${error.message}`;
+          // if (loading) return 'Loading...';
+          // if (error) return `Error! ${error.message}`;
+
+          if (loading || error) {
+            return [0, 1, 2].map((item, index) => (
+              <Card style={{marginBottom: 16}} key={index}>
+                <Skeleton avatar paragraph={{rows: 2}} loading={true} active />
+              </Card>
+            ));
+          }
 
           return (
             <List
