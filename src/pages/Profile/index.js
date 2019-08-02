@@ -1,10 +1,11 @@
 // @flow
 
 import React from 'react';
-import {Row, Col} from 'antd';
+import {Row} from 'antd';
 
 import ProfileInfo from './ProfileInfo';
 import ProfileContent from './ProfileContent';
+import ProfileCategoryBox from './ProfileCategoryBox';
 
 import ProfileMeta from './ProfileMeta';
 
@@ -21,10 +22,8 @@ function Profile() {
 
         <Row type={'flex'} justify={'center'} gutter={48}>
           <ProfileInfo />
-
           <ProfileContent />
-
-          <Col span={5}></Col>
+          <ProfileCategoryBox />
         </Row>
       </Content>
     </Layout>
