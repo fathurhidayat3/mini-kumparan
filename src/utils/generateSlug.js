@@ -1,6 +1,6 @@
 // @flow
 
-export default function generateSlug(str) {
+export default function generateSlug(str: string) {
   str = str.replace(/^\s+|\s+$/g, ''); // trim
   str = str.toLowerCase();
 
