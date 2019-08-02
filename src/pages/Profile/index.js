@@ -1,17 +1,33 @@
 // @flow
 
 import React from 'react';
-import {Card} from 'antd';
+import {Row, Col} from 'antd';
 
-import AuthContext from '../../contexts/AuthContext';
+import ProfileInfo from './ProfileInfo';
+import ProfileContent from './ProfileContent';
+
+import ProfileMeta from './ProfileMeta';
+
+import {Layout, Content} from '../../components/Base/style';
+import Navbar from '../../components/Navbar';
 
 function Profile() {
   return (
-    <AuthContext.Consumer>
-      {({userdata, setUserdata}) => {
-        return <Card> {userdata.fullname}</Card>;
-      }}
-    </AuthContext.Consumer>
+    <Layout>
+      <Navbar />
+
+      <Content>
+        <ProfileMeta title={'Bambang Setyanto'} pathname={'huhu'} />
+
+        <Row type={'flex'} justify={'center'} gutter={48}>
+          <ProfileInfo />
+
+          <ProfileContent />
+
+          <Col span={5}></Col>
+        </Row>
+      </Content>
+    </Layout>
   );
 }
 
