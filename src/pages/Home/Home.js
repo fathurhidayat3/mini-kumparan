@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 
-import {List} from 'antd';
+import {List, Card, Skeleton} from 'antd';
 import {Link, withRouter} from 'react-router-dom';
 
 import HomeMeta from './HomeMeta';
@@ -26,8 +26,21 @@ function Home(props: any) {
             query={GetPublishedArticles.query}
             variables={{category: filterData.category || categoryName}}>
             {({loading, error, data}) => {
-              if (loading) return 'Loading...';
-              if (error) return `Error! ${error.message}`;
+              // if (loading) return 'Loading...';
+              // if (error) return `Error! ${error.message}`;
+
+              if (loading || error) {
+                return [0, 1, 2, 3].map((item, index) => (
+                  <Card style={{marginBottom: 16}} key={index}>
+                    <Skeleton
+                      avatar
+                      paragraph={{rows: 2}}
+                      loading={true}
+                      active
+                    />
+                  </Card>
+                ));
+              }
 
               return (
                 <>
