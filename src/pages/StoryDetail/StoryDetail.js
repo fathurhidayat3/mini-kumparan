@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import {Divider} from 'antd';
+import {Divider, Card, Skeleton} from 'antd';
 import styled from 'styled-components';
 import {Editor, EditorState, convertFromRaw} from 'draft-js';
 
@@ -84,7 +84,7 @@ function StoryDetail(props: any) {
   //     'https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1564028912/sold65vxraawed8egt5n.jpg',
   //   user: {fullName: 'kuro'},
   //   body:
-  //     'Anak saya menderita bibir sumbing sudah sejak lahir," itulah jawaban yang dilontarkan Pahala Sipahutar, salah satu orang tua pasien bibir sumbing ketika kumparan (kumparan.com) temui di RSUD Dolok Sanggul, Humbang Hasundutan, Sumatera Utara, pada Rabu (24/7). Bibir sumbing merupakan sebuah penyakit yang belum dapat dipastikan secara jelas apa penyebabnya. Namun dari mayoritas kejadian yang ada, bibir sumbing lazim terjadi karena faktor keturunan, hingga gaya hidup orang tua saat mengandung anaknya. Di Dolok Sanggul sendiri, terdapat sejumlah penderita bibir sumbing yang didominasi pada usia anak-anak. Penyakit ini pun cukup menjadi perhatian, baik dari pihak pemerintah maupun swasta. Upaya yang dilakukan untuk mengurangi bibir sumbing di Kabupaten Humbang Hasundutan adalah dengan melakukan operasi gratis yang bekerja sama dengan Sido Muncul dan Kepak Sejahtera,” ujar Saut Parlindungan Simamora selaku Wakil Bupati Humbang Hasundutan.',
+  //     '{"blocks":[{"key":"5fjf8","text":"Googlekembali menambah aplikasi baru yang ramah memori, dan ini juga menjadi bagian dari program Android Go. Aplikasi baru yang dinamakan Gallery Go ini dibuat khusus untuk mengatur penyimpanan foto yang dilengkapi teknologi kecerdasan buatan (artificial intelligence/AI).","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":244,"length":23,"style":"ITALIC"}],"entityRanges":[],"data":{}},{"key":"dd8mu","text":"","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}},{"key":"c6c15","text":"Singkatnya, aplikasi Gallery Go adalah wujud sederhana dari Google Photos. Gallery Go dirancang dapat bekerja secara offline dan hanya memakan ruang memori penyimpanan sekitar 10 MB, namun tetap mempertahankan beberapa fitur Google Photos yang terbaik.","type":"unstyled","depth":0,"inlineStyleRanges":[{"offset":117,"length":8,"style":"ITALIC"}],"entityRanges":[],"data":{}}],"entityMap":{}}',
   //   categories: [
   //     'BISNIS',
   //     'KATARAK',
@@ -104,8 +104,33 @@ function StoryDetail(props: any) {
         query={QueryGetPublishedArticleBySlug.query}
         variables={{slug}}>
         {({loading, error, data}) => {
-          if (loading) return 'Loading...';
-          if (error) return `Error! ${error.message}`;
+          // if (loading) return 'Loading...';
+          // if (error) return `Error! ${error.message}`;
+
+          if (loading || error) {
+            return (
+              <>
+                <Card style={{marginBottom: 16}}>
+                  <Skeleton title paragraph={{rows: 0}} loading={true} active />
+
+                  <Skeleton
+                    avatar
+                    paragraph={{rows: 0}}
+                    loading={true}
+                    active
+                  />
+
+                  <Divider />
+
+                  <Skeleton paragraph={{rows: 9}} loading={true} active />
+
+                  <Divider />
+
+                  <Skeleton title paragraph={{rows: 0}} loading={true} active />
+                </Card>
+              </>
+            );
+          }
 
           const dataDetail = data.GetPublishedArticleBySlug;
 
