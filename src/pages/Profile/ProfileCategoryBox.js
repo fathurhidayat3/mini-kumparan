@@ -13,7 +13,7 @@ import HeadingText from '../../components/HeadingText';
 export default function ProfileCategoryBox(props: any) {
   const {userdata} = props;
 
-  const defaultCategories = ['NEWS', 'POLITIK', 'ENTERTAINMENT', 'OTOMOTIF'];
+  const defaultCategories = ['News', 'Politik', 'Entertainment', 'Otomotif'];
   // setCategory={setCategory}
   return (
     <CategoryContext.Consumer>
@@ -33,9 +33,11 @@ export default function ProfileCategoryBox(props: any) {
                 <CategoryContainer>
                   {defaultCategories.map(categoryDefaultItem => (
                     <CustomTag
-                      onClick={() => setCategory(categoryDefaultItem)}
+                      onClick={() =>
+                        setCategory(categoryDefaultItem.toUpperCase())
+                      }
                       key={categoryDefaultItem}>
-                      {categoryDefaultItem}
+                      {categoryDefaultItem.toUpperCase()}
                     </CustomTag>
                   ))}
 
