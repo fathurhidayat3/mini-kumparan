@@ -2,83 +2,59 @@
 
 import React from 'react';
 import {Row} from 'antd';
-
 import {withRouter} from 'react-router-dom';
 
 import ProfileInfo from './ProfileInfo';
 import ProfileContent from './ProfileContent';
 import ProfileCategoryBox from './ProfileCategoryBox';
 
-import ProfileMeta from './ProfileMeta';
+import QueryGetProfileArticles from '../../graphql/User/QueryGetProfileArticles';
 
-import AuthContext from '../../contexts/AuthContext';
+import ProfileMeta from './ProfileMeta';
 
 import {Layout, Content} from '../../components/Base/style';
 import Navbar from '../../components/Navbar';
-
-import gql from 'graphql-tag';
-import {Query} from 'react-apollo';
-
-const query = gql`
-  query QueryProfileArticles($username: String!, $category: String!) {
-    ProfileArticles(username: $username, category: $category) {
-      articles {
-        id
-        title
-        body
-        status
-        createdAt
-        thumbnail
-        totalComments
-        user {
-          userId
-        }
-        user {
-          userId
-        }
-      }
-      user {
-        username
-        fullname
-      }
-    }
-  }
-`;
 
 function Profile(props: any) {
   const pathname = props.history.location.pathname;
   const username = (pathname.split('/')[2] && pathname.split('/')[2]) || '';
 
+  const [category, setCategory] = React.useState('');
+
   return (
     <Layout>
       <Navbar />
 
-      <AuthContext.Consumer>
-        {({userdata}) => (
-          <Query query={query} variables={{username, category: ''}}>
-            {({loading, error, data}) => {
-              if (loading || error) {
-                return '';
-              }
+      <QueryGetProfileArticles
+        query={QueryGetProfileArticles.query}
+        variables={{username, category}}>
+        {({loading, error, data}) => {
+          if (loading || error) {
+            return '';
+          }
 
-              const userdata = data.ProfileArticles.user;
-              const articles = data.ProfileArticles.articles;
+          const dataProfile = data.ProfileArticles;
+          const {user: userdata, articles} = dataProfile;
 
-              return (
-                <Content>
-                  <ProfileMeta title={userdata.fullname} pathname={'huhu'} />
+          return (
+            <Content>
+              <ProfileMeta
+                title={userdata.fullname}
+                pathname={`/profile/${userdata.username}`}
+              />
 
-                  <Row type={'flex'} justify={'center'} gutter={48}>
-                    <ProfileInfo userdata={userdata} />
-                    {articles && <ProfileContent articles={articles} />}
-                    <ProfileCategoryBox userdata={userdata} />
-                  </Row>
-                </Content>
-              );
-            }}
-          </Query>
-        )}
-      </AuthContext.Consumer>
+              <Row type={'flex'} justify={'center'} gutter={48}>
+                <ProfileInfo userdata={userdata} />
+                {articles && <ProfileContent articles={articles} />}
+                <ProfileCategoryBox
+                  userdata={userdata}
+                  setCategory={setCategory}
+                />
+              </Row>
+            </Content>
+          );
+        }}
+      </QueryGetProfileArticles>
     </Layout>
   );
 }
