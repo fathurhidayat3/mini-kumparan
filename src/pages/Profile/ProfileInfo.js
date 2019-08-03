@@ -10,19 +10,21 @@ import HeadingText from '../../components/HeadingText';
 import {colors} from '../../constants';
 
 function ProfileInfo(props: any) {
+  const {userdata} = props;
+
   return (
     <ProfileInfoContainer span={5} style={{}}>
-      <ProfileImage
+      {/* <ProfileImage
         src={'https://avatars0.githubusercontent.com/u/9520695?s=460&v=4'}
         alt={'file-image'}
         style={{}}
-      />
+      /> */}
 
       <ProfileInfoContent>
-        <HeadingText>Bambang S</HeadingText>
+        <HeadingText>{userdata.fullname}</HeadingText>
 
         <HeadingText type={'h3'} style={{color: colors.secondary}}>
-          @{props.history.location.pathname.split('/')[2]}
+          @{userdata.username}
         </HeadingText>
       </ProfileInfoContent>
     </ProfileInfoContainer>
@@ -42,7 +44,7 @@ const ProfileImage = styled.img`
 `;
 
 const ProfileInfoContent = styled.div`
-  margin-top: 16px;
+  /* margin-top: 16px; */
   width: 100%;
 `;
 export default withRouter(ProfileInfo);
