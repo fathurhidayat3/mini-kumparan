@@ -31,16 +31,7 @@ const CREATE_COMMENT = gql`
 `;
 
 function CommentForm(props: any) {
-  const {
-    onChange,
-    onSubmit,
-    submitting,
-    value,
-    userData,
-    setEditorState,
-    dataDetail,
-    slug,
-  } = props;
+  const {onChange, value, userData, dataDetail, slug} = props;
 
   return (
     <Mutation
@@ -66,7 +57,6 @@ function CommentForm(props: any) {
             alignItems: 'flex-end',
             marginTop: 16,
           }}>
-          {/* {console.log(CreateComment)} */}
           <Form.Item style={{width: '100%'}}>
             <TextArea
               rows={4}
