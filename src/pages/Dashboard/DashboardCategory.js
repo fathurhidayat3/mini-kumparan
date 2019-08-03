@@ -8,7 +8,7 @@ import DashboardToolbox from './DashboardToolbox';
 
 import QueryDashboardArticles from '../../graphql/Article/QueryDashboardArticles';
 
-function DashboardArticle() {
+function DashboardCategory() {
   const [status, setStatus] = React.useState('ALL');
   const [keyword, setKeyword] = React.useState('');
   const [category, setCategory] = React.useState('');
@@ -103,4 +103,4 @@ function DashboardArticle() {
   );
 }
 
-export default DashboardArticle;
+export default DashboardCategory;

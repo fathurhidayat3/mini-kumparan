@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import {Button, Avatar, Menu, Dropdown, Input} from 'antd';
+import {Button, Avatar, Menu, Dropdown} from 'antd';
 import {Link, withRouter} from 'react-router-dom';
 
 import {NavbarContainer, NavbarPart} from './style';
@@ -13,8 +13,6 @@ import AuthContext from '../../contexts/AuthContext';
 import FilterContext from '../../contexts/FilterContext';
 
 import HeadingText from '../HeadingText';
-
-const {Search} = Input;
 
 function Navbar(props: any) {
   const {
@@ -66,13 +64,6 @@ function Navbar(props: any) {
                       Mini Kumparan Dashboard
                     </HeadingText>
                   </NavbarPart>
-
-                  {/* <NavbarPart justifyContent={'center'}>
-                    <Search
-                      placeholder="input search text"
-                      onSearch={value => console.log(value)}
-                    />
-                  </NavbarPart> */}
 
                   <NavbarPart justifyContent={'flex-end'}>
                     {userdata && userdata.token ? (
