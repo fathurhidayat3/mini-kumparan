@@ -34,8 +34,8 @@ export default function StoryCard({
 
         <HeadingText
           type={'h4'}
-          style={{display: 'inline-block', margin: '0 6px'}}>
-          {user.fullName}
+          style={{display: 'inline-block', margin: '0 8px 0 12px'}}>
+          {user.fullname}
         </HeadingText>
 
         <Text>{getTimeDifference(new Date(), new Date(createdAt))}</Text>
