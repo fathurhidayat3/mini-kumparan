@@ -33,7 +33,7 @@ function RelatedStoryList(props: any) {
             <List
               itemLayout="vertical"
               size="large"
-              dataSource={data.GetPublishedArticlesByCategory}
+              dataSource={data.GetPublishedArticlesByCategory.slice(0, 3)}
               renderItem={item => (
                 <Link to={`/story/${item.slug}`}>
                   <StoryCard {...item} />
