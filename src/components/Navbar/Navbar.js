@@ -25,9 +25,12 @@ function Navbar(props: any) {
   } = props;
 
   const menuItems = (userdata, setUserdata) => (
-    <Menu>
+    <Menu style={{width: 120}}>
       <Menu.Item>
         <Link to={`/profile/${userdata.username}`}>Profile</Link>
+      </Menu.Item>
+      <Menu.Item>
+        <Link to={`/dashboard/story`}>Dashboard</Link>
       </Menu.Item>
       <Menu.Item>
         <Button
@@ -74,7 +77,7 @@ function Navbar(props: any) {
                       <>
                         <Button
                           type={'primary'}
-                          onClick={() => props.history.push('/dummy')}
+                          onClick={() => props.history.push('/story/create')}
                           style={{marginRight: 16}}>
                           Write Article
                         </Button>
