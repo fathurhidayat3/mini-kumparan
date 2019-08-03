@@ -27,7 +27,9 @@ const query = gql`
 `;
 
 export default function ProfileCategoryBox(props: any) {
-  const {userdata} = props;
+  const {userdata, setCategory} = props;
+
+  const defaultCategories = ['NEWS', 'POLITIK', 'ENTERTAINMENT', 'OTOMOTIF'];
 
   return (
     <ProfileCategoryBoxContainer span={5}>
@@ -41,9 +43,19 @@ export default function ProfileCategoryBox(props: any) {
 
           return (
             <CategoryContainer>
+              {defaultCategories.map(categoryDefaultItem => (
+                <CustomTag
+                  onClick={() => setCategory(categoryDefaultItem)}
+                  key={categoryDefaultItem}>
+                  {categoryDefaultItem}
+                </CustomTag>
+              ))}
+
               {data.GetUserCategoriesByUsername.map(categoryItem => (
-                <CustomTag key={categoryItem.categoryslug}>
-                  {categoryItem.categoryname}
+                <CustomTag
+                  onClick={() => setCategory(categoryItem.categoryslug)}
+                  key={categoryItem.categoryslug}>
+                  {categoryItem.categoryname.toUpperCase()}
                 </CustomTag>
               ))}
             </CategoryContainer>
