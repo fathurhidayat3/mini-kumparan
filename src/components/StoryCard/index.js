@@ -34,7 +34,7 @@ export default function StoryCard({
 
         <HeadingText
           type={'h4'}
-          style={{display: 'inline-block', margin: '0 8px 0 12px'}}>
+          style={{display: 'inline-block', margin: '0 8px'}}>
           {user.fullname}
         </HeadingText>
 
