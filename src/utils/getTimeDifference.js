@@ -10,7 +10,7 @@ export default function getTimeDifference(current: Date, previous: Date) {
   const elapsed = current - previous;
 
   if (elapsed < msPerMinute) {
-    return `${Math.round(elapsed / 1000)} seconds ago`;
+    return `Just now`;
   } else if (elapsed < msPerHour) {
     return `${Math.round(elapsed / msPerMinute)} minutes ago`;
   } else if (elapsed < msPerDay) {
