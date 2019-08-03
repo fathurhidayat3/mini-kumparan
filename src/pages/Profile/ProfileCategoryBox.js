@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {Col, Tag} from 'antd';
+import {Tag} from 'antd';
 import styled from 'styled-components';
 
 import CategoryContext from '../../contexts/CategoryContext';
@@ -17,9 +17,8 @@ export default function ProfileCategoryBox(props: any) {
   // setCategory={setCategory}
   return (
     <CategoryContext.Consumer>
-      {({category, setCategory}) => (
+      {({setCategory}) => (
         <>
-          {console.log(setCategory)}
           <HeadingText type={'h4'}>Categories</HeadingText>
 
           <QueryGetUserCategoriesByUsername
@@ -56,10 +55,6 @@ export default function ProfileCategoryBox(props: any) {
     </CategoryContext.Consumer>
   );
 }
-
-const ProfileCategoryBoxContainer = styled.div`
-  /* padding: 8px 0; */
-`;
 
 const CategoryContainer = styled.div`
   margin-top: 24px;
