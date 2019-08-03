@@ -1,14 +1,15 @@
 // @flow
 
 import React from 'react';
-import {Row} from 'antd';
+import {Row, Col} from 'antd';
 import {withRouter} from 'react-router-dom';
 
 import ProfileInfo from './ProfileInfo';
 import ProfileContent from './ProfileContent';
-import ProfileCategoryBox from './ProfileCategoryBox';
 
 import QueryGetProfileArticles from '../../graphql/User/QueryGetProfileArticles';
+
+import CategoryContext from '../../contexts/CategoryContext';
 
 import ProfileMeta from './ProfileMeta';
 
@@ -24,37 +25,35 @@ function Profile(props: any) {
   return (
     <Layout>
       <Navbar />
+      <CategoryContext.Provider value={{category, setCategory}}>
+        <QueryGetProfileArticles
+          query={QueryGetProfileArticles.query}
+          variables={{username, category}}>
+          {({loading, error, data}) => {
+            if (loading || error) {
+              return '';
+            }
 
-      <QueryGetProfileArticles
-        query={QueryGetProfileArticles.query}
-        variables={{username, category}}>
-        {({loading, error, data}) => {
-          if (loading || error) {
-            return '';
-          }
+            const dataProfile = data.ProfileArticles;
+            const {user: userdata, articles} = dataProfile;
 
-          const dataProfile = data.ProfileArticles;
-          const {user: userdata, articles} = dataProfile;
-
-          return (
-            <Content>
-              <ProfileMeta
-                title={userdata.fullname}
-                pathname={`/profile/${userdata.username}`}
-              />
-
-              <Row type={'flex'} justify={'center'} gutter={48}>
-                <ProfileInfo userdata={userdata} />
-                {articles && <ProfileContent articles={articles} />}
-                <ProfileCategoryBox
-                  userdata={userdata}
-                  setCategory={setCategory}
+            return (
+              <Content>
+                <ProfileMeta
+                  title={userdata.fullname}
+                  pathname={`/profile/${userdata.username}`}
                 />
-              </Row>
-            </Content>
-          );
-        }}
-      </QueryGetProfileArticles>
+
+                <Row type={'flex'} justify={'center'} gutter={48}>
+                  <ProfileInfo userdata={userdata} />
+                  {articles && <ProfileContent articles={articles} />}
+                  <Col span={5} />
+                </Row>
+              </Content>
+            );
+          }}
+        </QueryGetProfileArticles>
+      </CategoryContext.Provider>
     </Layout>
   );
 }

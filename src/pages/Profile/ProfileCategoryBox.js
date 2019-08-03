@@ -4,54 +4,61 @@ import React from 'react';
 import {Col, Tag} from 'antd';
 import styled from 'styled-components';
 
+import CategoryContext from '../../contexts/CategoryContext';
+
 import QueryGetUserCategoriesByUsername from '../../graphql/User/QueryGetUserCategoriesByUsername';
 
 import HeadingText from '../../components/HeadingText';
 
 export default function ProfileCategoryBox(props: any) {
-  const {userdata, setCategory} = props;
+  const {userdata} = props;
 
   const defaultCategories = ['NEWS', 'POLITIK', 'ENTERTAINMENT', 'OTOMOTIF'];
-
+  // setCategory={setCategory}
   return (
-    <ProfileCategoryBoxContainer span={5}>
-      <HeadingText type={'h4'}>Categories</HeadingText>
+    <CategoryContext.Consumer>
+      {({category, setCategory}) => (
+        <>
+          {console.log(setCategory)}
+          <HeadingText type={'h4'}>Categories</HeadingText>
 
-      <QueryGetUserCategoriesByUsername
-        query={QueryGetUserCategoriesByUsername.query}
-        variables={{username: userdata.username}}>
-        {({loading, error, data}) => {
-          if (loading || error) {
-            return '';
-          }
+          <QueryGetUserCategoriesByUsername
+            query={QueryGetUserCategoriesByUsername.query}
+            variables={{username: userdata.username}}>
+            {({loading, error, data}) => {
+              if (loading || error) {
+                return '';
+              }
 
-          return (
-            <CategoryContainer>
-              {defaultCategories.map(categoryDefaultItem => (
-                <CustomTag
-                  onClick={() => setCategory(categoryDefaultItem)}
-                  key={categoryDefaultItem}>
-                  {categoryDefaultItem}
-                </CustomTag>
-              ))}
+              return (
+                <CategoryContainer>
+                  {defaultCategories.map(categoryDefaultItem => (
+                    <CustomTag
+                      onClick={() => setCategory(categoryDefaultItem)}
+                      key={categoryDefaultItem}>
+                      {categoryDefaultItem}
+                    </CustomTag>
+                  ))}
 
-              {data.GetUserCategoriesByUsername.map(categoryItem => (
-                <CustomTag
-                  onClick={() => setCategory(categoryItem.categoryslug)}
-                  key={categoryItem.categoryslug}>
-                  {categoryItem.categoryname.toUpperCase()}
-                </CustomTag>
-              ))}
-            </CategoryContainer>
-          );
-        }}
-      </QueryGetUserCategoriesByUsername>
-    </ProfileCategoryBoxContainer>
+                  {data.GetUserCategoriesByUsername.map(categoryItem => (
+                    <CustomTag
+                      onClick={() => setCategory(categoryItem.categoryslug)}
+                      key={categoryItem.categoryslug}>
+                      {categoryItem.categoryname.toUpperCase()}
+                    </CustomTag>
+                  ))}
+                </CategoryContainer>
+              );
+            }}
+          </QueryGetUserCategoriesByUsername>
+        </>
+      )}
+    </CategoryContext.Consumer>
   );
 }
 
-const ProfileCategoryBoxContainer = styled(Col)`
-  padding: 8px 0;
+const ProfileCategoryBoxContainer = styled.div`
+  /* padding: 8px 0; */
 `;
 
 const CategoryContainer = styled.div`

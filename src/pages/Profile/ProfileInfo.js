@@ -2,8 +2,10 @@
 
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import {Col} from 'antd';
+import {Col, Divider} from 'antd';
 import styled from 'styled-components';
+
+import ProfileCategoryBox from './ProfileCategoryBox';
 
 import HeadingText from '../../components/HeadingText';
 
@@ -26,6 +28,10 @@ function ProfileInfo(props: any) {
         <HeadingText type={'h3'} style={{color: colors.secondary}}>
           @{userdata.username}
         </HeadingText>
+
+        <Divider />
+
+        <ProfileCategoryBox userdata={userdata} />
       </ProfileInfoContent>
     </ProfileInfoContainer>
   );
