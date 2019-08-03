@@ -5,7 +5,7 @@ import {Form, Input, Button} from 'antd';
 import gql from 'graphql-tag';
 import {Mutation} from 'react-apollo';
 
-import QueryGetPublishedArticleBySlug from '../../graphql/Articles/QueryGetPublishedArticleBySlug';
+import QueryGetPublishedArticleBySlug from '../../graphql/Article/QueryGetPublishedArticleBySlug';
 
 const {TextArea} = Input;
 

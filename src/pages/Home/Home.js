@@ -6,7 +6,7 @@ import {withRouter} from 'react-router-dom';
 
 import HomeMeta from './HomeMeta';
 
-import GetPublishedArticles from '../../graphql/Articles/QueryGetPublishedArticles';
+import GetPublishedArticles from '../../graphql/Article/QueryGetPublishedArticles';
 import FilterContext from '../../contexts/FilterContext';
 
 import Base from '../../components/Base';

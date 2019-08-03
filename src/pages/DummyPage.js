@@ -18,7 +18,7 @@ import styled from 'styled-components';
 import {Helmet} from 'react-helmet';
 import {withRouter} from 'react-router-dom';
 
-import MutationCreateArticle from '../graphql/Articles/MutationCreateArticle';
+import MutationCreateArticle from '../graphql/Article/MutationCreateArticle';
 
 import Navbar from '../components/Navbar';
 import {Layout, Content} from '../components/Base/style';

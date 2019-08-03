@@ -14,7 +14,7 @@ import StoryDetailCategories from './StoryDetailCategories';
 
 import RelatedStoryList from './RelatedStoryList';
 
-import QueryGetPublishedArticleBySlug from '../../graphql/Articles/QueryGetPublishedArticleBySlug';
+import QueryGetPublishedArticleBySlug from '../../graphql/Article/QueryGetPublishedArticleBySlug';
 
 import Base from '../../components/Base';
 import CustomEditor from '../../components/CustomEditor';

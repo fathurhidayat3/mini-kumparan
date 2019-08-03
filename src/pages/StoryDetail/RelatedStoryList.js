@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import {List, Card, Skeleton} from 'antd';
 
-import GetPublishedArticles from '../../graphql/Articles/QueryGetPublishedArticles';
+import GetPublishedArticles from '../../graphql/Article/QueryGetPublishedArticles';
 
 import StoryCard from '../../components/StoryCard';
 
