@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Home from './pages/Home';
 import StoryDetail from './pages/StoryDetail';
@@ -21,16 +21,23 @@ export default function Routes() {
         path={'/category/:categoryName'}
         component={() => <Home />}
       />
-      <PrivateRoute
-        exact
-        path={'/story/write'}
-        component={() => <StoryCreate />}
-      />
-      <Route exact path={'/story/:storyId'} component={() => <StoryDetail />} />
-      <Route exact path={'/profile/:username'} component={() => <Profile />} />
-      <PrivateRoute path={'/dashboard'} component={() => <Dashboard />} />
 
-      {/* <PrivateRoute exact path={'/private'} component={() => <DummyPage />} /> */}
+      <Switch>
+        <PrivateRoute
+          exact
+          path={'/story/write'}
+          component={() => <StoryCreate />}
+        />
+        <Route
+          exact
+          path={'/story/:storyId'}
+          component={() => <StoryDetail />}
+        />
+      </Switch>
+
+      <Route exact path={'/profile/:username'} component={() => <Profile />} />
+
+      <PrivateRoute path={'/dashboard'} component={() => <Dashboard />} />
     </Router>
   );
 }
