@@ -19,6 +19,7 @@ import {Helmet} from 'react-helmet';
 import {withRouter} from 'react-router-dom';
 
 import MutationCreateArticle from '../../graphql/Article/MutationCreateArticle';
+import QueryGetProfileArticles from '../../graphql/User/QueryGetProfileArticles';
 
 import AuthContext from '../../contexts/AuthContext';
 
@@ -133,6 +134,12 @@ function DummyPage(props: any) {
                     username: userdata && userdata.username,
                     status: articleStatus,
                   }}
+                  refetchQueries={[
+                    {
+                      query: QueryGetProfileArticles.query,
+                      variables: {username: userdata.username, category: ''},
+                    },
+                  ]}
                   onCompleted={() =>
                     props.history.push(`/profile/${userdata.username}`)
                   }>
