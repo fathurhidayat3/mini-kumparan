@@ -3,20 +3,10 @@
 import React from 'react';
 import {Col, Tag} from 'antd';
 import styled from 'styled-components';
-import gql from 'graphql-tag';
-import {Query} from 'react-apollo';
+
+import QueryGetUserCategoriesByUsername from '../../graphql/User/QueryGetUserCategoriesByUsername';
 
 import HeadingText from '../../components/HeadingText';
-
-const query = gql`
-  query QueryGetUserCategoriesByUsername($username: String!) {
-    GetUserCategoriesByUsername(username: $username) {
-      username
-      categoryname
-      categoryslug
-    }
-  }
-`;
 
 export default function ProfileCategoryBox(props: any) {
   const {userdata, setCategory} = props;
@@ -27,7 +17,9 @@ export default function ProfileCategoryBox(props: any) {
     <ProfileCategoryBoxContainer span={5}>
       <HeadingText type={'h4'}>Categories</HeadingText>
 
-      <Query query={query} variables={{username: userdata.username}}>
+      <QueryGetUserCategoriesByUsername
+        query={QueryGetUserCategoriesByUsername.query}
+        variables={{username: userdata.username}}>
         {({loading, error, data}) => {
           if (loading || error) {
             return '';
@@ -53,7 +45,7 @@ export default function ProfileCategoryBox(props: any) {
             </CategoryContainer>
           );
         }}
-      </Query>
+      </QueryGetUserCategoriesByUsername>
     </ProfileCategoryBoxContainer>
   );
 }
