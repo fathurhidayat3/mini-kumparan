@@ -1,22 +1,19 @@
 // @flow
 
 import * as React from 'react';
-import {useDropzone} from 'react-dropzone';
-import {Editor, EditorState, convertToRaw, RichUtils} from 'draft-js';
-import {
-  Card,
-  Button,
-  Input,
-  Col,
-  Row,
-  Divider,
-  Affix,
-  Icon,
-  Select,
-} from 'antd';
-import styled from 'styled-components';
+import {Editor, EditorState, convertToRaw} from 'draft-js';
+import {Card, Button, Input, Col, Row, Divider, Affix, Select} from 'antd';
 import {Helmet} from 'react-helmet';
 import {withRouter} from 'react-router-dom';
+
+import {
+  CustomInputTitle,
+  EditorBottomToolbox,
+  EditorTopToolbox,
+  WordCounter,
+} from './style';
+
+import EditorToolbox from './EditorToolbox';
 
 import MutationCreateArticle from '../../graphql/Article/MutationCreateArticle';
 import QueryGetProfileArticles from '../../graphql/User/QueryGetProfileArticles';
@@ -27,88 +24,39 @@ import Navbar from '../../components/Navbar';
 import {Layout, Content} from '../../components/Base/style';
 import HeadingText from '../../components/HeadingText';
 import CategoryForm from '../../components/CategoryForm';
+import Thumbnail from '../../components/Thumbnail';
 
 import generateSlug from '../../utils/generateSlug';
 import useFocus from '../../utils/useFocus';
-import handleInlineStyle from '../../utils/handleInlineStyle';
-import getWordCount from '../../utils/getWordCount';
+import checkContentLength from '../../utils/checkContentLength';
+import handleKeyCommand from '../../utils/handleKeyCommand';
 
 const {Option} = Select;
 
 function DummyPage(props: any) {
   const [title, setTitle] = React.useState('');
+  const [thumbnail, setThumbnail] = React.useState('');
   const [slug, setSlug] = React.useState('');
   const [editorState, setEditorState] = React.useState(
     EditorState.createEmpty()
   );
-  const [articleStatus, setArticleStatus] = React.useState('DRAFT');
+  const [articleStatus, setArticleStatus] = React.useState('PUBLISHED');
 
   const [titleInputRef, setTitleInputFocus] = useFocus();
   const [contentInputRef, setContentInputFocus] = useFocus();
-
-  function handleKeyCommand(command, editorState) {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      this.onChange(newState);
-      return 'handled';
-    }
-    return 'not-handled';
-  }
 
   function handleTitleChange(e) {
     setTitle(e.target.value);
     setSlug(generateSlug(e.target.value));
   }
 
-  function checkContentLength() {
-    const editorContentlength = getWordCount(editorState);
-
-    if (editorContentlength === 0) {
-      return `Hello, you can write me 250 words`;
-    } else if (0 < editorContentlength && editorContentlength < 250) {
-      return `Write ${250 - editorContentlength} more words`;
-    } else if (editorContentlength < 999) {
-      return `Good job, now you can publish your article`;
-    }
-
-    return `Oops, you've reached the words limit`;
-  }
-
-  const [files, setFiles] = React.useState([]);
-
-  const {getRootProps, getInputProps} = useDropzone({
-    accept: 'image/*',
-    onDrop: acceptedFiles => {
-      setFiles(
-        acceptedFiles.map(file =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      );
-    },
-  });
-
-  const thumbs = files.map(file => (
-    <div key={file.name}>
-      <div>
-        <img src={file.preview} style={{height: 100, width: 100}} />
-      </div>
-    </div>
-  ));
-
-  function handleStatusChange(e) {
-    setArticleStatus(e);
-  }
-
   React.useEffect(() => {
     setTitleInputFocus();
-    files.forEach(file => URL.revokeObjectURL(file.preview));
   }, [titleInputRef]);
 
   return (
     <AuthContext.Consumer>
-      {({userdata, setUserdata}) => (
+      {({userdata}) => (
         <Layout>
           <Navbar />
           <Content style={{position: 'relative'}}>
@@ -133,6 +81,7 @@ function DummyPage(props: any) {
                     slug,
                     username: userdata && userdata.username,
                     status: articleStatus,
+                    thumbnail,
                   }}
                   refetchQueries={[
                     {
@@ -165,59 +114,14 @@ function DummyPage(props: any) {
                       <Affix offsetTop={63}>
                         <Card bodyStyle={{padding: '8px'}}>
                           <EditorTopToolbox>
-                            <div>
-                              <button
-                                onClick={e =>
-                                  handleInlineStyle(
-                                    e,
-                                    'BOLD',
-                                    editorState,
-                                    setEditorState
-                                  )
-                                }
-                                style={{
-                                  padding: 8,
-                                  border: 'none',
-                                  outline: 'none',
-                                }}>
-                                <Icon size={24} type={'bold'} />
-                              </button>
+                            <EditorToolbox
+                              editorState={editorState}
+                              setEditorState={setEditorState}
+                            />
 
-                              <button
-                                onClick={e =>
-                                  handleInlineStyle(
-                                    e,
-                                    'ITALIC',
-                                    editorState,
-                                    setEditorState
-                                  )
-                                }
-                                style={{
-                                  padding: 8,
-                                  border: 'none',
-                                  outline: 'none',
-                                }}>
-                                <Icon size={24} type={'italic'} />
-                              </button>
-                              <button
-                                onClick={e =>
-                                  handleInlineStyle(
-                                    e,
-                                    'UNDERLINE',
-                                    editorState,
-                                    setEditorState
-                                  )
-                                }
-                                style={{
-                                  padding: 8,
-                                  border: 'none',
-                                  outline: 'none',
-                                }}>
-                                <Icon size={24} type={'underline'} />
-                              </button>
-                            </div>
-
-                            <WordCounter>{checkContentLength()}</WordCounter>
+                            <WordCounter>
+                              {checkContentLength(editorState)}
+                            </WordCounter>
                           </EditorTopToolbox>
                         </Card>
                       </Affix>
@@ -237,8 +141,12 @@ function DummyPage(props: any) {
                         />
                       </Card>
 
-                      <Row style={{marginTop: 32}} gutter={24}>
-                        <Col span={12}>
+                      <Row
+                        style={{
+                          marginTop: 32,
+                        }}
+                        gutter={24}>
+                        <Col span={8}>
                           <Card>
                             <HeadingText type={'h4'}>
                               Attach Thumbnail
@@ -246,18 +154,18 @@ function DummyPage(props: any) {
 
                             <Divider />
 
-                            <section className="container">
-                              <div {...getRootProps({className: 'dropzone'})}>
-                                <input {...getInputProps()} />
-                                <Button>Click me to upload</Button>
-                              </div>
-                              <aside>{thumbs}</aside>
-                            </section>
+                            <div
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                              }}>
+                              <Thumbnail setThumbnail={setThumbnail} />
+                            </div>
                           </Card>
                         </Col>
 
-                        <Col span={12}>
-                          <Card>
+                        <Col span={16}>
+                          <Card style={{minHeight: 236}}>
                             <HeadingText type={'h4'}>Category</HeadingText>
 
                             <Divider />
@@ -271,16 +179,12 @@ function DummyPage(props: any) {
                         <Select
                           style={{marginRight: 8, width: 150}}
                           value={articleStatus}
-                          onChange={handleStatusChange}>
+                          onChange={setArticleStatus}>
                           <Option value="DRAFT">DRAFT</Option>
-                          <Option value="PUBLISHED">PUBLISHED</Option>
+                          <Option value="PUBLISHED">PUBLISH</Option>
                         </Select>
 
-                        <Button
-                          type={'primary'}
-                          onClick={CreateArticle}
-                          // disabled={getWordCount(editorState) < 250 && true}
-                        >
+                        <Button type={'primary'} onClick={CreateArticle}>
                           Save
                         </Button>
                       </EditorBottomToolbox>
@@ -295,34 +199,5 @@ function DummyPage(props: any) {
     </AuthContext.Consumer>
   );
 }
-
-const CustomInputTitle = styled.input`
-  width: 100%;
-
-  background: transparent;
-  border: none !important;
-  outline: none !important;
-
-  font-size: 1.5rem;
-  font-weight: bold;
-`;
-
-const EditorBottomToolbox = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-  margin-top: 32px;
-`;
-
-const EditorTopToolbox = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const WordCounter = styled.div`
-  padding: 8px;
-
-  background: white;
-`;
 
 export default withRouter(DummyPage);

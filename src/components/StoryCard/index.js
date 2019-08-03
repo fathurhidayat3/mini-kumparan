@@ -55,7 +55,7 @@ export default function StoryCard({
         <Avatar
           shape="square"
           size={100}
-          src={thumbnail}
+          src={`${process.env.REACT_APP_GQL_URL}${thumbnail}`}
           style={{minWidth: 100, objectFit: 'cover'}}
           icon={'file-image'}
         />

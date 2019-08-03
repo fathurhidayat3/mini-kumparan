@@ -10,6 +10,7 @@ const mutation = gql`
     $body: String!
     $slug: String!
     $status: String!
+    $thumbnail: String!
   ) {
     CreateArticle(
       article: {
@@ -18,12 +19,14 @@ const mutation = gql`
         body: $body
         slug: $slug
         status: $status
-        thumbnail: "https://pbs.twimg.com/media/EAKLX0bUYAAOMMT.jpg"
+        thumbnail: $thumbnail
         categories: ["POLITIK", "OTOMOTIF"]
       }
     ) {
       id
       title
+      body
+      slug
       thumbnail
     }
   }
