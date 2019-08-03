@@ -77,9 +77,9 @@ function Navbar(props: any) {
                       <>
                         <Button
                           type={'primary'}
-                          onClick={() => props.history.push('/story/create')}
+                          onClick={() => props.history.push('/story/write')}
                           style={{marginRight: 16}}>
-                          Write Article
+                          Write Story
                         </Button>
                         <Dropdown
                           overlay={() => menuItems(userdata, setUserdata)}
