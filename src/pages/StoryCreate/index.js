@@ -18,19 +18,19 @@ import styled from 'styled-components';
 import {Helmet} from 'react-helmet';
 import {withRouter} from 'react-router-dom';
 
-import MutationCreateArticle from '../graphql/Article/MutationCreateArticle';
+import MutationCreateArticle from '../../graphql/Article/MutationCreateArticle';
 
-import Navbar from '../components/Navbar';
-import {Layout, Content} from '../components/Base/style';
-import HeadingText from '../components/HeadingText';
-import CategoryForm from '../components/CategoryForm';
+import AuthContext from '../../contexts/AuthContext';
 
-import generateSlug from '../utils/generateSlug';
-import useFocus from '../utils/useFocus';
-import handleInlineStyle from '../utils/handleInlineStyle';
-import getWordCount from '../utils/getWordCount';
+import Navbar from '../../components/Navbar';
+import {Layout, Content} from '../../components/Base/style';
+import HeadingText from '../../components/HeadingText';
+import CategoryForm from '../../components/CategoryForm';
 
-import AuthContext from '../contexts/AuthContext';
+import generateSlug from '../../utils/generateSlug';
+import useFocus from '../../utils/useFocus';
+import handleInlineStyle from '../../utils/handleInlineStyle';
+import getWordCount from '../../utils/getWordCount';
 
 const {Option} = Select;
 
