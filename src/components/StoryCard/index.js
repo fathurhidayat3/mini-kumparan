@@ -2,7 +2,8 @@
 
 import React from 'react';
 import {Avatar, Typography} from 'antd';
-import dayjs from 'dayjs';
+
+import getTimeDifference from '../../utils/getTimeDifference';
 
 import {
   StoryCardContainer,
@@ -24,7 +25,6 @@ export default function StoryCard({
   user,
   avatar,
   thumbnail,
-  like,
   totalComments,
 }: any) {
   return (
@@ -34,13 +34,11 @@ export default function StoryCard({
 
         <HeadingText
           type={'h4'}
-          style={{display: 'inline-block', margin: '0 8px'}}>
+          style={{display: 'inline-block', margin: '0 6px'}}>
           {user.fullName}
         </HeadingText>
 
-        <Text>{`Published at : ${dayjs(createdAt).format(
-          'DD/MM/YYYY HH:mm'
-        )}`}</Text>
+        <Text>{getTimeDifference(new Date(), new Date(createdAt))}</Text>
       </StoryCardHeader>
 
       <StoryCardInnerBody>
@@ -50,8 +48,6 @@ export default function StoryCard({
           </StoryCardTopWrapper>
 
           <StoryCardBottomWrapper>
-            {/* {like &&  */}
-            <IconText type="like-o" text={like || 0} />
             <IconText type="wechat" text={totalComments} />
           </StoryCardBottomWrapper>
         </StoryCardContentWrapper>
