@@ -19,10 +19,14 @@ export default function Routes() {
         path={'/category/:categoryName'}
         component={() => <Home />}
       />
+      <PrivateRoute
+        exact
+        path={'/story/write'}
+        component={() => <DummyPage />}
+      />
       <Route exact path={'/story/:storyId'} component={() => <StoryDetail />} />
       <Route exact path={'/profile/:username'} component={() => <Profile />} />
       <PrivateRoute exact path={'/private'} component={() => <DummyPage />} />
-      <Route exact path={'/dummy'} component={() => <DummyPage />} />
     </Router>
   );
 }
