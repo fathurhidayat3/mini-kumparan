@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {Card, Tabs, Skeleton, Col} from 'antd';
+import {Tabs, Col} from 'antd';
 
 import styled from 'styled-components';
 
