@@ -16,6 +16,7 @@ const query = gql`
       updatedAt
       categories
       user {
+        username
         fullname
       }
       totalComments
