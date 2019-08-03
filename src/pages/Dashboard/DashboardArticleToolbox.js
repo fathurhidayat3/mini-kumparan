@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 
 const {Option} = Select;
 
-export default function DashboardToolbox(props: any) {
+export default function DashboardArticleToolbox(props: any) {
   const {handleFilterSubmit} = props;
 
   const [tempStatus, setTempStatus] = React.useState('ALL');

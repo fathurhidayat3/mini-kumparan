@@ -4,7 +4,7 @@ import React from 'react';
 import {Table, Tag, Card, Button} from 'antd';
 import {Link} from 'react-router-dom';
 
-import DashboardToolbox from './DashboardToolbox';
+import DashboardArticleToolbox from './DashboardArticleToolbox';
 
 import QueryDashboardArticles from '../../graphql/Article/QueryDashboardArticles';
 
@@ -73,7 +73,7 @@ function DashboardArticle() {
 
   return (
     <div>
-      <DashboardToolbox
+      <DashboardArticleToolbox
         keyword={keyword}
         category={category}
         status={status}
@@ -86,7 +86,7 @@ function DashboardArticle() {
           variables={{category, status, keyword}}>
           {({loading, error, data}) => {
             if (loading || error) {
-              return 'yeye';
+              return null;
             }
 
             return (
