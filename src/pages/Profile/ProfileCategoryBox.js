@@ -8,14 +8,6 @@ import {Query} from 'react-apollo';
 
 import HeadingText from '../../components/HeadingText';
 
-const tagsData = [
-  'ENTERTAINMENT',
-  'TEKNOLOGI',
-  'OLAHRAGA',
-  'OTOMOTIF',
-  'KUMPARANMOM',
-];
-
 const query = gql`
   query QueryGetUserCategoriesByUsername($username: String!) {
     GetUserCategoriesByUsername(username: $username) {
