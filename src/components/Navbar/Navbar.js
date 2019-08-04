@@ -7,12 +7,12 @@ import {Link, withRouter} from 'react-router-dom';
 import {NavbarContainer, NavbarPart} from './style';
 import SignInModal from '../Modal/SignInModal';
 
-import handleLogout from '../../utils/handleLogout';
-
 import AuthContext from '../../contexts/AuthContext';
 import FilterContext from '../../contexts/FilterContext';
 
 import HeadingText from '../HeadingText';
+
+import handleLogout from '../../utils/handleLogout';
 
 const {Search} = Input;
 

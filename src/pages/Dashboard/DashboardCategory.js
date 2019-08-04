@@ -31,7 +31,7 @@ function DashboardCategory() {
         <Col span={10} offset={1}>
           <DashboardCategoryToolbox />
 
-          <Card style={{marginTop: 16}} bodyStyle={{padding: '0'}}>
+          <Card style={{marginTop: 24}} bodyStyle={{padding: '0'}}>
             <QueryDashboardCategories
               query={QueryDashboardCategories.query}
               variables={{username: userdata.userdata.username}}>

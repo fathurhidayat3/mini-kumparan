@@ -9,15 +9,15 @@ import QueryGetPublishedArticleBySlug from '../../graphql/Article/QueryGetPublis
 const {TextArea} = Input;
 
 function CommentForm(props: any) {
-  const {onChange, value, userData, dataDetail, slug} = props;
+  const {onChange, value, userData, dataDetail, slug, isDisabled} = props;
 
   return (
     <MutationCreateComment
       mutation={MutationCreateComment.mutation}
       variables={{
         articleID: dataDetail.id,
-        fullname: userData.fullname,
-        username: userData.username,
+        fullname: userData && userData.fullname,
+        username: userData && userData.username,
         message: value,
       }}
       // onCompleted={() => setEditorState('')}
@@ -41,10 +41,11 @@ function CommentForm(props: any) {
               onChange={onChange}
               value={value}
               style={{padding: 16, width: '100%'}}
+              disabled={isDisabled}
             />
           </Form.Item>
 
-          <Form.Item>
+          <div>
             <Button
               htmlType="submit"
               // loading={submitting}
@@ -52,7 +53,7 @@ function CommentForm(props: any) {
               type="primary">
               Add Comment
             </Button>
-          </Form.Item>
+          </div>
         </div>
       )}
     </MutationCreateComment>

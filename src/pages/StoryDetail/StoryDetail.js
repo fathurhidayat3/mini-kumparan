@@ -80,21 +80,22 @@ function StoryDetail(props: any) {
                 />
               </StoryDetailContainer>
 
+              <Divider />
+
               <div style={{marginTop: 36}}>
                 <HeadingText type={'h3'}>Comments</HeadingText>
 
+                <CommentForm
+                  slug={slug}
+                  userData={userData}
+                  dataDetail={dataDetail}
+                  value={value}
+                  onChange={handleChange}
+                  isDisabled={!userData && true}
+                />
+
                 {dataDetail.comments.length > 0 && (
                   <CommentList comments={dataDetail.comments} />
-                )}
-
-                {userData && (
-                  <CommentForm
-                    slug={slug}
-                    userData={userData}
-                    dataDetail={dataDetail}
-                    value={value}
-                    onChange={handleChange}
-                  />
                 )}
               </div>
 

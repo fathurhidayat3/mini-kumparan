@@ -49,7 +49,9 @@ function DashboardArticle() {
       render: categories => (
         <span>
           {categories.map((category, index) => (
-            <Tag key={index}>{category.toUpperCase()}</Tag>
+            <Tag key={index} style={{marginBottom: 8}}>
+              {category.toUpperCase()}
+            </Tag>
           ))}
         </span>
       ),
@@ -89,7 +91,7 @@ function DashboardArticle() {
         handleFilterSubmit={handleFilterSubmit}
       />
 
-      <Card style={{marginTop: 16}} bodyStyle={{padding: '0'}}>
+      <Card style={{marginTop: 24}} bodyStyle={{padding: '0'}}>
         <QueryDashboardArticles
           query={QueryDashboardArticles.query}
           variables={{category, status, keyword}}>
