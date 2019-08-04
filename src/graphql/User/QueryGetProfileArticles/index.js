@@ -17,9 +17,8 @@ const query = gql`
         totalComments
         user {
           userId
-        }
-        user {
-          userId
+          username
+          fullname
         }
       }
       user {
