@@ -28,6 +28,11 @@ export default function Routes() {
           path={'/story/write'}
           component={() => <StoryCreate />}
         />
+        <PrivateRoute
+          exact
+          path={'/story/edit/:storyId'}
+          component={() => <StoryCreate />}
+        />
         <Route
           exact
           path={'/story/:storyId'}
