@@ -26,7 +26,11 @@ import useFocus from '../../utils/useFocus';
 import checkContentLength from '../../utils/checkContentLength';
 import handleKeyCommand from '../../utils/handleKeyCommand';
 
-function DummyPage(props: any) {
+type Props = {
+  history: Object,
+};
+
+function StoryCreate(props: Props) {
   const [title, setTitle] = React.useState('');
   const [thumbnail, setThumbnail] = React.useState('');
   const [slug, setSlug] = React.useState('');
@@ -164,4 +168,4 @@ function DummyPage(props: any) {
   );
 }
 
-export default withRouter(DummyPage);
+export default withRouter(StoryCreate);

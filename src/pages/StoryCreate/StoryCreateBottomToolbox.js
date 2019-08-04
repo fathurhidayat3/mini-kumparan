@@ -1,12 +1,18 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 import {Button, Select} from 'antd';
 
 const {Option} = Select;
 
-export default function StoryCreateBottomToolbox(props: any) {
+type Props = {
+  articleStatus: string,
+  setArticleStatus: Function,
+  editorBottomOnSubmit: Function,
+};
+
+export default function StoryCreateBottomToolbox(props: Props) {
   const {articleStatus, setArticleStatus, editorBottomOnSubmit} = props;
 
   return (

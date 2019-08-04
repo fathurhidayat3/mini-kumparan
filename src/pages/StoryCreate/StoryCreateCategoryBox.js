@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import {Col, Card, Divider} from 'antd';
 
 import QueryDashboardCategories from '../../graphql/Category/QueryDashboardCategories';
@@ -8,10 +8,16 @@ import QueryDashboardCategories from '../../graphql/Category/QueryDashboardCateg
 import HeadingText from '../../components/HeadingText';
 import CategoryForm from '../../components/CategoryForm';
 
-export default function StoryCreateCategoryBox(props: any) {
+type Props = {
+  checkedCategories: Array<Object>,
+  setCheckedCategories: Function,
+  userdata: Object,
+};
+
+export default function StoryCreateCategoryBox(props: Props) {
   const {checkedCategories, setCheckedCategories, userdata} = props;
 
-  const [defaultCategories, setDefaultCategories] = React.useState([
+  const [defaultCategories] = React.useState([
     {categoryname: 'News', categoryslug: 'NEWS'},
     {categoryname: 'Politik', categoryslug: 'POLITIK'},
     {categoryname: 'Entertainment', categoryslug: 'ENTERTAINMENT'},

@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import {Col, Card, Divider} from 'antd';
 
 import HeadingText from '../../components/HeadingText';

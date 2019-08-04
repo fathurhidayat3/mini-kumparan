@@ -1,11 +1,16 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import {Icon} from 'antd';
 
 import handleInlineStyle from '../../utils/handleInlineStyle';
 
-export default function EditorToolbox(props: any) {
+type Props = {
+  editorState: Object,
+  setEditorState: Object,
+};
+
+export default function EditorToolbox(props: Props) {
   const {editorState, setEditorState} = props;
 
   return (
