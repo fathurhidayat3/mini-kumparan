@@ -90,6 +90,7 @@ function StoryDetail(props: any) {
                   userData={userData}
                   dataDetail={dataDetail}
                   value={value}
+                  setValue={setValue}
                   onChange={handleChange}
                   isDisabled={!userData && true}
                 />

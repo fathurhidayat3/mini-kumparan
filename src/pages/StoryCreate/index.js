@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import {Editor, EditorState, convertToRaw} from 'draft-js';
-import {Card, Input, Col, Row, Divider, Affix, Select} from 'antd';
+import {Card, Input, Col, Row, Affix} from 'antd';
 import {withRouter} from 'react-router-dom';
 
 import {CustomInputTitle, EditorTopToolbox, WordCounter} from './style';

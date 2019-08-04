@@ -9,7 +9,15 @@ import QueryGetPublishedArticleBySlug from '../../graphql/Article/QueryGetPublis
 const {TextArea} = Input;
 
 function CommentForm(props: any) {
-  const {onChange, value, userData, dataDetail, slug, isDisabled} = props;
+  const {
+    onChange,
+    value,
+    setValue,
+    userData,
+    dataDetail,
+    slug,
+    isDisabled,
+  } = props;
 
   return (
     <MutationCreateComment
@@ -20,7 +28,7 @@ function CommentForm(props: any) {
         username: userData && userData.username,
         message: value,
       }}
-      // onCompleted={() => setEditorState('')}
+      onCompleted={() => setValue('')}
       refetchQueries={[
         {
           query: QueryGetPublishedArticleBySlug.query,
