@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import {Button, Avatar, Menu, Dropdown, Input} from 'antd';
+import {Button, Menu, Dropdown, Input} from 'antd';
 import {Link, withRouter} from 'react-router-dom';
 
 import {NavbarContainer, NavbarPart} from './style';
@@ -61,7 +61,12 @@ function Navbar(props: any) {
                         setFilterData({category: ''});
                         props.history.push('/');
                       }}>
-                      Mini Kumparan
+                      {/* Mini Kumparan */}
+                      <img
+                        src={'/logo.png'}
+                        alt={'mini-kumparan-logo'}
+                        style={{height: 35}}
+                      />
                     </HeadingText>
                   </NavbarPart>
 
