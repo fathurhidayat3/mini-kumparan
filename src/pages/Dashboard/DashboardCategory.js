@@ -3,6 +3,8 @@
 import React from 'react';
 import {Table, Card, Col} from 'antd';
 
+import AuthContext from '../../contexts/AuthContext';
+
 import DashboardCategoryToolbox from './DashboardCategoryToolbox';
 
 import QueryDashboardCategories from '../../graphql/Category/QueryDashboardCategories';
@@ -24,29 +26,33 @@ function DashboardCategory() {
   ];
 
   return (
-    <Col span={10} offset={1}>
-      <DashboardCategoryToolbox />
+    <AuthContext.Consumer>
+      {userdata => (
+        <Col span={10} offset={1}>
+          <DashboardCategoryToolbox />
 
-      <Card style={{marginTop: 16}} bodyStyle={{padding: '0'}}>
-        <QueryDashboardCategories
-          query={QueryDashboardCategories.query}
-          variables={{username: 'jri'}}>
-          {({loading, error, data}) => {
-            if (loading || error) {
-              return null;
-            }
+          <Card style={{marginTop: 16}} bodyStyle={{padding: '0'}}>
+            <QueryDashboardCategories
+              query={QueryDashboardCategories.query}
+              variables={{username: userdata.userdata.username}}>
+              {({loading, error, data}) => {
+                if (loading || error) {
+                  return null;
+                }
 
-            return (
-              <Table
-                columns={columns}
-                dataSource={data.GetUserCategoriesByUsername}
-                pagination={false}
-              />
-            );
-          }}
-        </QueryDashboardCategories>
-      </Card>
-    </Col>
+                return (
+                  <Table
+                    columns={columns}
+                    dataSource={data.GetUserCategoriesByUsername}
+                    pagination={false}
+                  />
+                );
+              }}
+            </QueryDashboardCategories>
+          </Card>
+        </Col>
+      )}
+    </AuthContext.Consumer>
   );
 }
 
