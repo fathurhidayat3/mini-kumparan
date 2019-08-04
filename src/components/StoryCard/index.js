@@ -23,7 +23,6 @@ export default function StoryCard({
   title,
   createdAt,
   user,
-  avatar,
   thumbnail,
   totalComments,
 }: any) {

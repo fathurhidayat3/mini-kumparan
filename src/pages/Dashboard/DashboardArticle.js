@@ -25,6 +25,15 @@ function DashboardArticle() {
       dataIndex: 'slug',
       key: 'slug',
       width: 300,
+      // eslint-disable-next-line react/display-name
+      render: slug => (
+        <Link
+          // $FlowFixMe
+          to={`/story/${slug}`}
+          style={{textDecoration: 'underline'}}>
+          {slug}
+        </Link>
+      ),
     },
     {
       title: 'Thumbnail',
@@ -68,8 +77,8 @@ function DashboardArticle() {
       key: 'action',
       // eslint-disable-next-line react/display-name
       render: text => (
-        <Link to={`/story/${text.slug}`}>
-          <Button type={'primary'}>Preview</Button>
+        <Link to={`/story/edit/${text.slug}`}>
+          <Button type={'primary'}>Edit</Button>
         </Link>
       ),
       width: 120,

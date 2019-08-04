@@ -27,12 +27,6 @@ function ProfileContent(props: any) {
     <ProfileContentContainer span={11}>
       <Tabs defaultActiveKey="1">
         <TabPane tab={'Articles'} key="1">
-          {/* {[0, 1, 2, 3].map((item, index) => (
-            <Card style={{marginBottom: 16}} key={index}>
-              <Skeleton avatar paragraph={{rows: 2}} loading={true} active />
-            </Card>
-          ))} */}
-
           <ArticleList data={articles} />
         </TabPane>
       </Tabs>

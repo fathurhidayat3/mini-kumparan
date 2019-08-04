@@ -48,7 +48,12 @@ function Profile(props: any) {
                   {userdata.username ? (
                     <>
                       <ProfileInfo userdata={userdata} />
-                      {articles && <ProfileContent articles={articles} />}
+                      {articles && (
+                        <ProfileContent
+                          userdata={userdata}
+                          articles={articles}
+                        />
+                      )}
                       <Col span={5} />
                     </>
                   ) : (
