@@ -18,8 +18,8 @@ function Dashboard(props: any) {
     <Layout>
       <DashboardNavbar />
       <Content>
-        <Row type={'flex'} justify={'center'}>
-          <Col span={4}>
+        <Row type={'flex'}>
+          <Col span={4} offset={1}>
             <List
               size="small"
               header={
@@ -48,20 +48,18 @@ function Dashboard(props: any) {
             />
           </Col>
 
-          <Col span={18} offset={1}>
-            <Switch>
-              <Route
-                exact
-                path={'/dashboard/story'}
-                component={() => <DashboardArticle />}
-              />
-              <Route
-                exact
-                path={'/dashboard/category'}
-                component={() => <DashboardCategory />}
-              />
-            </Switch>
-          </Col>
+          <Switch>
+            <Route
+              exact
+              path={'/dashboard/story'}
+              component={() => <DashboardArticle />}
+            />
+            <Route
+              exact
+              path={'/dashboard/category'}
+              component={() => <DashboardCategory />}
+            />
+          </Switch>
         </Row>
       </Content>
     </Layout>
