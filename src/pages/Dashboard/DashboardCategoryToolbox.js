@@ -1,36 +1,107 @@
 // @flow
 
 import React from 'react';
-import {Input, Button} from 'antd';
+import {Button, Modal, Input, Icon} from 'antd';
+import styled from 'styled-components';
+import AuthContext from '../../contexts/AuthContext';
+
+import MutationCreateUserCategory from '../../graphql/Category/MutationCreateUserCategory';
+import QueryDashboardCategories from '../../graphql/Category/QueryDashboardCategories';
 
 export default function DashboardCategoryToolbox(props: any) {
-  const {handleFilterSubmit} = props;
+  const [
+    modalCreateCategoryVisible,
+    setModalCreateCategoryVisible,
+  ] = React.useState(false);
 
-  const [tempKeyword, setTempKeyword] = React.useState('');
+  const [categoryname, setCategoryname]: any = React.useState('');
+  const [categoryslug, setCategoryslug]: any = React.useState('');
+
+  const [confirmLoading, setConfirmLoading]: any = React.useState(false);
+
+  function handleCategoryNameChange(e, userdata) {
+    const value = e.target.value;
+
+    setCategoryname(value.toUpperCase());
+    setCategoryslug(`${userdata.userdata.username}-${value}`.toUpperCase());
+  }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-      }}>
-      <div>
-        <Input
-          value={tempKeyword}
-          placeholder="input search text"
-          onChange={e => setTempKeyword(e.target.value)}
-          style={{width: 300}}
-        />
+    <AuthContext.Consumer>
+      {userdata => (
+        <MutationCreateUserCategory
+          mutation={MutationCreateUserCategory.mutation}
+          variables={{
+            username: userdata.userdata.username,
+            categoryname,
+            categoryslug,
+          }}
+          refetchQueries={[
+            {
+              query: QueryDashboardCategories.query,
+              variables: {username: userdata.userdata.username},
+            },
+          ]}
+          onCompleted={() => {
+            setConfirmLoading(true);
+            setModalCreateCategoryVisible(false);
+          }}
+          onError={() => {
+            Modal.error({
+              title: 'Create Category Failed',
+              content: 'Category already exists',
+              okText: 'OK',
+            });
 
-        <Button
-          type={'primary'}
-          style={{marginLeft: 16}}
-          onClick={() => handleFilterSubmit(tempKeyword)}>
-          Apply Filter
-        </Button>
-      </div>
+            setConfirmLoading(false);
+          }}>
+          {CreateUserCategory => {
+            return (
+              <>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                  }}>
+                  <Button
+                    type={'primary'}
+                    onClick={() => {
+                      setModalCreateCategoryVisible(true);
+                    }}>
+                    Add Category
+                  </Button>
+                </div>
 
-      <Button type={'primary'}>Add Category</Button>
-    </div>
+                <Modal
+                  title={'Add category'}
+                  centered
+                  visible={modalCreateCategoryVisible}
+                  confirmLoading={confirmLoading}
+                  onCancel={() => setModalCreateCategoryVisible(false)}
+                  onOk={() => {
+                    setConfirmLoading(true);
+                    CreateUserCategory();
+                  }}>
+                  <FormGroup>
+                    <Input
+                      value={categoryname}
+                      onChange={e => handleCategoryNameChange(e, userdata)}
+                      placeholder="Enter your custom category name"
+                      prefix={
+                        <Icon type="edit" style={{color: 'rgba(0,0,0,.25)'}} />
+                      }
+                    />
+                  </FormGroup>
+                </Modal>
+              </>
+            );
+          }}
+        </MutationCreateUserCategory>
+      )}
+    </AuthContext.Consumer>
   );
 }
+
+const FormGroup = styled.div`
+  margin-bottom: 16px;
+`;
