@@ -3,7 +3,7 @@
 import React from 'react';
 import {Avatar, Typography} from 'antd';
 
-import getTimeDifference from '../../utils/getTimeDifference';
+import timeAgo from '../../utils/timeAgo';
 
 import {
   StoryCardContainer,
@@ -38,7 +38,7 @@ export default function StoryCard({
           {user.fullname}
         </HeadingText>
 
-        <Text>{getTimeDifference(new Date(), new Date(createdAt))}</Text>
+        <Text>{timeAgo(createdAt)}</Text>
       </StoryCardHeader>
 
       <StoryCardInnerBody>

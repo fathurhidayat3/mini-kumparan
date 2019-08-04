@@ -13,6 +13,7 @@ import {
 } from './style';
 
 import HeadingText from '../../components/HeadingText';
+import timeAgo from '../../utils/timeAgo';
 
 const {Text} = Typography;
 
@@ -31,9 +32,7 @@ function StoryDetailHeader(props: any) {
             <HeadingText type={'h4'}>{user.fullname}</HeadingText>
           </Link>
 
-          <Text>{`Published at : ${dayjs(dataDetail.createdAt).format(
-            'DD/MM/YYYY HH:mm'
-          )}`}</Text>
+          <Text>{timeAgo(dataDetail.createdAt)}</Text>
         </StoryDetailHeaderUserContainer>
       </StoryDetailHeaderInfoContainer>
     </StoryDetailHeaderContainer>
