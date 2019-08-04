@@ -16,8 +16,6 @@ export default function CategoryForm(props: any) {
 
         setCheckedCategories([...checkedCategories, {checkedItem}]);
       }
-
-      // console.log(checkedItem);
     });
   }
 
@@ -34,6 +32,7 @@ export default function CategoryForm(props: any) {
             <CategoryTag
               checked={
                 checkedCategories &&
+                checkedCategories[index] &&
                 checkedCategories[index].categoryslug === tag.categoryslug &&
                 checkedCategories[index].isChecked
               }
