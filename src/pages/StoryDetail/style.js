@@ -16,7 +16,7 @@ const StoryDetailHeaderInfoContainer = styled.div`
 const StoryDetailHeaderUserContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 8px;
+  margin-right: 8px;
 `;
 
 const StoryImageThumbnail = styled(Avatar)`
