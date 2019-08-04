@@ -87,7 +87,7 @@ function Navbar(props: any) {
                         <Dropdown
                           overlay={() => menuItems(userdata, setUserdata)}
                           placement="bottomRight">
-                          <Avatar icon="user" />
+                          <Button>Hello {userdata.fullname}</Button>
                         </Dropdown>
                       </>
                     ) : (

@@ -25,8 +25,6 @@ function StoryDetailHeader(props: any) {
     <StoryDetailHeaderContainer>
       <HeadingText type={'h1'}>{dataDetail.title}</HeadingText>
       <StoryDetailHeaderInfoContainer>
-        <Avatar size={32} icon={'user'} />
-
         <StoryDetailHeaderUserContainer style={{flex: 1}}>
           <Link to={`/profile/${user.username}`}>
             <HeadingText type={'h4'}>{user.fullname}</HeadingText>

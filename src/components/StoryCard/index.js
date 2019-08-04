@@ -30,11 +30,9 @@ export default function StoryCard({
   return (
     <StoryCardContainer>
       <StoryCardHeader>
-        <Avatar size={28} src={avatar} icon={'user'} />
-
         <HeadingText
           type={'h4'}
-          style={{display: 'inline-block', margin: '0 8px'}}>
+          style={{display: 'inline-block', marginRight: 8}}>
           {user.fullname}
         </HeadingText>
 

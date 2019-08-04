@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import {Button, Avatar, Menu, Dropdown} from 'antd';
+import {Button, Menu, Dropdown} from 'antd';
 import {Link, withRouter} from 'react-router-dom';
 
 import {NavbarContainer, NavbarPart} from './style';
@@ -71,7 +71,7 @@ function Navbar(props: any) {
                         <Dropdown
                           overlay={() => menuItems(userdata, setUserdata)}
                           placement="bottomRight">
-                          <Avatar icon="user" />
+                          <Button>Hello {userdata.fullname}</Button>
                         </Dropdown>
                       </>
                     ) : (

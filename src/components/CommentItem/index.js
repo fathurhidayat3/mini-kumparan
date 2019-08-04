@@ -20,8 +20,6 @@ function CommentItem(props: any) {
     <Card style={{marginBottom: 16}}>
       <StoryDetailHeaderContainer>
         <StoryDetailHeaderInfoContainer>
-          <Avatar size={32} icon={'user'} />
-
           <StoryDetailHeaderUserContainer>
             <HeadingText type={'h4'}>{fullname}</HeadingText>
           </StoryDetailHeaderUserContainer>
