@@ -37,7 +37,7 @@ function DashboardArticle() {
           // $FlowFixMe
           src={`${process.env.REACT_APP_GQL_URL}${thumbnail}`}
           style={{height: 50, width: 50}}
-          alt={'thumbnail-image'}
+          alt={'story-thumbnail'}
         />
       ),
     },

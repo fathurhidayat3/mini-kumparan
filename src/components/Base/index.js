@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import {Row, Col} from 'antd';
 
 import type {baseType} from './type';
@@ -31,7 +31,7 @@ function Base(props: baseType) {
         </Row>
       </Content>
 
-      <Footer>by siapa aja</Footer>
+      <Footer>Kumparan Academy - Team GPN</Footer>
     </Layout>
   );
 }

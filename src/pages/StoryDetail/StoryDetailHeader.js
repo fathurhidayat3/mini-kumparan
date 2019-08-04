@@ -1,8 +1,7 @@
 // @flow
 
 import React from 'react';
-import dayjs from 'dayjs';
-import {Typography, Avatar} from 'antd';
+import {Typography} from 'antd';
 
 import {withRouter, Link} from 'react-router-dom';
 

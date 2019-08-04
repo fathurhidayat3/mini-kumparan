@@ -1,8 +1,7 @@
 // @flow
 
 import React from 'react';
-import dayjs from 'dayjs';
-import {Card, Avatar, Typography} from 'antd';
+import {Card} from 'antd';
 
 import {
   StoryDetailHeaderUserContainer,
@@ -11,8 +10,6 @@ import {
 } from '../../pages/StoryDetail/style';
 
 import HeadingText from '../../components/HeadingText';
-
-const {Text} = Typography;
 
 function CommentItem(props: any) {
   const {fullname, message} = props;

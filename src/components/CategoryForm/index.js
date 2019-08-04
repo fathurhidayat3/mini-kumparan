@@ -16,6 +16,7 @@ export default function CategoryForm(props: any) {
 
         setCheckedCategories([...checkedCategories, {checkedItem}]);
       }
+      return null;
     });
   }
 

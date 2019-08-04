@@ -50,7 +50,7 @@ function StoryCreate(props: Props) {
 
   React.useEffect(() => {
     setTitleInputFocus();
-  }, [titleInputRef]);
+  }, [titleInputRef, setTitleInputFocus]);
 
   return (
     <AuthContext.Consumer>
