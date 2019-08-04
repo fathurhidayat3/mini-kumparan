@@ -65,6 +65,7 @@ function StoryDetail(props: any) {
 
                 <StoryImageThumbnail
                   shape="square"
+                  // $FlowFixMe
                   src={`${process.env.REACT_APP_GQL_URL}${dataDetail.thumbnail}`}
                   icon={'file-image'}
                 />
