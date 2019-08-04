@@ -6,7 +6,11 @@ import {Link, withRouter} from 'react-router-dom';
 
 import StoryCard from '../../components/StoryCard';
 
-function ArticleList(props: any) {
+type Props = {
+  data: Array<any>,
+};
+
+function ArticleList(props: Props) {
   const {data} = props;
 
   return (

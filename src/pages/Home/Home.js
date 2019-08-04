@@ -31,7 +31,11 @@ const query = gql`
   }
 `;
 
-function Home(props: any) {
+type Props = {
+  history: Object,
+};
+
+function Home(props: Props) {
   const pathname = props.history.location.pathname;
   const categoryName =
     (pathname.split('/')[2] && pathname.split('/')[2].toUpperCase()) || '';
