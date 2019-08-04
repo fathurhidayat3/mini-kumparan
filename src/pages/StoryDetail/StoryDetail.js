@@ -23,7 +23,13 @@ import CommentList from '../../components/CommentList';
 import CommentForm from '../../components/CommentForm';
 import SkeletonLoaderContent from '../../components/SkeletonLoaderContent';
 
-function StoryDetail(props: any) {
+type Props = {
+  filterData: Array<any>,
+  setFilterData: Function,
+  history: Object,
+};
+
+function StoryDetail(props: Props) {
   const {filterData, setFilterData} = props;
 
   const [value, setValue] = React.useState('');
@@ -45,9 +51,6 @@ function StoryDetail(props: any) {
         query={QueryGetPublishedArticleBySlug.query}
         variables={{slug}}>
         {({loading, error, data}) => {
-          // if (loading) return 'Loading...';
-          // if (error) return `Error! ${error.message}`;
-
           if (loading || error) {
             return <SkeletonLoaderContent />;
           }

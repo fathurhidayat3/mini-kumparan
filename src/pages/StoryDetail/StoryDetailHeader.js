@@ -17,7 +17,11 @@ import timeAgo from '../../utils/timeAgo';
 
 const {Text} = Typography;
 
-function StoryDetailHeader(props: any) {
+type Props = {
+  dataDetail: Object,
+};
+
+function StoryDetailHeader(props: Props) {
   const {dataDetail} = props;
   const {user} = dataDetail;
 

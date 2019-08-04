@@ -7,7 +7,11 @@ import {StoryDetailBodyContainer} from './style';
 
 const {Text} = Typography;
 
-function StoryDetailBody(props: any) {
+type Props = {
+  dataDetail: Object,
+};
+
+function StoryDetailBody(props: Props) {
   const {dataDetail} = props;
 
   return (

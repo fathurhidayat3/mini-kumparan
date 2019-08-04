@@ -9,7 +9,11 @@ import GetPublishedArticles from '../../graphql/Article/QueryGetPublishedArticle
 
 import StoryCard from '../../components/StoryCard';
 
-function RelatedStoryList(props: any) {
+type Props = {
+  filterData: Object,
+};
+
+function RelatedStoryList(props: Props) {
   const {filterData} = props;
 
   return (
@@ -18,9 +22,6 @@ function RelatedStoryList(props: any) {
         query={GetPublishedArticles.query}
         variables={{category: filterData.category}}>
         {({loading, error, data}) => {
-          // if (loading) return 'Loading...';
-          // if (error) return `Error! ${error.message}`;
-
           if (loading || error) {
             return [0, 1, 2].map((item, index) => (
               <Card style={{marginBottom: 16}} key={index}>

@@ -6,7 +6,12 @@ import {Tag} from 'antd';
 
 import {StoryDetailCategoriesContainer} from './style';
 
-function StoryDetailCategories(props: any) {
+type Props = {
+  dataDetail: Object,
+  setFilterData: Function,
+};
+
+function StoryDetailCategories(props: Props) {
   const {dataDetail, setFilterData} = props;
 
   return (
