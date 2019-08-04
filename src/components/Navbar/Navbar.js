@@ -68,7 +68,10 @@ function Navbar(props: any) {
                   <NavbarPart justifyContent={'center'}>
                     <Search
                       placeholder="input search text"
-                      onSearch={value => console.log(value)}
+                      onSearch={keyword => {
+                        setFilterData({keyword});
+                        props.history.push('/');
+                      }}
                     />
                   </NavbarPart>
 

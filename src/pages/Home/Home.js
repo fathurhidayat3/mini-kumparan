@@ -13,6 +13,24 @@ import Base from '../../components/Base';
 import ArticleList from './ArticleList';
 import SkeletonLoaderList from '../../components/SkeletonLoaderList';
 
+import gql from 'graphql-tag';
+
+const query = gql`
+  query QueryFindPublishedArticles($keyword: String!) {
+    FindPublishedArticles(keyword: $keyword) {
+      id
+      title
+      slug
+      thumbnail
+      createdAt
+      totalComments
+      user {
+        fullname
+      }
+    }
+  }
+`;
+
 function Home(props: any) {
   const pathname = props.history.location.pathname;
   const categoryName =
@@ -22,21 +40,34 @@ function Home(props: any) {
     <FilterContext.Consumer>
       {({filterData}) => (
         <Base>
-          <GetPublishedArticles
-            query={GetPublishedArticles.query}
-            variables={{category: filterData.category || categoryName}}>
-            {({loading, error, data}) => {
-              // if (loading) return 'Loading...';
-              // if (error) return `Error! ${error.message}`;
+          {filterData.keyword && (
+            <div style={{marginBottom: 16}}>
+              Hasil pencarian dari kunci
+              <span style={{fontWeight: 'bold'}}> {filterData.keyword}</span>
+            </div>
+          )}
 
+          <GetPublishedArticles
+            query={
+              filterData.keyword === '' ? GetPublishedArticles.query : query
+            }
+            variables={{
+              category: filterData.category || categoryName,
+              keyword: filterData.keyword || '',
+            }}>
+            {({loading, error, data}) => {
               if (loading || error) {
                 return <SkeletonLoaderList length={4} />;
               }
 
+              const resdata =
+                data.GetPublishedArticlesByCategory ||
+                data.FindPublishedArticles;
+
               return (
                 <>
                   <HomeMeta />
-                  <ArticleList data={data.GetPublishedArticlesByCategory} />
+                  <ArticleList data={resdata} />
                 </>
               );
             }}
