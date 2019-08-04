@@ -1,9 +1,8 @@
 // @flow
 
-import getWordCount from './getWordCount';
-
 export default function checkContentLength(editorState: any) {
-  const editorContentlength = getWordCount(editorState);
+  const editorPlainText = editorState.getCurrentContent().getPlainText('');
+  const editorContentlength = editorPlainText.length;
 
   if (editorContentlength === 0) {
     return `Hello, you can write me 250 words`;
