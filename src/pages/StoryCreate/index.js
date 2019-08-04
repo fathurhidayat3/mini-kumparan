@@ -2,37 +2,29 @@
 
 import * as React from 'react';
 import {Editor, EditorState, convertToRaw} from 'draft-js';
-import {Card, Button, Input, Col, Row, Divider, Affix, Select} from 'antd';
-import {Helmet} from 'react-helmet';
+import {Card, Input, Col, Row, Divider, Affix, Select} from 'antd';
 import {withRouter} from 'react-router-dom';
 
-import {
-  CustomInputTitle,
-  EditorBottomToolbox,
-  EditorTopToolbox,
-  WordCounter,
-} from './style';
+import {CustomInputTitle, EditorTopToolbox, WordCounter} from './style';
 
 import EditorToolbox from './EditorToolbox';
+import StoryCreateMeta from './StoryCreateMeta';
+import StoryCreateThumbnailBox from './StoryCreateThumbnailBox';
+import StoryCreateCategoryBox from './StoryCreateCategoryBox';
+import StoryCreateBottomToolbox from './StoryCreateBottomToolbox';
 
 import MutationCreateArticle from '../../graphql/Article/MutationCreateArticle';
 import QueryGetProfileArticles from '../../graphql/User/QueryGetProfileArticles';
-import QueryDashboardCategories from '../../graphql/Category/QueryDashboardCategories';
 
 import AuthContext from '../../contexts/AuthContext';
 
 import Navbar from '../../components/Navbar';
 import {Layout, Content} from '../../components/Base/style';
-import HeadingText from '../../components/HeadingText';
-import CategoryForm from '../../components/CategoryForm';
-import Thumbnail from '../../components/Thumbnail';
 
 import generateSlug from '../../utils/generateSlug';
 import useFocus from '../../utils/useFocus';
 import checkContentLength from '../../utils/checkContentLength';
 import handleKeyCommand from '../../utils/handleKeyCommand';
-
-const {Option} = Select;
 
 function DummyPage(props: any) {
   const [title, setTitle] = React.useState('');
@@ -42,7 +34,6 @@ function DummyPage(props: any) {
     EditorState.createEmpty()
   );
   const [articleStatus, setArticleStatus] = React.useState('PUBLISHED');
-
   const [checkedCategories, setCheckedCategories] = React.useState([]);
 
   const [titleInputRef, setTitleInputFocus] = useFocus();
@@ -63,14 +54,7 @@ function DummyPage(props: any) {
         <Layout>
           <Navbar />
           <Content style={{position: 'relative'}}>
-            <Helmet>
-              <meta charSet="utf-8" />
-              <meta name="description" content="Write Article" />
-
-              <title>Write Article</title>
-
-              <link rel="canonical" href={`http://mini-kumparan.com/dummy`} />
-            </Helmet>
+            <StoryCreateMeta />
 
             <Row type={'flex'} justify={'center'}>
               <Col span={13}>
@@ -102,7 +86,7 @@ function DummyPage(props: any) {
                   }>
                   {CreateArticle => (
                     <div style={{padding: 16}}>
-                      <div style={{margin: '00'}}>
+                      <div>
                         <CustomInputTitle
                           value={title}
                           ref={titleInputRef}
@@ -154,74 +138,20 @@ function DummyPage(props: any) {
                           marginTop: 32,
                         }}
                         gutter={24}>
-                        <Col span={8}>
-                          <Card>
-                            <HeadingText type={'h4'}>
-                              Attach Thumbnail
-                            </HeadingText>
+                        <StoryCreateThumbnailBox setThumbnail={setThumbnail} />
 
-                            <Divider />
-
-                            <div
-                              style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                              }}>
-                              <Thumbnail setThumbnail={setThumbnail} />
-                            </div>
-                          </Card>
-                        </Col>
-
-                        <Col span={16}>
-                          <Card style={{minHeight: 236}}>
-                            <HeadingText type={'h4'}>Category</HeadingText>
-
-                            {JSON.stringify(
-                              checkedCategories &&
-                                checkedCategories
-                                  .filter(
-                                    checkedItem =>
-                                      checkedItem.isChecked === true
-                                  )
-                                  .map(checkedItem => checkedItem.categoryslug)
-                            )}
-
-                            <Divider />
-
-                            <QueryDashboardCategories
-                              query={QueryDashboardCategories.query}
-                              variables={{
-                                username: userdata.username,
-                              }}>
-                              {({data}) => {
-                                return (
-                                  <CategoryForm
-                                    checkedCategories={checkedCategories}
-                                    setCheckedCategories={setCheckedCategories}
-                                    categories={
-                                      data.GetUserCategoriesByUsername
-                                    }
-                                  />
-                                );
-                              }}
-                            </QueryDashboardCategories>
-                          </Card>
-                        </Col>
+                        <StoryCreateCategoryBox
+                          userdata={userdata}
+                          checkedCategories={checkedCategories}
+                          setCheckedCategories={setCheckedCategories}
+                        />
                       </Row>
 
-                      <EditorBottomToolbox>
-                        <Select
-                          style={{marginRight: 8, width: 150}}
-                          value={articleStatus}
-                          onChange={setArticleStatus}>
-                          <Option value="DRAFT">DRAFT</Option>
-                          <Option value="PUBLISHED">PUBLISH</Option>
-                        </Select>
-
-                        <Button type={'primary'} onClick={CreateArticle}>
-                          Save
-                        </Button>
-                      </EditorBottomToolbox>
+                      <StoryCreateBottomToolbox
+                        articleStatus={articleStatus}
+                        setArticleStatus={setArticleStatus}
+                        editorBottomOnSubmit={CreateArticle}
+                      />
                     </div>
                   )}
                 </MutationCreateArticle>

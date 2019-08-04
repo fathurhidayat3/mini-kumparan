@@ -13,13 +13,6 @@ const CustomInputTitle = styled.input`
   font-weight: bold;
 `;
 
-const EditorBottomToolbox = styled.div`
-  display: flex;
-  justify-content: flex-end;
-
-  margin-top: 32px;
-`;
-
 const EditorTopToolbox = styled.div`
   display: flex;
   justify-content: space-between;
@@ -31,4 +24,4 @@ const WordCounter = styled.div`
   background: white;
 `;
 
-export {CustomInputTitle, EditorBottomToolbox, EditorTopToolbox, WordCounter};
+export {CustomInputTitle, EditorTopToolbox, WordCounter};
