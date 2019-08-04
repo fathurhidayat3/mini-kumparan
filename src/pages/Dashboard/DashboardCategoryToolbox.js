@@ -45,6 +45,7 @@ export default function DashboardCategoryToolbox(props: any) {
           onCompleted={() => {
             setConfirmLoading(true);
             setModalCreateCategoryVisible(false);
+            setConfirmLoading(false);
           }}
           onError={() => {
             Modal.error({
