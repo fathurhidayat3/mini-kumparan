@@ -10,10 +10,33 @@ type Props = {
   articleStatus: string,
   setArticleStatus: Function,
   editorBottomOnSubmit: Function,
+  storyStates: {
+    title: string,
+    editorState: Object,
+  },
 };
 
 export default function StoryCreateBottomToolbox(props: Props) {
-  const {articleStatus, setArticleStatus, editorBottomOnSubmit} = props;
+  const {
+    articleStatus,
+    setArticleStatus,
+    editorBottomOnSubmit,
+    storyStates,
+  } = props;
+
+  function validateStory() {
+    const {title, editorState} = storyStates;
+    const editorPlainText = editorState.getCurrentContent().getPlainText('');
+    const editorContentlength = editorPlainText.length;
+
+    if (articleStatus === 'PUBLISHED') {
+      if (title.length <= 10 || editorContentlength <= 250) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 
   return (
     <EditorBottomToolbox>
@@ -25,7 +48,10 @@ export default function StoryCreateBottomToolbox(props: Props) {
         <Option value="PUBLISHED">PUBLISH</Option>
       </Select>
 
-      <Button type={'primary'} onClick={editorBottomOnSubmit}>
+      <Button
+        type={'primary'}
+        onClick={editorBottomOnSubmit}
+        disabled={validateStory()}>
         Save
       </Button>
     </EditorBottomToolbox>

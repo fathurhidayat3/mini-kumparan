@@ -28,6 +28,11 @@ import handleKeyCommand from '../../utils/handleKeyCommand';
 
 type Props = {
   history: Object,
+  match: {
+    params: {
+      storyId: string,
+    },
+  },
 };
 
 function StoryCreate(props: Props) {
@@ -87,7 +92,10 @@ function StoryCreate(props: Props) {
                   refetchQueries={[
                     {
                       query: QueryGetProfileArticles.query,
-                      variables: {username: userdata.username, category: ''},
+                      variables: {
+                        username: userdata.username,
+                        category: '',
+                      },
                     },
                   ]}
                   onCompleted={() =>
@@ -160,6 +168,7 @@ function StoryCreate(props: Props) {
                         articleStatus={articleStatus}
                         setArticleStatus={setArticleStatus}
                         editorBottomOnSubmit={CreateArticle}
+                        storyStates={{title, editorState}}
                       />
                     </div>
                   )}
