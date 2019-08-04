@@ -45,9 +45,15 @@ function Profile(props: any) {
                 />
 
                 <Row type={'flex'} justify={'center'} gutter={48}>
-                  <ProfileInfo userdata={userdata} />
-                  {articles && <ProfileContent articles={articles} />}
-                  <Col span={5} />
+                  {userdata.username ? (
+                    <>
+                      <ProfileInfo userdata={userdata} />
+                      {articles && <ProfileContent articles={articles} />}
+                      <Col span={5} />
+                    </>
+                  ) : (
+                    'User not found'
+                  )}
                 </Row>
               </Content>
             );
