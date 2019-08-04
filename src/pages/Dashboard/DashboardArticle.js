@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import {Table, Tag, Card, Button} from 'antd';
+import {Table, Tag, Card, Button, Col} from 'antd';
 import {Link} from 'react-router-dom';
 
 import DashboardArticleToolbox from './DashboardArticleToolbox';
@@ -30,7 +30,16 @@ function DashboardArticle() {
       title: 'Thumbnail',
       dataIndex: 'thumbnail',
       key: 'thumbnail',
-      width: 300,
+      width: 100,
+      // eslint-disable-next-line react/display-name
+      render: thumbnail => (
+        <img
+          // $FlowFixMe
+          src={`${process.env.REACT_APP_GQL_URL}${thumbnail}`}
+          style={{height: 50, width: 50}}
+          alt={'thumbnail-image'}
+        />
+      ),
     },
     {
       title: 'Categories',
@@ -72,7 +81,7 @@ function DashboardArticle() {
   };
 
   return (
-    <div>
+    <Col span={17} offset={1}>
       <DashboardArticleToolbox
         keyword={keyword}
         category={category}
@@ -99,7 +108,7 @@ function DashboardArticle() {
           }}
         </QueryDashboardArticles>
       </Card>
-    </div>
+    </Col>
   );
 }
 

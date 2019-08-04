@@ -16,6 +16,7 @@ const query = gql`
       categories
       status
       slug
+      thumbnail
     }
   }
 `;
