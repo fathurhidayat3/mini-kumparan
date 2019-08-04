@@ -1,15 +1,13 @@
 // @flow
 
 import React from 'react';
-import {Table, Card, Button} from 'antd';
+import {Table, Card, Col} from 'antd';
 
 import DashboardCategoryToolbox from './DashboardCategoryToolbox';
 
 import QueryDashboardCategories from '../../graphql/Category/QueryDashboardCategories';
 
 function DashboardCategory() {
-  const [keyword, setKeyword] = React.useState('');
-
   const columns = [
     {
       title: 'Name',
@@ -23,25 +21,11 @@ function DashboardCategory() {
       key: 'categoryslug',
       width: 300,
     },
-    {
-      title: 'Action',
-      key: 'action',
-      // eslint-disable-next-line react/display-name
-      render: text => <Button type={'primary'}>EDIT</Button>,
-      width: 120,
-    },
   ];
 
-  const handleFilterSubmit = tempKeyword => {
-    setKeyword(tempKeyword);
-  };
-
   return (
-    <div>
-      <DashboardCategoryToolbox
-        keyword={keyword}
-        handleFilterSubmit={handleFilterSubmit}
-      />
+    <Col span={10} offset={1}>
+      <DashboardCategoryToolbox />
 
       <Card style={{marginTop: 16}} bodyStyle={{padding: '0'}}>
         <QueryDashboardCategories
@@ -62,7 +46,7 @@ function DashboardCategory() {
           }}
         </QueryDashboardCategories>
       </Card>
-    </div>
+    </Col>
   );
 }
 
