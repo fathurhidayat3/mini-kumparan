@@ -17,6 +17,7 @@ import EditorToolbox from './EditorToolbox';
 
 import MutationCreateArticle from '../../graphql/Article/MutationCreateArticle';
 import QueryGetProfileArticles from '../../graphql/User/QueryGetProfileArticles';
+import QueryDashboardCategories from '../../graphql/Category/QueryDashboardCategories';
 
 import AuthContext from '../../contexts/AuthContext';
 
@@ -41,6 +42,8 @@ function DummyPage(props: any) {
     EditorState.createEmpty()
   );
   const [articleStatus, setArticleStatus] = React.useState('PUBLISHED');
+
+  const [checkedCategories, setCheckedCategories] = React.useState([]);
 
   const [titleInputRef, setTitleInputFocus] = useFocus();
   const [contentInputRef, setContentInputFocus] = useFocus();
@@ -82,6 +85,11 @@ function DummyPage(props: any) {
                     username: userdata && userdata.username,
                     status: articleStatus,
                     thumbnail,
+                    categories:
+                      checkedCategories &&
+                      checkedCategories
+                        .filter(checkedItem => checkedItem.isChecked === true)
+                        .map(checkedItem => checkedItem.categoryslug),
                   }}
                   refetchQueries={[
                     {
@@ -168,9 +176,35 @@ function DummyPage(props: any) {
                           <Card style={{minHeight: 236}}>
                             <HeadingText type={'h4'}>Category</HeadingText>
 
+                            {JSON.stringify(
+                              checkedCategories &&
+                                checkedCategories
+                                  .filter(
+                                    checkedItem =>
+                                      checkedItem.isChecked === true
+                                  )
+                                  .map(checkedItem => checkedItem.categoryslug)
+                            )}
+
                             <Divider />
 
-                            <CategoryForm />
+                            <QueryDashboardCategories
+                              query={QueryDashboardCategories.query}
+                              variables={{
+                                username: userdata.username,
+                              }}>
+                              {({data}) => {
+                                return (
+                                  <CategoryForm
+                                    checkedCategories={checkedCategories}
+                                    setCheckedCategories={setCheckedCategories}
+                                    categories={
+                                      data.GetUserCategoriesByUsername
+                                    }
+                                  />
+                                );
+                              }}
+                            </QueryDashboardCategories>
                           </Card>
                         </Col>
                       </Row>

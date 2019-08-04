@@ -11,6 +11,7 @@ const mutation = gql`
     $slug: String!
     $status: String!
     $thumbnail: String!
+    $categories: [String]!
   ) {
     CreateArticle(
       article: {
@@ -20,7 +21,7 @@ const mutation = gql`
         slug: $slug
         status: $status
         thumbnail: $thumbnail
-        categories: ["POLITIK", "OTOMOTIF"]
+        categories: $categories
       }
     ) {
       id
