@@ -1,14 +1,6 @@
 // @flow
 
-type credentialType = {userKey: string, userPassword: string};
-type dataType = {token: string, payload: any};
-
 export default function(username: string, password: string) {
-  const credential: any = {
-    username,
-    password,
-  };
-
   // $FlowFixMe
   const url = `${process.env.REACT_APP_GQL_URL}/user/login`;
 

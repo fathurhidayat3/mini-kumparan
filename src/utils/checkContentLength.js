@@ -1,6 +1,6 @@
 // @flow
 
-export default function checkContentLength(editorState: any) {
+export default function checkContentLength(editorState: Object) {
   const editorPlainText = editorState.getCurrentContent().getPlainText('');
   const editorContentlength = editorPlainText.length;
 
