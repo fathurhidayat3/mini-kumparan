@@ -2,40 +2,18 @@
 
 import React from 'react';
 import {Form, Input, Button} from 'antd';
-import gql from 'graphql-tag';
-import {Mutation} from 'react-apollo';
 
+import MutationCreateComment from '../../graphql/Comment/MutationCreateComment';
 import QueryGetPublishedArticleBySlug from '../../graphql/Article/QueryGetPublishedArticleBySlug';
 
 const {TextArea} = Input;
-
-const CREATE_COMMENT = gql`
-  mutation QCreateComment(
-    $articleID: String!
-    $fullname: String!
-    $username: String!
-    $message: String!
-  ) {
-    CreateComment(
-      comment: {
-        articleID: $articleID
-        fullname: $fullname
-        message: $message
-        username: $username
-      }
-    ) {
-      message
-      articleID
-    }
-  }
-`;
 
 function CommentForm(props: any) {
   const {onChange, value, userData, dataDetail, slug} = props;
 
   return (
-    <Mutation
-      mutation={CREATE_COMMENT}
+    <MutationCreateComment
+      mutation={MutationCreateComment.mutation}
       variables={{
         articleID: dataDetail.id,
         fullname: userData.fullname,
@@ -77,7 +55,7 @@ function CommentForm(props: any) {
           </Form.Item>
         </div>
       )}
-    </Mutation>
+    </MutationCreateComment>
   );
 }
 
