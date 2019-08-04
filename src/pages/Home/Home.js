@@ -49,7 +49,7 @@ function Home(props: any) {
 
           <GetPublishedArticles
             query={
-              filterData.keyword === '' ? GetPublishedArticles.query : query
+              filterData.keyword !== '' ? query : GetPublishedArticles.query
             }
             variables={{
               category: filterData.category || categoryName,

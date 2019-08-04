@@ -31,7 +31,7 @@ function CategoryList(props: any) {
                   cursor: 'pointer',
                 }}
                 onClick={() => {
-                  setFilterData({category: item.toUpperCase()});
+                  setFilterData({category: item.toUpperCase(), keyword: ''});
                   props.history.push(`/category/${item.toLowerCase()}`);
                 }}>
                 {item}
