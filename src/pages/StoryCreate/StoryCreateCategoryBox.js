@@ -31,8 +31,9 @@ export default function StoryCreateCategoryBox(props: any) {
             username: userdata.username,
           }}>
           {({data}) => {
-            let categories = data.GetUserCategoriesByUsername || [];
-            categories = categories.concat(defaultCategories);
+            // const categories = data && data.GetUserCategoriesByUsername;
+            let categories = (data && data.GetUserCategoriesByUsername) || [];
+            categories = [...categories, ...defaultCategories];
 
             return (
               <CategoryForm
