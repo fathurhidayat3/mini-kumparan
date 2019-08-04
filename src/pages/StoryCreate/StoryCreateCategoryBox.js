@@ -17,13 +17,6 @@ type Props = {
 export default function StoryCreateCategoryBox(props: Props) {
   const {checkedCategories, setCheckedCategories, userdata} = props;
 
-  const [defaultCategories] = React.useState([
-    {categoryname: 'News', categoryslug: 'NEWS'},
-    {categoryname: 'Politik', categoryslug: 'POLITIK'},
-    {categoryname: 'Entertainment', categoryslug: 'ENTERTAINMENT'},
-    {categoryname: 'Otomotif', categoryslug: 'OTOMOTIF'},
-  ]);
-
   return (
     <Col span={16}>
       <Card style={{minHeight: 236}}>
@@ -38,8 +31,10 @@ export default function StoryCreateCategoryBox(props: Props) {
           }}>
           {({data}) => {
             // const categories = data && data.GetUserCategoriesByUsername;
-            let categories = (data && data.GetUserCategoriesByUsername) || [];
-            categories = [...categories, ...defaultCategories];
+            const categories = (data && data.GetUserCategoriesByUsername) || [];
+            // categories = [...categories, ...defaultCategories];
+
+            // setDefaultCategories([...defaultCategories, ...categories]);
 
             return (
               <CategoryForm

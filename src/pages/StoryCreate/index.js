@@ -38,7 +38,12 @@ function StoryCreate(props: Props) {
     EditorState.createEmpty()
   );
   const [articleStatus, setArticleStatus] = React.useState('PUBLISHED');
-  const [checkedCategories, setCheckedCategories] = React.useState([]);
+  const [checkedCategories, setCheckedCategories] = React.useState([
+    {categoryname: 'NEWS', categoryslug: 'NEWS'},
+    {categoryname: 'POLITIK', categoryslug: 'POLITIK'},
+    {categoryname: 'ENTERTAINMENT', categoryslug: 'ENTERTAINMENT'},
+    {categoryname: 'OTOMOTIF', categoryslug: 'OTOMOTIF'},
+  ]);
 
   const [titleInputRef, setTitleInputFocus] = useFocus();
   const [contentInputRef, setContentInputFocus] = useFocus();
@@ -50,7 +55,7 @@ function StoryCreate(props: Props) {
 
   React.useEffect(() => {
     setTitleInputFocus();
-  }, [titleInputRef, setTitleInputFocus]);
+  }, [titleInputRef]);
 
   return (
     <AuthContext.Consumer>

@@ -21,15 +21,15 @@ export default function CategoryForm(props: any) {
   }
 
   React.useEffect(() => {
-    setCheckedCategories(categories);
-  });
+    const newData = [...checkedCategories, ...categories];
+    setCheckedCategories(newData);
+  }, [categories]);
 
   return (
     <div>
-      {categories &&
-        categories.map((tag, index) => {
-          const isLongTag = tag.categoryname.length > 20;
-          const tagElem = (
+      {checkedCategories &&
+        checkedCategories.map((tag, index) => {
+          return (
             <CategoryTag
               checked={
                 checkedCategories &&
@@ -41,13 +41,6 @@ export default function CategoryForm(props: any) {
               key={index}>
               {tag.categoryname}
             </CategoryTag>
-          );
-          return isLongTag ? (
-            <Tooltip title={tag.categoryname} key={tag.categoryslug}>
-              {tagElem}
-            </Tooltip>
-          ) : (
-            tagElem
           );
         })}
     </div>
