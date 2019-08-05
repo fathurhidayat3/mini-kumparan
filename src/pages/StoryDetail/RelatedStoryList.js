@@ -2,10 +2,8 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import {List, Card, Skeleton} from 'antd';
-
-import {withRouter} from 'react-router-dom';
 
 import GetPublishedArticles from '../../graphql/Article/QueryGetPublishedArticles';
 
