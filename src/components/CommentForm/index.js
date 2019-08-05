@@ -58,7 +58,8 @@ function CommentForm(props: any) {
               htmlType="submit"
               // loading={submitting}
               onClick={CreateComment}
-              type="primary">
+              type="primary"
+              disabled={isDisabled}>
               Add Comment
             </Button>
           </div>
