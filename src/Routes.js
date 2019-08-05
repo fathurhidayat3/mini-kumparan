@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import StoryDetail from './pages/StoryDetail';
 import Profile from './pages/Profile';
 import StoryCreate from './pages/StoryCreate';
+import StoryEdit from './pages/StoryEdit';
 import Dashboard from './pages/Dashboard';
 
 import PrivateRoute from './components/PrivateRoute';
@@ -31,7 +32,7 @@ export default function Routes() {
         <PrivateRoute
           exact
           path={'/story/edit/:storyId'}
-          component={() => <StoryCreate />}
+          component={() => <StoryEdit />}
         />
         <Route
           exact

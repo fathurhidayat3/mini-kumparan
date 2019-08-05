@@ -5,16 +5,19 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom';
 import {List, Card, Skeleton} from 'antd';
 
+import {withRouter} from 'react-router-dom';
+
 import GetPublishedArticles from '../../graphql/Article/QueryGetPublishedArticles';
 
 import StoryCard from '../../components/StoryCard';
 
 type Props = {
   filterData: Object,
+  match: Object,
 };
 
 function RelatedStoryList(props: Props) {
-  const {filterData} = props;
+  const {filterData, match} = props;
 
   return (
     <RelatedStoryListContainer>
@@ -34,7 +37,11 @@ function RelatedStoryList(props: Props) {
             <List
               itemLayout="vertical"
               size="large"
-              dataSource={data.GetPublishedArticlesByCategory.slice(0, 3)}
+              dataSource={data.GetPublishedArticlesByCategory.filter(
+                storyData => {
+                  return storyData.slug !== match.params.storyId;
+                }
+              )}
               renderItem={item => (
                 <Link to={`/story/${item.slug}`}>
                   <StoryCard {...item} />
@@ -52,4 +59,4 @@ const RelatedStoryListContainer = styled.div`
   margin-top: 16px;
 `;
 
-export default RelatedStoryList;
+export default withRouter(RelatedStoryList);
