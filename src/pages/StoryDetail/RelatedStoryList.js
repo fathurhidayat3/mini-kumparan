@@ -41,7 +41,7 @@ function RelatedStoryList(props: Props) {
                 storyData => {
                   return storyData.slug !== match.params.storyId;
                 }
-              )}
+              ).slice(0, 3)}
               renderItem={item => (
                 <Link to={`/story/${item.slug}`}>
                   <StoryCard {...item} />
