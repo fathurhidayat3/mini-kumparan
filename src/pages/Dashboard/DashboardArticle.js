@@ -8,10 +8,13 @@ import DashboardArticleToolbox from './DashboardArticleToolbox';
 
 import QueryDashboardArticles from '../../graphql/Article/QueryDashboardArticles';
 
+import timeAgo from '../../utils/timeAgo';
+
 function DashboardArticle() {
   const [status, setStatus] = React.useState('ALL');
   const [keyword, setKeyword] = React.useState('');
   const [category, setCategory] = React.useState('');
+  const [saved, setSaved] = React.useState({});
 
   const columns = [
     {
@@ -73,11 +76,25 @@ function DashboardArticle() {
       width: 150,
     },
     {
+      title: 'Created At',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      width: 150,
+      render: createdAt => timeAgo(createdAt),
+    },
+    {
+      title: 'Updated At',
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
+      width: 150,
+      render: updatedAt => timeAgo(updatedAt),
+    },
+    {
       title: 'Action',
       key: 'action',
       // eslint-disable-next-line react/display-name
       render: text => (
-        <Link to={`/story/edit/${text.slug}`}>
+        <Link to={{pathname: `/story/edit/${text.slug}`, state: {saved}}}>
           <Button type={'primary'}>Edit</Button>
         </Link>
       ),
@@ -90,6 +107,8 @@ function DashboardArticle() {
     setKeyword(tempKeyword);
     setCategory(tempCategory);
   };
+
+  React.useEffect(() => {}, [saved]);
 
   return (
     <Col span={17} offset={1}>
@@ -108,6 +127,8 @@ function DashboardArticle() {
             if (loading || error) {
               return null;
             }
+
+            setSaved(data.DashboardArticles);
 
             return (
               <Table

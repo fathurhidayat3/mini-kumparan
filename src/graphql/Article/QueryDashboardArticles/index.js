@@ -17,6 +17,8 @@ const query = gql`
       status
       slug
       thumbnail
+      createdAt
+      updatedAt
     }
   }
 `;

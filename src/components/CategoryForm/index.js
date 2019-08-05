@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import {Tag, Tooltip} from 'antd';
+import {Tag} from 'antd';
 
 const {CheckableTag} = Tag;
 
