@@ -58,7 +58,7 @@ function Navbar(props: any) {
                       type={'h3'}
                       style={{color: '#00a1b0', cursor: 'pointer'}}
                       onClick={() => {
-                        setFilterData({category: ''});
+                        setFilterData({category: '', keyword: ''});
                         props.history.push('/');
                       }}>
                       {/* Mini Kumparan */}
