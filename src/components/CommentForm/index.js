@@ -33,7 +33,13 @@ function CommentForm(props: Props) {
   return (
     <MutationCreateComment
       mutation={MutationCreateComment.mutation}
-      onCompleted={() => setValue('')}>
+      onCompleted={() => setValue('')}
+      refetchQueries={[
+        {
+          query: QueryGetPublishedArticleBySlug.query,
+          variables: {slug},
+        },
+      ]}>
       {CreateComment => (
         <CommentFormContainer>
           <Form.Item style={{width: '100%'}}>
