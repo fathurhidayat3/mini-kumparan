@@ -6,7 +6,9 @@ import {withRouter} from 'react-router-dom';
 
 import HomeMeta from './HomeMeta';
 
-import GetPublishedArticles from '../../graphql/Article/QueryGetPublishedArticles';
+import QueryGetPublishedArticles from '../../graphql/Article/QueryGetPublishedArticles';
+import QueryFindPublishedArticles from '../../graphql/Article/QueryFindPublishedArticles';
+
 import FilterContext from '../../contexts/FilterContext';
 
 import Base from '../../components/Base';
@@ -14,22 +16,6 @@ import ArticleList from './ArticleList';
 import SkeletonLoaderList from '../../components/SkeletonLoaderList';
 
 import gql from 'graphql-tag';
-
-const query = gql`
-  query QueryFindPublishedArticles($keyword: String!) {
-    FindPublishedArticles(keyword: $keyword) {
-      id
-      title
-      slug
-      thumbnail
-      createdAt
-      totalComments
-      user {
-        fullname
-      }
-    }
-  }
-`;
 
 type Props = {
   history: Object,
@@ -51,28 +37,49 @@ function Home(props: Props) {
         </div>
       )}
 
-      <GetPublishedArticles
-        query={filterData.keyword !== '' ? query : GetPublishedArticles.query}
-        variables={{
-          category: filterData.category || categoryName,
-          keyword: filterData.keyword || '',
-        }}>
-        {({loading, error, data}) => {
-          if (loading || error) {
-            return <SkeletonLoaderList length={4} />;
-          }
+      {filterData.keyword !== '' ? (
+        <QueryFindPublishedArticles
+          query={QueryFindPublishedArticles.query}
+          variables={{
+            keyword: filterData.keyword || '',
+          }}>
+          {({loading, error, data}) => {
+            if (loading || error) {
+              return <SkeletonLoaderList length={4} />;
+            }
 
-          const resdata =
-            data.GetPublishedArticlesByCategory || data.FindPublishedArticles;
+            const resdata = data && data.FindPublishedArticles;
 
-          return (
-            <>
-              <HomeMeta />
-              <ArticleList data={resdata} />
-            </>
-          );
-        }}
-      </GetPublishedArticles>
+            return (
+              <>
+                <HomeMeta />
+                <ArticleList data={resdata} />
+              </>
+            );
+          }}
+        </QueryFindPublishedArticles>
+      ) : (
+        <QueryGetPublishedArticles
+          query={QueryGetPublishedArticles.query}
+          variables={{
+            category: filterData.category || categoryName,
+          }}>
+          {({loading, error, data}) => {
+            if (loading || error) {
+              return <SkeletonLoaderList length={4} />;
+            }
+
+            const resdata = data && data.GetPublishedArticlesByCategory;
+
+            return (
+              <>
+                <HomeMeta />
+                <ArticleList data={resdata} />
+              </>
+            );
+          }}
+        </QueryGetPublishedArticles>
+      )}
     </Base>
   );
 }
