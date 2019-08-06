@@ -22,18 +22,23 @@ type Props = {
 
 function StoryDetailHeader(props: Props) {
   const {dataDetail} = props;
-  const {user} = dataDetail;
+  // const {user} = props && props.dataDetail;
 
   return (
     <StoryDetailHeaderContainer>
-      <HeadingText type={'h1'}>{dataDetail.title}</HeadingText>
+      <HeadingText type={'h1'}>{dataDetail && dataDetail.title}</HeadingText>
       <StoryDetailHeaderInfoContainer>
         <StoryDetailHeaderUserContainer style={{flex: 1}}>
-          <Link to={`/profile/${user.username}`}>
-            <HeadingText type={'h4'}>{user.fullname}</HeadingText>
+          <Link
+            to={`/profile/${dataDetail &&
+              dataDetail.user &&
+              dataDetail.user.username}`}>
+            <HeadingText type={'h4'}>
+              {dataDetail && dataDetail.user && dataDetail.user.fullname}
+            </HeadingText>
           </Link>
 
-          <Text>{timeAgo(dataDetail.createdAt)}</Text>
+          <Text>{timeAgo(dataDetail && dataDetail.createdAt)}</Text>
         </StoryDetailHeaderUserContainer>
       </StoryDetailHeaderInfoContainer>
     </StoryDetailHeaderContainer>

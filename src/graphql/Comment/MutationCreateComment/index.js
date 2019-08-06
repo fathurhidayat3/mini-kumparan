@@ -3,7 +3,7 @@
 import {Mutation} from 'react-apollo';
 import gql from 'graphql-tag';
 import type {
-  MutationCreateComment_CreateComment,
+  MutationCreateComment,
   MutationCreateCommentVariables,
 } from '../../types';
 
@@ -28,11 +28,11 @@ const mutation = gql`
   }
 `;
 
-class MutationCreateComment extends Mutation<
-  MutationCreateComment_CreateComment,
+class MutationCreateCommentComp extends Mutation<
+  MutationCreateComment,
   MutationCreateCommentVariables
 > {
   static mutation = mutation;
 }
 
-export default MutationCreateComment;
+export default MutationCreateCommentComp;

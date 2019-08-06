@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {Form, Input, Button} from 'antd';
+import styled from 'styled-components';
 
 import MutationCreateComment from '../../graphql/Comment/MutationCreateComment';
 import QueryGetPublishedArticleBySlug from '../../graphql/Article/QueryGetPublishedArticleBySlug';
@@ -32,27 +33,9 @@ function CommentForm(props: Props) {
   return (
     <MutationCreateComment
       mutation={MutationCreateComment.mutation}
-      variables={{
-        articleID: dataDetail.id,
-        fullname: userData && userData.fullname,
-        username: userData && userData.username,
-        message: value,
-      }}
-      onCompleted={() => setValue('')}
-      refetchQueries={[
-        {
-          query: QueryGetPublishedArticleBySlug.query,
-          variables: {slug},
-        },
-      ]}>
+      onCompleted={() => setValue('')}>
       {CreateComment => (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-            marginTop: 16,
-          }}>
+        <CommentFormContainer>
           <Form.Item style={{width: '100%'}}>
             <TextArea
               rows={4}
@@ -67,16 +50,43 @@ function CommentForm(props: Props) {
             <Button
               htmlType="submit"
               // loading={submitting}
-              onClick={CreateComment}
+              onClick={() =>
+                CreateComment({
+                  variables: {
+                    articleID: dataDetail.id,
+                    fullname: userData && userData.fullname,
+                    username: userData && userData.username,
+                    message: value,
+                  },
+                  optimisticResponse: {
+                    __typename: 'Comment',
+                    CreateComment: {
+                      __typename: 'Comment',
+                      id: 'yey',
+                      articleID: dataDetail.id,
+                      fullname: userData && userData.fullname,
+                      username: userData && userData.username,
+                      message: value,
+                    },
+                  },
+                })
+              }
               type="primary"
               disabled={isDisabled}>
               Add Comment
             </Button>
           </div>
-        </div>
+        </CommentFormContainer>
       )}
     </MutationCreateComment>
   );
 }
+
+const CommentFormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 16px;
+`;
 
 export default CommentForm;
