@@ -34,7 +34,9 @@ function DashboardCategory() {
       <Card style={{marginTop: 24}} bodyStyle={{padding: '0'}}>
         <QueryDashboardCategories
           query={QueryDashboardCategories.query}
-          variables={{username: userdata.userdata.username}}>
+          variables={{
+            username: userdata && userdata.username,
+          }}>
           {({loading, error, data}) => {
             if (loading || error) {
               return null;
@@ -45,6 +47,7 @@ function DashboardCategory() {
                 columns={columns}
                 dataSource={data && data.GetUserCategoriesByUsername}
                 pagination={false}
+                rowKey={'categoryslug'}
               />
             );
           }}
