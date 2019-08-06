@@ -4,7 +4,7 @@ import {Mutation} from 'react-apollo';
 import gql from 'graphql-tag';
 import {ArticleParts} from '../../fragments/FragmentArticle';
 import type {
-  MutationUpdateArticle_UpdateArticle,
+  MutationUpdateArticle,
   MutationUpdateArticleVariables,
 } from '../../types';
 
@@ -41,11 +41,11 @@ const mutation = gql`
   ${ArticleParts}
 `;
 
-class MutationUpdateArticle extends Mutation<
-  MutationUpdateArticle_UpdateArticle,
+class MutationUpdateArticleComp extends Mutation<
+  MutationUpdateArticle,
   MutationUpdateArticleVariables
 > {
   static mutation = mutation;
 }
 
-export default MutationUpdateArticle;
+export default MutationUpdateArticleComp;

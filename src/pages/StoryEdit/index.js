@@ -14,7 +14,6 @@ import StoryCreateCategoryBox from './StoryCreateCategoryBox';
 import StoryCreateBottomToolbox from './StoryCreateBottomToolbox';
 
 import MutationUpdateArticle from '../../graphql/Article/MutationUpdateArticle';
-import QueryGetProfileArticles from '../../graphql/User/QueryGetProfileArticles';
 
 import AuthContext from '../../contexts/AuthContext';
 
@@ -117,15 +116,15 @@ function StoryCreate(props: Props) {
                     .filter(checkedItem => checkedItem.isChecked === true)
                     .map(checkedItem => checkedItem.categoryslug),
               }}
-              refetchQueries={[
-                {
-                  query: QueryGetProfileArticles.query,
-                  variables: {
-                    username: userdata.username,
-                    category: '',
-                  },
-                },
-              ]}
+              // refetchQueries={[
+              //   {
+              //     query: QueryGetProfileArticles.query,
+              //     variables: {
+              //       username: userdata.username,
+              //       category: '',
+              //     },
+              //   },
+              // ]}
               onCompleted={() => props.history.push(`/dashboard/story`)}>
               {UpdateArticle => (
                 <div style={{padding: 16}}>

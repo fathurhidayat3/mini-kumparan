@@ -120,7 +120,23 @@ function DashboardArticle() {
         <QueryDashboardArticles
           query={QueryDashboardArticles.query}
           variables={{category, status, keyword}}
-          fetchPolicy={'network-only'}>
+          fetchPolicy={'cache-first'}
+          update={(store, {data: {UpdateArticle}}: any) => {
+            console.log('UpdateArticle >>>', UpdateArticle);
+            const data = store.readQuery({
+              query: QueryDashboardArticles.query,
+              variables: {category, status, keyword},
+            });
+            console.log('data >>>', data);
+            // console.log(data);
+            data &&
+              data.map(dataItem => {
+                dataItem =
+                  dataItem.id === UpdateArticle.id ? UpdateArticle : dataItem;
+                return dataItem;
+              });
+            store.writeQuery({query: UpdateArticle, data});
+          }}>
           {({loading, error, data}) => {
             if (loading || error) {
               return null;
