@@ -18,11 +18,13 @@ function SignInModal(props: any) {
     setModalRegisterVisible,
   } = props;
 
-  const [username, setUsername]: any = React.useState('');
-  const [password, setPassword]: any = React.useState('');
-  const [showRegister, setShowRegister]: any = React.useState(false);
+  const {setUserdata} = React.useContext(AuthContext);
 
-  const [confirmLoading, setConfirmLoading]: any = React.useState(false);
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [showRegister, setShowRegister] = React.useState(false);
+
+  const [confirmLoading, setConfirmLoading] = React.useState(false);
 
   function successLoginModal() {
     Modal.success({
@@ -59,74 +61,64 @@ function SignInModal(props: any) {
   }
 
   return (
-    <AuthContext.Consumer>
-      {({setUserdata}) => (
-        <>
-          <Modal
-            title="Sign in to do something cooler"
-            centered
-            visible={modalSignInVisible}
-            confirmLoading={confirmLoading}
-            onCancel={() => setModalSignInVisible(false)}
-            onOk={() => {
-              setConfirmLoading(true);
+    <>
+      <Modal
+        title="Sign in to do something cooler"
+        centered
+        visible={modalSignInVisible}
+        confirmLoading={confirmLoading}
+        onCancel={() => setModalSignInVisible(false)}
+        onOk={() => {
+          setConfirmLoading(true);
 
-              handleSignIn(username, password).then(async data => {
-                checkSignInStatus(data, setUserdata);
-              });
-            }}>
-            <FormGroup>
-              <Input
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                placeholder="Enter your username/email"
-                prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}} />}
-                suffix={
-                  <Tooltip title="You can use either username or email to continue">
-                    <Icon
-                      type="info-circle"
-                      style={{color: 'rgba(0,0,0,.45)'}}
-                    />
-                  </Tooltip>
-                }
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <Input.Password
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}} />}
-                suffix={
-                  <Tooltip title="Make sure you don't share your credential data">
-                    <Icon
-                      type="info-circle"
-                      style={{color: 'rgba(0,0,0,.45)'}}
-                    />
-                  </Tooltip>
-                }
-              />
-            </FormGroup>
-
-            {showRegister && (
-              <Button
-                onClick={() => {
-                  setModalSignInVisible(false);
-                  setModalRegisterVisible(true);
-                }}>
-                Register here
-              </Button>
-            )}
-          </Modal>
-
-          <RegisterModal
-            modalRegisterVisible={modalRegisterVisible}
-            setModalRegisterVisible={setModalRegisterVisible}
+          handleSignIn(username, password).then(async data => {
+            checkSignInStatus(data, setUserdata);
+          });
+        }}>
+        <FormGroup>
+          <Input
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            placeholder="Enter your username/email"
+            prefix={<Icon type="user" style={{color: 'rgba(0,0,0,.25)'}} />}
+            suffix={
+              <Tooltip title="You can use either username or email to continue">
+                <Icon type="info-circle" style={{color: 'rgba(0,0,0,.45)'}} />
+              </Tooltip>
+            }
           />
-        </>
-      )}
-    </AuthContext.Consumer>
+        </FormGroup>
+
+        <FormGroup>
+          <Input.Password
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Enter your password"
+            prefix={<Icon type="lock" style={{color: 'rgba(0,0,0,.25)'}} />}
+            suffix={
+              <Tooltip title="Make sure you don't share your credential data">
+                <Icon type="info-circle" style={{color: 'rgba(0,0,0,.45)'}} />
+              </Tooltip>
+            }
+          />
+        </FormGroup>
+
+        {showRegister && (
+          <Button
+            onClick={() => {
+              setModalSignInVisible(false);
+              setModalRegisterVisible(true);
+            }}>
+            Register here
+          </Button>
+        )}
+      </Modal>
+
+      <RegisterModal
+        modalRegisterVisible={modalRegisterVisible}
+        setModalRegisterVisible={setModalRegisterVisible}
+      />
+    </>
   );
 }
 

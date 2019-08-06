@@ -40,45 +40,40 @@ function Home(props: Props) {
   const categoryName =
     (pathname.split('/')[2] && pathname.split('/')[2].toUpperCase()) || '';
 
+  const {filterData} = React.useContext(FilterContext);
+
   return (
-    <FilterContext.Consumer>
-      {({filterData}) => (
-        <Base>
-          {filterData.keyword && (
-            <div style={{marginBottom: 16}}>
-              Hasil pencarian dari kunci
-              <span style={{fontWeight: 'bold'}}> {filterData.keyword}</span>
-            </div>
-          )}
-
-          <GetPublishedArticles
-            query={
-              filterData.keyword !== '' ? query : GetPublishedArticles.query
-            }
-            variables={{
-              category: filterData.category || categoryName,
-              keyword: filterData.keyword || '',
-            }}>
-            {({loading, error, data}) => {
-              if (loading || error) {
-                return <SkeletonLoaderList length={4} />;
-              }
-
-              const resdata =
-                data.GetPublishedArticlesByCategory ||
-                data.FindPublishedArticles;
-
-              return (
-                <>
-                  <HomeMeta />
-                  <ArticleList data={resdata} />
-                </>
-              );
-            }}
-          </GetPublishedArticles>
-        </Base>
+    <Base>
+      {filterData.keyword && (
+        <div style={{marginBottom: 16}}>
+          Hasil pencarian dari kunci
+          <span style={{fontWeight: 'bold'}}> {filterData.keyword}</span>
+        </div>
       )}
-    </FilterContext.Consumer>
+
+      <GetPublishedArticles
+        query={filterData.keyword !== '' ? query : GetPublishedArticles.query}
+        variables={{
+          category: filterData.category || categoryName,
+          keyword: filterData.keyword || '',
+        }}>
+        {({loading, error, data}) => {
+          if (loading || error) {
+            return <SkeletonLoaderList length={4} />;
+          }
+
+          const resdata =
+            data.GetPublishedArticlesByCategory || data.FindPublishedArticles;
+
+          return (
+            <>
+              <HomeMeta />
+              <ArticleList data={resdata} />
+            </>
+          );
+        }}
+      </GetPublishedArticles>
+    </Base>
   );
 }
 

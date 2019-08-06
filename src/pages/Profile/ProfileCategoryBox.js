@@ -12,49 +12,43 @@ import HeadingText from '../../components/HeadingText';
 
 export default function ProfileCategoryBox(props: any) {
   const {userdata} = props;
+  const {setCategory} = React.useContext(CategoryContext);
 
   const defaultCategories = ['News', 'Politik', 'Entertainment', 'Otomotif'];
-  // setCategory={setCategory}
   return (
-    <CategoryContext.Consumer>
-      {({setCategory}) => (
-        <>
-          <HeadingText type={'h4'}>Categories</HeadingText>
+    <>
+      <HeadingText type={'h4'}>Categories</HeadingText>
 
-          <QueryGetUserCategoriesByUsername
-            query={QueryGetUserCategoriesByUsername.query}
-            variables={{username: userdata.username}}>
-            {({loading, error, data}) => {
-              if (loading || error) {
-                return '';
-              }
+      <QueryGetUserCategoriesByUsername
+        query={QueryGetUserCategoriesByUsername.query}
+        variables={{username: userdata.username}}>
+        {({loading, error, data}) => {
+          if (loading || error) {
+            return '';
+          }
 
-              return (
-                <CategoryContainer>
-                  {defaultCategories.map(categoryDefaultItem => (
-                    <CustomTag
-                      onClick={() =>
-                        setCategory(categoryDefaultItem.toUpperCase())
-                      }
-                      key={categoryDefaultItem}>
-                      {categoryDefaultItem.toUpperCase()}
-                    </CustomTag>
-                  ))}
+          return (
+            <CategoryContainer>
+              {defaultCategories.map(categoryDefaultItem => (
+                <CustomTag
+                  onClick={() => setCategory(categoryDefaultItem.toUpperCase())}
+                  key={categoryDefaultItem}>
+                  {categoryDefaultItem.toUpperCase()}
+                </CustomTag>
+              ))}
 
-                  {data.GetUserCategoriesByUsername.map(categoryItem => (
-                    <CustomTag
-                      onClick={() => setCategory(categoryItem.categoryslug)}
-                      key={categoryItem.categoryslug}>
-                      {categoryItem.categoryname.toUpperCase()}
-                    </CustomTag>
-                  ))}
-                </CategoryContainer>
-              );
-            }}
-          </QueryGetUserCategoriesByUsername>
-        </>
-      )}
-    </CategoryContext.Consumer>
+              {data.GetUserCategoriesByUsername.map(categoryItem => (
+                <CustomTag
+                  onClick={() => setCategory(categoryItem.categoryslug)}
+                  key={categoryItem.categoryslug}>
+                  {categoryItem.categoryname.toUpperCase()}
+                </CustomTag>
+              ))}
+            </CategoryContainer>
+          );
+        }}
+      </QueryGetUserCategoriesByUsername>
+    </>
   );
 }
 

@@ -22,6 +22,9 @@ function Navbar(props: any) {
     setModalRegisterVisible,
   } = props;
 
+  const {userdata, setUserdata} = React.useContext(AuthContext);
+  const {setFilterData} = React.useContext(FilterContext);
+
   const menuItems = (userdata, setUserdata) => (
     <Menu style={{width: 120}}>
       <Menu.Item>
@@ -46,56 +49,42 @@ function Navbar(props: any) {
   );
 
   return (
-    <AuthContext.Consumer>
-      {({userdata, setUserdata}) => {
-        return (
-          <FilterContext.Consumer>
-            {({setFilterData}) => {
-              return (
-                <NavbarContainer>
-                  <NavbarPart>
-                    <HeadingText
-                      type={'h3'}
-                      style={{color: '#00a1b0', cursor: 'pointer'}}
-                      onClick={() => {
-                        setFilterData({category: ''});
-                        props.history.push('/dashboard/story');
-                      }}>
-                      Mini Kumparan Dashboard
-                    </HeadingText>
-                  </NavbarPart>
+    <NavbarContainer>
+      <NavbarPart>
+        <HeadingText
+          type={'h3'}
+          style={{color: '#00a1b0', cursor: 'pointer'}}
+          onClick={() => {
+            setFilterData({category: ''});
+            props.history.push('/dashboard/story');
+          }}>
+          Mini Kumparan Dashboard
+        </HeadingText>
+      </NavbarPart>
 
-                  <NavbarPart justifyContent={'flex-end'}>
-                    {userdata && userdata.token ? (
-                      <>
-                        <Dropdown
-                          overlay={() => menuItems(userdata, setUserdata)}
-                          placement="bottomRight">
-                          <Button>Hello {userdata.fullname}</Button>
-                        </Dropdown>
-                      </>
-                    ) : (
-                      <Button
-                        type={'primary'}
-                        onClick={() => setModalSignInVisible(true)}>
-                        Sign In
-                      </Button>
-                    )}
-                  </NavbarPart>
+      <NavbarPart justifyContent={'flex-end'}>
+        {userdata && userdata.token ? (
+          <>
+            <Dropdown
+              overlay={() => menuItems(userdata, setUserdata)}
+              placement="bottomRight">
+              <Button>Hello {userdata.fullname}</Button>
+            </Dropdown>
+          </>
+        ) : (
+          <Button type={'primary'} onClick={() => setModalSignInVisible(true)}>
+            Sign In
+          </Button>
+        )}
+      </NavbarPart>
 
-                  <SignInModal
-                    modalSignInVisible={modalSignInVisible}
-                    setModalSignInVisible={setModalSignInVisible}
-                    modalRegisterVisible={modalRegisterVisible}
-                    setModalRegisterVisible={setModalRegisterVisible}
-                  />
-                </NavbarContainer>
-              );
-            }}
-          </FilterContext.Consumer>
-        );
-      }}
-    </AuthContext.Consumer>
+      <SignInModal
+        modalSignInVisible={modalSignInVisible}
+        setModalSignInVisible={setModalSignInVisible}
+        modalRegisterVisible={modalRegisterVisible}
+        setModalRegisterVisible={setModalRegisterVisible}
+      />
+    </NavbarContainer>
   );
 }
 

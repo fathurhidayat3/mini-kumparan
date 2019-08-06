@@ -10,6 +10,8 @@ import DashboardCategoryToolbox from './DashboardCategoryToolbox';
 import QueryDashboardCategories from '../../graphql/Category/QueryDashboardCategories';
 
 function DashboardCategory() {
+  const {userdata} = React.useContext(AuthContext);
+
   const columns = [
     {
       title: 'Name',
@@ -26,33 +28,29 @@ function DashboardCategory() {
   ];
 
   return (
-    <AuthContext.Consumer>
-      {userdata => (
-        <Col span={10} offset={1}>
-          <DashboardCategoryToolbox />
+    <Col span={10} offset={1}>
+      <DashboardCategoryToolbox />
 
-          <Card style={{marginTop: 24}} bodyStyle={{padding: '0'}}>
-            <QueryDashboardCategories
-              query={QueryDashboardCategories.query}
-              variables={{username: userdata.userdata.username}}>
-              {({loading, error, data}) => {
-                if (loading || error) {
-                  return null;
-                }
+      <Card style={{marginTop: 24}} bodyStyle={{padding: '0'}}>
+        <QueryDashboardCategories
+          query={QueryDashboardCategories.query}
+          variables={{username: userdata.userdata.username}}>
+          {({loading, error, data}) => {
+            if (loading || error) {
+              return null;
+            }
 
-                return (
-                  <Table
-                    columns={columns}
-                    dataSource={data.GetUserCategoriesByUsername}
-                    pagination={false}
-                  />
-                );
-              }}
-            </QueryDashboardCategories>
-          </Card>
-        </Col>
-      )}
-    </AuthContext.Consumer>
+            return (
+              <Table
+                columns={columns}
+                dataSource={data.GetUserCategoriesByUsername}
+                pagination={false}
+              />
+            );
+          }}
+        </QueryDashboardCategories>
+      </Card>
+    </Col>
   );
 }
 

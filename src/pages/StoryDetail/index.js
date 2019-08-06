@@ -7,14 +7,12 @@ import FilterContext from '../../contexts/FilterContext';
 import StoryDetail from './StoryDetail';
 
 function StoryDetailContainer() {
+  const {filterData, setFilterData} = React.useContext(FilterContext);
+
   return (
-    <FilterContext.Consumer>
-      {({filterData, setFilterData}) => (
-        <StoryDetail
-          filterData={filterData}
-          setFilterData={setFilterData}></StoryDetail>
-      )}
-    </FilterContext.Consumer>
+    <StoryDetail
+      filterData={filterData}
+      setFilterData={setFilterData}></StoryDetail>
   );
 }
 

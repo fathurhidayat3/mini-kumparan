@@ -36,6 +36,8 @@ type Props = {
 };
 
 function StoryCreate(props: Props) {
+  const {userdata} = React.useContext(AuthContext);
+
   const [title, setTitle] = React.useState('');
   const [thumbnail, setThumbnail] = React.useState('');
   const [slug, setSlug] = React.useState('');
@@ -63,123 +65,119 @@ function StoryCreate(props: Props) {
   }, [titleInputRef]);
 
   return (
-    <AuthContext.Consumer>
-      {({userdata}) => (
-        <Layout>
-          <Navbar />
-          <Content style={{position: 'relative'}}>
-            <StoryCreateMeta />
+    <Layout>
+      <Navbar />
+      <Content style={{position: 'relative'}}>
+        <StoryCreateMeta />
 
-            <Row type={'flex'} justify={'center'}>
-              <Col span={13}>
-                <MutationCreateArticle
-                  mutation={MutationCreateArticle.mutation}
-                  variables={{
-                    title,
-                    body: JSON.stringify(
-                      convertToRaw(editorState.getCurrentContent())
-                    ),
-                    slug,
-                    username: userdata && userdata.username,
-                    status: articleStatus,
-                    thumbnail,
-                    categories:
-                      checkedCategories &&
-                      checkedCategories
-                        // $FlowFixMe
-                        .filter(checkedItem => checkedItem.isChecked === true)
-                        .map(checkedItem => checkedItem.categoryslug),
-                  }}
-                  refetchQueries={[
-                    {
-                      query: QueryGetProfileArticles.query,
-                      variables: {
-                        username: userdata.username,
-                        category: '',
-                      },
-                    },
-                  ]}
-                  onCompleted={() =>
-                    props.history.push(`/profile/${userdata.username}`)
-                  }>
-                  {CreateArticle => (
-                    <div style={{padding: 16}}>
-                      <div>
-                        <CustomInputTitle
-                          value={title}
-                          ref={titleInputRef}
-                          onChange={e => handleTitleChange(e)}
-                          placeholder="Title"
-                        />
-                      </div>
+        <Row type={'flex'} justify={'center'}>
+          <Col span={13}>
+            <MutationCreateArticle
+              mutation={MutationCreateArticle.mutation}
+              variables={{
+                title,
+                body: JSON.stringify(
+                  convertToRaw(editorState.getCurrentContent())
+                ),
+                slug,
+                username: userdata && userdata.username,
+                status: articleStatus,
+                thumbnail,
+                categories:
+                  checkedCategories &&
+                  checkedCategories
+                    // $FlowFixMe
+                    .filter(checkedItem => checkedItem.isChecked === true)
+                    .map(checkedItem => checkedItem.categoryslug),
+              }}
+              refetchQueries={[
+                {
+                  query: QueryGetProfileArticles.query,
+                  variables: {
+                    username: userdata.username,
+                    category: '',
+                  },
+                },
+              ]}
+              onCompleted={() =>
+                props.history.push(`/profile/${userdata.username}`)
+              }>
+              {CreateArticle => (
+                <div style={{padding: 16}}>
+                  <div>
+                    <CustomInputTitle
+                      value={title}
+                      ref={titleInputRef}
+                      onChange={e => handleTitleChange(e)}
+                      placeholder="Title"
+                    />
+                  </div>
 
-                      <div style={{margin: '16px 0'}}>
-                        <Input
-                          value={slug}
-                          onChange={e => setSlug(e.target.value)}
-                          placeholder="Slug"
-                        />
-                      </div>
+                  <div style={{margin: '16px 0'}}>
+                    <Input
+                      value={slug}
+                      onChange={e => setSlug(e.target.value)}
+                      placeholder="Slug"
+                    />
+                  </div>
 
-                      <Affix offsetTop={63}>
-                        <Card bodyStyle={{padding: '8px'}}>
-                          <EditorTopToolbox>
-                            <EditorToolbox
-                              editorState={editorState}
-                              setEditorState={setEditorState}
-                            />
-
-                            <WordCounter>
-                              {checkContentLength(editorState)}
-                            </WordCounter>
-                          </EditorTopToolbox>
-                        </Card>
-                      </Affix>
-
-                      <Card
-                        bodyStyle={{
-                          padding: 16,
-                          minHeight: 450,
-                        }}
-                        onClick={setContentInputFocus}
-                        style={{marginTop: 16}}>
-                        <Editor
-                          ref={contentInputRef}
+                  <Affix offsetTop={63}>
+                    <Card bodyStyle={{padding: '8px'}}>
+                      <EditorTopToolbox>
+                        <EditorToolbox
                           editorState={editorState}
-                          handleKeyCommand={handleKeyCommand}
-                          onChange={setEditorState}
+                          setEditorState={setEditorState}
                         />
-                      </Card>
 
-                      <Row
-                        style={{
-                          marginTop: 32,
-                        }}
-                        gutter={24}>
-                        <StoryCreateThumbnailBox setThumbnail={setThumbnail} />
+                        <WordCounter>
+                          {checkContentLength(editorState)}
+                        </WordCounter>
+                      </EditorTopToolbox>
+                    </Card>
+                  </Affix>
 
-                        <StoryCreateCategoryBox
-                          userdata={userdata}
-                          checkedCategories={checkedCategories}
-                          setCheckedCategories={setCheckedCategories}
-                        />
-                      </Row>
+                  <Card
+                    bodyStyle={{
+                      padding: 16,
+                      minHeight: 450,
+                    }}
+                    onClick={setContentInputFocus}
+                    style={{marginTop: 16}}>
+                    <Editor
+                      ref={contentInputRef}
+                      editorState={editorState}
+                      handleKeyCommand={handleKeyCommand}
+                      onChange={setEditorState}
+                    />
+                  </Card>
 
-                      <StoryCreateBottomToolbox
-                        articleStatus={articleStatus}
-                        setArticleStatus={setArticleStatus}
-                        editorBottomOnSubmit={CreateArticle}
-                        storyStates={{title, editorState}}
-                      />
-                    </div>
-                  )}
-                </MutationCreateArticle>
-              </Col>
-            </Row>
-          </Content>
-        </Layout>
-      )}
-    </AuthContext.Consumer>
+                  <Row
+                    style={{
+                      marginTop: 32,
+                    }}
+                    gutter={24}>
+                    <StoryCreateThumbnailBox setThumbnail={setThumbnail} />
+
+                    <StoryCreateCategoryBox
+                      userdata={userdata}
+                      checkedCategories={checkedCategories}
+                      setCheckedCategories={setCheckedCategories}
+                    />
+                  </Row>
+
+                  <StoryCreateBottomToolbox
+                    articleStatus={articleStatus}
+                    setArticleStatus={setArticleStatus}
+                    editorBottomOnSubmit={CreateArticle}
+                    storyStates={{title, editorState}}
+                  />
+                </div>
+              )}
+            </MutationCreateArticle>
+          </Col>
+        </Row>
+      </Content>
+    </Layout>
   );
 }
 
