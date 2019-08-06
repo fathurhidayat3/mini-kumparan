@@ -36,7 +36,8 @@ function DashboardCategory() {
           query={QueryDashboardCategories.query}
           variables={{
             username: userdata && userdata.username,
-          }}>
+          }}
+          fetchPolicy={'network-only'}>
           {({loading, error, data}) => {
             if (loading || error) {
               return null;

@@ -119,7 +119,8 @@ function DashboardArticle() {
       <Card style={{marginTop: 24}} bodyStyle={{padding: '0'}}>
         <QueryDashboardArticles
           query={QueryDashboardArticles.query}
-          variables={{category, status, keyword}}>
+          variables={{category, status, keyword}}
+          fetchPolicy={'network-only'}>
           {({loading, error, data}) => {
             if (loading || error) {
               return null;
