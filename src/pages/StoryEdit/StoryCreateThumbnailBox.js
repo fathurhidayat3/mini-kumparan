@@ -7,7 +7,7 @@ import HeadingText from '../../components/HeadingText';
 import Thumbnail from '../../components/Thumbnail';
 
 export default function StoryCreateThumbnailBox(props: any) {
-  const {setThumbnail} = props;
+  const {thumbnail, setThumbnail} = props;
 
   return (
     <Col span={8}>
@@ -21,7 +21,7 @@ export default function StoryCreateThumbnailBox(props: any) {
             display: 'flex',
             justifyContent: 'center',
           }}>
-          <Thumbnail setThumbnail={setThumbnail} />
+          <Thumbnail thumbnail={thumbnail} setThumbnail={setThumbnail} />
         </div>
       </Card>
     </Col>

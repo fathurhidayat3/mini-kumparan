@@ -39,12 +39,12 @@ type Props = {
 function StoryCreate(props: Props) {
   const {userdata} = React.useContext(AuthContext);
 
-  const [saved, setSaved] = React.useState(
-    props.location.state.saved.filter(item => {
-      return item.slug === props.match.params.storyId;
-    })[0]
+  const [saved] = React.useState(
+    props.location.state.saved.filter(
+      item => item.slug === props.match.params.storyId
+    )[0]
   );
-  const [id, setId] = React.useState(saved.id || '');
+  const [id] = React.useState(saved.id || '');
   const [title, setTitle] = React.useState(saved.title || '');
   const [thumbnail, setThumbnail] = React.useState(saved.thumbnail || '');
   const [slug, setSlug] = React.useState(saved.slug || '');
@@ -182,7 +182,10 @@ function StoryCreate(props: Props) {
                       marginTop: 32,
                     }}
                     gutter={24}>
-                    <StoryCreateThumbnailBox setThumbnail={setThumbnail} />
+                    <StoryCreateThumbnailBox
+                      thumbnail={thumbnail}
+                      setThumbnail={setThumbnail}
+                    />
 
                     <StoryCreateCategoryBox
                       userdata={userdata}

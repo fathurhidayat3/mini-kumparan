@@ -23,6 +23,7 @@ function beforeUpload(file) {
 }
 
 type Props = {
+  thumbnail: String,
   setThumbnail: Function,
 };
 
@@ -32,10 +33,15 @@ type State = {
 };
 
 class Thumbnail extends React.Component<Props, State> {
-  state = {
-    loading: false,
-    imageUrl: '',
-  };
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      loading: false,
+      // $FlowFixMe
+      imageUrl: `${process.env.REACT_APP_GQL_URL}${this.props.thumbnail}`,
+    };
+  }
 
   handleChange = (info: Object) => {
     if (info.file.status === 'uploading') {
