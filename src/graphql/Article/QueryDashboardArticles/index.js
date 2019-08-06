@@ -2,6 +2,10 @@
 
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
+import type {
+  QueryDashboardArticles,
+  QueryDashboardArticlesVariables,
+} from '../../types';
 
 const query = gql`
   query QueryDashboardArticles(
@@ -23,8 +27,11 @@ const query = gql`
   }
 `;
 
-class QueryDashboardArticles extends Query<> {
+class QueryDashboardArticlesComp extends Query<
+  QueryDashboardArticles,
+  QueryDashboardArticlesVariables
+> {
   static query = query;
 }
 
-export default QueryDashboardArticles;
+export default QueryDashboardArticlesComp;

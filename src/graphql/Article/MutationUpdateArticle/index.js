@@ -2,6 +2,10 @@
 
 import {Mutation} from 'react-apollo';
 import gql from 'graphql-tag';
+import type {
+  MutationUpdateArticle_UpdateArticle,
+  MutationUpdateArticleVariables,
+} from '../../types';
 
 const mutation = gql`
   mutation MutationUpdateArticle(
@@ -39,7 +43,10 @@ const mutation = gql`
   }
 `;
 
-class MutationUpdateArticle extends Mutation {
+class MutationUpdateArticle extends Mutation<
+  MutationUpdateArticle_UpdateArticle,
+  MutationUpdateArticleVariables
+> {
   static mutation = mutation;
 }
 

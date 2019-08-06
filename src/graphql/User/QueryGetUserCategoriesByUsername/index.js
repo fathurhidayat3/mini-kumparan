@@ -2,6 +2,10 @@
 
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
+import type {
+  QueryGetUserCategoriesByUsername,
+  QueryGetUserCategoriesByUsernameVariables,
+} from '../../types';
 
 const query = gql`
   query QueryGetUserCategoriesByUsername($username: String!) {
@@ -13,8 +17,11 @@ const query = gql`
   }
 `;
 
-class QueryGetUserCategoriesByUsername extends Query<> {
+class QueryGetUserCategoriesByUsernameComp extends Query<
+  QueryGetUserCategoriesByUsername,
+  QueryGetUserCategoriesByUsernameVariables
+> {
   static query = query;
 }
 
-export default QueryGetUserCategoriesByUsername;
+export default QueryGetUserCategoriesByUsernameComp;

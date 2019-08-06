@@ -2,6 +2,10 @@
 
 import {Mutation} from 'react-apollo';
 import gql from 'graphql-tag';
+import type {
+  QCreateArticle_CreateArticle,
+  QCreateArticleVariables,
+} from '../../types';
 
 const mutation = gql`
   mutation QCreateArticle(
@@ -33,7 +37,10 @@ const mutation = gql`
   }
 `;
 
-class MutationCreateArticle extends Mutation {
+class MutationCreateArticle extends Mutation<
+  QCreateArticle_CreateArticle,
+  QCreateArticleVariables
+> {
   static mutation = mutation;
 }
 

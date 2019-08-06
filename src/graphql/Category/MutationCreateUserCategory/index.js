@@ -2,6 +2,10 @@
 
 import {Mutation} from 'react-apollo';
 import gql from 'graphql-tag';
+import type {
+  MutationCreateUserCategory_CreateUserCategory,
+  MutationCreateUserCategoryVariables,
+} from '../../types';
 
 const mutation = gql`
   mutation MutationCreateUserCategory(
@@ -22,7 +26,10 @@ const mutation = gql`
   }
 `;
 
-class MutationCreateUserCategory extends Mutation {
+class MutationCreateUserCategory extends Mutation<
+  MutationCreateUserCategory_CreateUserCategory,
+  MutationCreateUserCategoryVariables
+> {
   static mutation = mutation;
 }
 

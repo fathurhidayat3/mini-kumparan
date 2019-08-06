@@ -2,6 +2,10 @@
 
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
+import type {
+  QueryGetPublishedArticleBySlug,
+  QueryGetPublishedArticleBySlugVariables,
+} from '../../types';
 
 const query = gql`
   query QueryGetPublishedArticleBySlug($slug: String!) {
@@ -28,8 +32,11 @@ const query = gql`
   }
 `;
 
-class QueryGetPublishedArticleBySlug extends Query<> {
+class QueryGetPublishedArticleBySlugComp extends Query<
+  QueryGetPublishedArticleBySlug,
+  QueryGetPublishedArticleBySlugVariables
+> {
   static query = query;
 }
 
-export default QueryGetPublishedArticleBySlug;
+export default QueryGetPublishedArticleBySlugComp;
