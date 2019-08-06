@@ -38,8 +38,11 @@ class Thumbnail extends React.Component<Props, State> {
 
     this.state = {
       loading: false,
-      // $FlowFixMe
-      imageUrl: `${process.env.REACT_APP_GQL_URL}${this.props.thumbnail}`,
+
+      imageUrl:
+        this.props.thumbnail &&
+        // $FlowFixMe
+        `${process.env.REACT_APP_GQL_URL}${this.props.thumbnail}`,
     };
   }
 
