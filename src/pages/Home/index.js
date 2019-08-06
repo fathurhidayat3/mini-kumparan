@@ -15,8 +15,6 @@ import Base from '../../components/Base';
 import ArticleList from './ArticleList';
 import SkeletonLoaderList from '../../components/SkeletonLoaderList';
 
-import gql from 'graphql-tag';
-
 type Props = {
   history: Object,
 };

@@ -34,11 +34,10 @@ function Profile(props: any) {
               return '';
             }
 
-            const userdata = data && data.user;
-            const articles = data && data.articles;
-
-            // const dataProfile = data && data.;
-            // const {user: userdata, articles} = dataProfile;
+            const userdata =
+              data && data.ProfileArticles && data.ProfileArticles.user;
+            const articles =
+              data && data.ProfileArticles && data.ProfileArticles.articles;
 
             return (
               <Content>
