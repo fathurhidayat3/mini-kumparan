@@ -30,10 +30,7 @@ function DashboardArticle() {
       width: 300,
       // eslint-disable-next-line react/display-name
       render: slug => (
-        <Link
-          // $FlowFixMe
-          to={`/story/${slug}`}
-          style={{textDecoration: 'underline'}}>
+        <Link to={`/story/${slug}`} style={{textDecoration: 'underline'}}>
           {slug}
         </Link>
       ),
@@ -135,6 +132,7 @@ function DashboardArticle() {
                 columns={columns}
                 dataSource={data.DashboardArticles}
                 pagination={false}
+                rowKey="slug"
               />
             );
           }}
