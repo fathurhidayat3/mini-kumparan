@@ -2,6 +2,7 @@
 
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
+import {ArticleParts} from '../../fragments/FragmentArticle';
 import type {
   QueryDashboardArticles,
   QueryDashboardArticlesVariables,
@@ -14,17 +15,14 @@ const query = gql`
     $status: String!
   ) {
     DashboardArticles(keyword: $keyword, category: $category, status: $status) {
-      id
-      title
+      ...ArticleParts
       body
-      categories
       status
-      slug
-      thumbnail
-      createdAt
       updatedAt
+      categories
     }
   }
+  ${ArticleParts}
 `;
 
 class QueryDashboardArticlesComp extends Query<

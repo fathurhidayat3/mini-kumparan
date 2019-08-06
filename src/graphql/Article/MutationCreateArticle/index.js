@@ -2,6 +2,7 @@
 
 import {Mutation} from 'react-apollo';
 import gql from 'graphql-tag';
+import {ArticleParts} from '../../fragments/FragmentArticle';
 import type {
   QCreateArticle_CreateArticle,
   QCreateArticleVariables,
@@ -28,13 +29,10 @@ const mutation = gql`
         categories: $categories
       }
     ) {
-      id
-      title
-      body
-      slug
-      thumbnail
+      ...ArticleParts
     }
   }
+  ${ArticleParts}
 `;
 
 class MutationCreateArticle extends Mutation<

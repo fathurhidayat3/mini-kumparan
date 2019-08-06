@@ -2,6 +2,7 @@
 
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
+import {ArticleParts} from '../../fragments/FragmentArticle';
 import type {
   QueryFindPublishedArticles,
   QueryFindPublishedArticlesVariables,
@@ -10,17 +11,10 @@ import type {
 const query = gql`
   query QueryFindPublishedArticles($keyword: String!) {
     FindPublishedArticles(keyword: $keyword) {
-      id
-      title
-      slug
-      thumbnail
-      createdAt
-      totalComments
-      user {
-        fullname
-      }
+      ...ArticleParts
     }
   }
+  ${ArticleParts}
 `;
 
 class QueryFindPublishedArticlesComp extends Query<

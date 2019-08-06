@@ -2,6 +2,7 @@
 
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
+import {ArticleParts} from '../../fragments/FragmentArticle';
 import type {
   QueryGetPublishedArticleBySlug,
   QueryGetPublishedArticleBySlugVariables,
@@ -10,26 +11,22 @@ import type {
 const query = gql`
   query QueryGetPublishedArticleBySlug($slug: String!) {
     GetPublishedArticleBySlug(slug: $slug) {
-      id
-      title
-      slug
+      ...ArticleParts
       body
-      thumbnail
       status
-      createdAt
       updatedAt
       categories
       user {
         username
         fullname
       }
-      totalComments
       comments {
         fullname
         message
       }
     }
   }
+  ${ArticleParts}
 `;
 
 class QueryGetPublishedArticleBySlugComp extends Query<

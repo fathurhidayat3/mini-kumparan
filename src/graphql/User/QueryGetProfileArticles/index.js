@@ -3,7 +3,7 @@
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
 import type {
-  QueryProfileArticles_ProfileArticles,
+  QueryProfileArticles,
   QueryProfileArticlesVariables,
 } from '../../types';
 
@@ -34,7 +34,7 @@ const query = gql`
 `;
 
 class QueryGetProfileArticlesComp extends Query<
-  QueryProfileArticles_ProfileArticles,
+  QueryProfileArticles,
   QueryProfileArticlesVariables
 > {
   static query = query;
