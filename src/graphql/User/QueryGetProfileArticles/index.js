@@ -2,6 +2,7 @@
 
 import {Query} from 'react-apollo';
 import gql from 'graphql-tag';
+import {ArticleParts} from '../../fragments/FragmentArticle';
 import type {
   QueryProfileArticles,
   QueryProfileArticlesVariables,
@@ -11,14 +12,9 @@ const query = gql`
   query QueryProfileArticles($username: String!, $category: String!) {
     ProfileArticles(username: $username, category: $category) {
       articles {
-        id
-        title
+        ...ArticleParts
         body
         status
-        slug
-        createdAt
-        thumbnail
-        totalComments
         user {
           userId
           username
@@ -31,6 +27,7 @@ const query = gql`
       }
     }
   }
+  ${ArticleParts}
 `;
 
 class QueryGetProfileArticlesComp extends Query<
