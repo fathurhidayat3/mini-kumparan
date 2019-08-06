@@ -4,10 +4,12 @@
   "private": true,
   "dependencies": {
     "antd": "^3.20.7",
+    "apollo": "^2.17.1",
     "apollo-boost": "^0.4.3",
     "dayjs": "^1.8.15",
     "dotenv": "^8.0.0",
     "draft-js": "^0.11.0",
+    "global": "^4.4.0",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
     "react": "^16.8.6",
@@ -27,7 +29,9 @@
     "format": "yarn lint --fix",
     "typecheck": "flow",
     "lint": "eslint . --max-warnings 0",
-    "test": "yarn lint && yarn typecheck && yarn test-script"
+    "test": "yarn lint && yarn typecheck && yarn test-script",
+    "apollo:generate": "apollo codegen:generate --localSchemaFile=schema.json --excludes=node_modules/* --includes=src/**/*.js --addTypename --target=flow --tagName=gql  --useFlowExactObjects --passthroughCustomScalars --outputFlat src/graphql/types.js",
+    "apollo:download-schema": "apollo client:download-schema"
   },
   "devDependencies": {
     "eslint-config-prettier": "^6.0.0",
