@@ -4,7 +4,11 @@ import React from 'react';
 
 import {Editor, EditorState, convertFromRaw} from 'draft-js';
 
-export default function CustomEditor(props: any) {
+type Props = {
+  body: Object,
+};
+
+export default function CustomEditor(props: Props) {
   const {body} = props;
 
   const [editorState, setEditorState] = React.useState(

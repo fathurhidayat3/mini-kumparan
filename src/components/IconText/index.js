@@ -4,9 +4,13 @@ import {Icon} from 'antd';
 
 import {IconTextContainer} from './style';
 
-export default function IconText({type, text, ...otherProps}: any) {
+type Props = {type: string, text: string};
+
+export default function IconText(props: Props) {
+  const {type, text} = props;
+
   return (
-    <IconTextContainer {...otherProps}>
+    <IconTextContainer>
       <Icon type={type} style={{marginRight: 8}} />
       {text}
     </IconTextContainer>

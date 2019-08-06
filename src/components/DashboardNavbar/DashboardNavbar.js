@@ -14,7 +14,15 @@ import FilterContext from '../../contexts/FilterContext';
 
 import HeadingText from '../HeadingText';
 
-function Navbar(props: any) {
+type Props = {
+  modalSignInVisible: boolean,
+  setModalSignInVisible: Function,
+  modalRegisterVisible: boolean,
+  setModalRegisterVisible: Function,
+  history: Object,
+};
+
+function Navbar(props: Props) {
   const {
     modalSignInVisible,
     setModalSignInVisible,

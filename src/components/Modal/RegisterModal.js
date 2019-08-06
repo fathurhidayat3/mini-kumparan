@@ -9,7 +9,12 @@ import AuthContext from '../../contexts/AuthContext';
 
 import handleRegister from '../../utils/handleRegister';
 
-function RegisterModal(props: any) {
+type Props = {
+  modalRegisterVisible: boolean,
+  setModalRegisterVisible: Function,
+};
+
+function RegisterModal(props: Props) {
   const {modalRegisterVisible, setModalRegisterVisible} = props;
 
   const {setUserdata} = React.useContext(AuthContext);

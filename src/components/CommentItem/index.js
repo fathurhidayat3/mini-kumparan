@@ -11,8 +11,14 @@ import {
 
 import HeadingText from '../../components/HeadingText';
 
-function CommentItem(props: any) {
+type Props = {
+  fullname: string,
+  message: string,
+};
+
+function CommentItem(props: Props) {
   const {fullname, message} = props;
+
   return (
     <Card style={{marginBottom: 16}}>
       <StoryDetailHeaderContainer>

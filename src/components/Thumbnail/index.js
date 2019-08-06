@@ -1,4 +1,6 @@
-import React from 'react';
+// @flow
+
+import * as React from 'react';
 import {Upload, Icon, message} from 'antd';
 
 function getBase64(img, callback) {
@@ -20,12 +22,22 @@ function beforeUpload(file) {
   return isJpgOrPng && isLt2M;
 }
 
-class Thumbnail extends React.Component {
+type Props = {
+  setThumbnail: Function,
+};
+
+type State = {
+  loading: boolean,
+  imageUrl: any,
+};
+
+class Thumbnail extends React.Component<Props, State> {
   state = {
     loading: false,
+    imageUrl: '',
   };
 
-  handleChange = info => {
+  handleChange = (info: Object) => {
     if (info.file.status === 'uploading') {
       this.setState({loading: true});
       return;
@@ -44,6 +56,7 @@ class Thumbnail extends React.Component {
   };
 
   render() {
+    // $FlowFixMe
     const url = `${process.env.REACT_APP_GQL_URL}/upload`;
 
     const uploadButton = (
@@ -52,7 +65,9 @@ class Thumbnail extends React.Component {
         <div className="ant-upload-text">Upload</div>
       </div>
     );
+
     const {imageUrl} = this.state;
+
     return (
       <>
         <Upload

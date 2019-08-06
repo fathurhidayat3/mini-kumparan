@@ -1,6 +1,13 @@
-import React from 'react';
+// @flow
 
-const FilterContext = React.createContext({
+import * as React from 'react';
+
+type Props = {
+  filterData: Object,
+  setFilterData: Function,
+};
+
+const FilterContext = React.createContext<Props>({
   filterData: {
     category: '',
     keyword: '',

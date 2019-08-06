@@ -3,14 +3,16 @@
 import * as React from 'react';
 import {Row, Col} from 'antd';
 
-import type {baseType} from './type';
-
 import {Layout, Content, Footer} from './style';
 
 import Navbar from '../Navbar';
 import CategoryList from '../CategoryList';
 
-function Base(props: baseType) {
+type Props = {
+  children?: React.Node,
+};
+
+function Base(props: Props) {
   const {children} = props;
 
   const data = ['News', 'Politik', 'Entertainment', 'Otomotif'];

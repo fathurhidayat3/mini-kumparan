@@ -5,12 +5,20 @@ import {Modal, Input, Tooltip, Icon, Button} from 'antd';
 import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
 
+import RegisterModal from './RegisterModal';
+
 import AuthContext from '../../contexts/AuthContext';
 
 import handleSignIn from '../../utils/handleSignIn';
-import RegisterModal from './RegisterModal';
 
-function SignInModal(props: any) {
+type Props = {
+  modalSignInVisible: boolean,
+  setModalSignInVisible: Function,
+  modalRegisterVisible: Boolean,
+  setModalRegisterVisible: Function,
+};
+
+function SignInModal(props: Props) {
   const {
     modalSignInVisible,
     setModalSignInVisible,

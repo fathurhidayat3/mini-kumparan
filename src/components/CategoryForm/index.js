@@ -5,7 +5,13 @@ import {Tag} from 'antd';
 
 const {CheckableTag} = Tag;
 
-export default function CategoryForm(props: any) {
+type Props = {
+  categories: Array<Object>,
+  checkedCategories: Array<Object>,
+  setCheckedCategories: Function,
+};
+
+export default function CategoryForm(props: Props) {
   const {categories, checkedCategories, setCheckedCategories} = props;
 
   function handleCategoryCheck(e, category) {
@@ -28,21 +34,19 @@ export default function CategoryForm(props: any) {
   return (
     <div>
       {checkedCategories &&
-        checkedCategories.map((tag, index) => {
-          return (
-            <CategoryTag
-              checked={
-                checkedCategories &&
-                checkedCategories[index] &&
-                checkedCategories[index].categoryslug === tag.categoryslug &&
-                checkedCategories[index].isChecked
-              }
-              onChange={e => handleCategoryCheck(e, tag)}
-              key={index}>
-              {tag.categoryname}
-            </CategoryTag>
-          );
-        })}
+        checkedCategories.map((tag, index) => (
+          <CategoryTag
+            checked={
+              checkedCategories &&
+              checkedCategories[index] &&
+              checkedCategories[index].categoryslug === tag.categoryslug &&
+              checkedCategories[index].isChecked
+            }
+            onChange={e => handleCategoryCheck(e, tag)}
+            key={index}>
+            {tag.categoryname}
+          </CategoryTag>
+        ))}
     </div>
   );
 }

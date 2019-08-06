@@ -1,6 +1,13 @@
-import React from 'react';
+// @flow
 
-const CategoryContext = React.createContext({
+import * as React from 'react';
+
+type Props = {
+  category: string,
+  setCategory: Function,
+};
+
+const CategoryContext = React.createContext<Props>({
   category: '',
   setCategory: () => {},
 });

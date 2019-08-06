@@ -5,7 +5,11 @@ import {List} from 'antd';
 
 import CommentItem from '../CommentItem';
 
-function CommentList(props: any) {
+type Props = {
+  comments: Array<Object>,
+};
+
+function CommentList(props: Props) {
   const {comments} = props;
 
   return (

@@ -8,15 +8,25 @@ import QueryGetPublishedArticleBySlug from '../../graphql/Article/QueryGetPublis
 
 const {TextArea} = Input;
 
-function CommentForm(props: any) {
+type Props = {
+  value: Object,
+  setValue: Function,
+  userData: Object,
+  dataDetail: Object,
+  slug: string,
+  isDisabled: boolean,
+  onChange: Function,
+};
+
+function CommentForm(props: Props) {
   const {
-    onChange,
     value,
     setValue,
     userData,
     dataDetail,
     slug,
     isDisabled,
+    onChange,
   } = props;
 
   return (

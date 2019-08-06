@@ -3,12 +3,20 @@
 import * as React from 'react';
 import {Route, Redirect} from 'react-router-dom';
 
-function PrivateRoute({component: Component, ...rest}: any) {
+type Props = {
+  component: React.Node,
+  otherProps: any,
+};
+
+function PrivateRoute(props: Props) {
+  const {component: Component, ...otherProps} = props;
+
   return (
     <Route
-      {...rest}
+      {...otherProps}
       render={props =>
         localStorage.getItem('user-data') ? (
+          // $FlowFixMe
           <Component {...props} />
         ) : (
           <Redirect

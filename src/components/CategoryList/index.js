@@ -9,7 +9,12 @@ import FilterContext from '../../contexts/FilterContext';
 
 import HeadingText from '../HeadingText';
 
-function CategoryList(props: any) {
+type Props = {
+  data: Array<Object>,
+  history: Object,
+};
+
+function CategoryList(props: Props) {
   const {data} = props;
 
   const {setFilterData} = React.useContext(FilterContext);

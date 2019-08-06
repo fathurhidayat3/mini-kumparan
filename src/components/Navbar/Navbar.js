@@ -16,7 +16,15 @@ import handleLogout from '../../utils/handleLogout';
 
 const {Search} = Input;
 
-function Navbar(props: any) {
+type Props = {
+  modalSignInVisible: boolean,
+  setModalSignInVisible: Function,
+  modalRegisterVisible: Boolean,
+  setModalRegisterVisible: Function,
+  history: Object,
+};
+
+function Navbar(props: Props) {
   const {
     modalSignInVisible,
     setModalSignInVisible,

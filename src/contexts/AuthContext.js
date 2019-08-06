@@ -1,6 +1,13 @@
-import React from 'react';
+// @flow
 
-const AuthContext = React.createContext({
+import * as React from 'react';
+
+type Props = {
+  userdata: Object,
+  setUserdata: Function,
+};
+
+const AuthContext = React.createContext<Props>({
   userdata: {},
   setUserdata: () => {},
 });

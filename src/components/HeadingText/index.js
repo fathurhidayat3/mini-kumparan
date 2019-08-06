@@ -9,7 +9,14 @@ import {
   HeadingTextH5,
 } from './style';
 
-const checkType = ({type, ...otherProps}: any) => {
+type Props = {
+  type: string,
+  otherProps: any,
+};
+
+const checkType = (props: Props) => {
+  const {type, ...otherProps} = props;
+
   switch (type) {
     case 'h1':
       return <HeadingTextH1 {...otherProps} />;
