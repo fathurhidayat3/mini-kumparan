@@ -5,7 +5,7 @@ import {Route, Redirect} from 'react-router-dom';
 
 type Props = {
   component: React.Node,
-  otherProps: any,
+  otherProps?: any,
 };
 
 function PrivateRoute(props: Props) {

@@ -24,15 +24,11 @@ export default function Routes() {
       />
 
       <Switch>
-        <PrivateRoute
-          exact
-          path={'/story/write'}
-          component={() => <StoryCreate />}
-        />
+        <PrivateRoute exact path={'/story/write'} component={StoryCreate} />
         <PrivateRoute
           exact
           path={'/story/edit/:storyId'}
-          component={() => <StoryEdit />}
+          component={StoryEdit}
         />
         <Route
           exact
@@ -43,7 +39,7 @@ export default function Routes() {
 
       <Route exact path={'/profile/:username'} component={() => <Profile />} />
 
-      <PrivateRoute path={'/dashboard'} component={() => <Dashboard />} />
+      <PrivateRoute path={'/dashboard'} component={Dashboard} />
     </Router>
   );
 }

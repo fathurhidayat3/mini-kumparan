@@ -33,7 +33,7 @@ type Props = {
       storyId: string,
     },
   },
-  location: any,
+  location: Object,
 };
 
 function StoryCreate(props: Props) {
@@ -114,7 +114,6 @@ function StoryCreate(props: Props) {
                 categories:
                   checkedCategories &&
                   checkedCategories
-                    // $FlowFixMe
                     .filter(checkedItem => checkedItem.isChecked === true)
                     .map(checkedItem => checkedItem.categoryslug),
               }}
