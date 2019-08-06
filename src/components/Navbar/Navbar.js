@@ -79,7 +79,7 @@ function Navbar(props: Props) {
         <Search
           placeholder="input search text"
           onSearch={keyword => {
-            setFilterData({keyword});
+            setFilterData({keyword, category: ''});
             props.history.push('/');
           }}
         />
