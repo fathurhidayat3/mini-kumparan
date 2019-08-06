@@ -3,9 +3,12 @@
 import React from 'react';
 import {Helmet} from 'react-helmet';
 
-import type {storyDetailHelmetType} from './type';
+type Props = {
+  title: ?string,
+  pathname: string,
+};
 
-export default function StoryDetailMeta(props: storyDetailHelmetType) {
+export default function StoryDetailMeta(props: Props) {
   const {title, pathname} = props;
 
   return (

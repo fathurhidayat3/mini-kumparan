@@ -34,18 +34,21 @@ function Profile(props: any) {
               return '';
             }
 
-            const dataProfile = data.ProfileArticles;
-            const {user: userdata, articles} = dataProfile;
+            const userdata = data && data.user;
+            const articles = data && data.articles;
+
+            // const dataProfile = data && data.;
+            // const {user: userdata, articles} = dataProfile;
 
             return (
               <Content>
                 <ProfileMeta
-                  title={userdata.fullname}
-                  pathname={`/profile/${userdata.username}`}
+                  title={userdata && userdata.fullname}
+                  pathname={`/profile/${(userdata && userdata.username) || ''}`}
                 />
 
                 <Row type={'flex'} justify={'center'} gutter={48}>
-                  {userdata.username ? (
+                  {userdata && userdata.username ? (
                     <>
                       <ProfileInfo userdata={userdata} />
                       {articles && (

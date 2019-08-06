@@ -125,12 +125,12 @@ function DashboardArticle() {
               return null;
             }
 
-            setSaved(data.DashboardArticles);
+            setSaved(data && data.DashboardArticles);
 
             return (
               <Table
                 columns={columns}
-                dataSource={data.DashboardArticles}
+                dataSource={data && data.DashboardArticles}
                 pagination={false}
                 rowKey="slug"
               />

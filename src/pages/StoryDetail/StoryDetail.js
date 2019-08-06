@@ -55,12 +55,15 @@ function StoryDetail(props: Props) {
             return <SkeletonLoaderContent />;
           }
 
-          const dataDetail = data.GetPublishedArticleBySlug;
+          const dataDetail = data && data.GetPublishedArticleBySlug;
 
           return (
             <>
               <StoryDetailContainer>
-                <StoryDetailMeta title={dataDetail.title} pathname={pathname} />
+                <StoryDetailMeta
+                  title={dataDetail && dataDetail.title}
+                  pathname={pathname}
+                />
 
                 <StoryDetailHeader dataDetail={dataDetail} />
 
@@ -98,9 +101,11 @@ function StoryDetail(props: Props) {
                   isDisabled={!userData && true}
                 />
 
-                {dataDetail.comments.length > 0 && (
-                  <CommentList comments={dataDetail.comments} />
-                )}
+                {dataDetail &&
+                  dataDetail.comments &&
+                  dataDetail.comments.length > 0 && (
+                    <CommentList comments={dataDetail.comments} />
+                  )}
               </div>
 
               <Divider />

@@ -35,11 +35,13 @@ function RelatedStoryList(props: Props) {
             <List
               itemLayout="vertical"
               size="large"
-              dataSource={data.GetPublishedArticlesByCategory.filter(
-                storyData => {
-                  return storyData.slug !== match.params.storyId;
-                }
-              ).slice(0, 3)}
+              dataSource={
+                data &&
+                data.GetPublishedArticlesByCategory &&
+                data.GetPublishedArticlesByCategory.filter(storyData => {
+                  return storyData && storyData.slug !== match.params.storyId;
+                }).slice(0, 3)
+              }
               renderItem={item => (
                 <Link to={`/story/${item.slug}`}>
                   <StoryCard {...item} />

@@ -43,7 +43,7 @@ function DashboardCategory() {
             return (
               <Table
                 columns={columns}
-                dataSource={data.GetUserCategoriesByUsername}
+                dataSource={data && data.GetUserCategoriesByUsername}
                 pagination={false}
               />
             );

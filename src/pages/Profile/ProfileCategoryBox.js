@@ -37,13 +37,19 @@ export default function ProfileCategoryBox(props: any) {
                 </CustomTag>
               ))}
 
-              {data.GetUserCategoriesByUsername.map(categoryItem => (
-                <CustomTag
-                  onClick={() => setCategory(categoryItem.categoryslug)}
-                  key={categoryItem.categoryslug}>
-                  {categoryItem.categoryname.toUpperCase()}
-                </CustomTag>
-              ))}
+              {data &&
+                data.GetUserCategoriesByUsername &&
+                data.GetUserCategoriesByUsername.map(categoryItem => (
+                  <CustomTag
+                    onClick={() =>
+                      setCategory(categoryItem && categoryItem.categoryslug)
+                    }
+                    key={categoryItem && categoryItem.categoryslug}>
+                    {categoryItem &&
+                      categoryItem.categoryname &&
+                      categoryItem.categoryname.toUpperCase()}
+                  </CustomTag>
+                ))}
             </CategoryContainer>
           );
         }}
