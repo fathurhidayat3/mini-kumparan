@@ -75,6 +75,25 @@ function CommentForm(props: Props) {
                       message: value,
                     },
                   },
+                  update: (proxy, {data: {CreateComment}}: any) => {
+                    const data = proxy.readQuery({
+                      query: QueryGetPublishedArticleBySlug.query,
+                      variables: {slug},
+                    });
+                    proxy.writeQuery({
+                      query: QueryGetPublishedArticleBySlug.query,
+                      data: {
+                        GetPublishedArticleBySlug: data && {
+                          ...data.GetPublishedArticleBySlug,
+                          comments: [
+                            ...data.GetPublishedArticleBySlug.comments,
+                            CreateComment,
+                          ],
+                        },
+                      },
+                    });
+                    setValue('');
+                  },
                 })
               }
               type="primary"
