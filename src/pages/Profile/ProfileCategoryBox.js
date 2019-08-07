@@ -41,7 +41,7 @@ export default function ProfileCategoryBox(props: any) {
 
       <QueryGetUserCategoriesByUsername
         query={QueryGetUserCategoriesByUsername.query}
-        variables={{username: userdata.username}}>
+        variables={{userId: userdata && userdata.userId, limit: 5, offset: 0}}>
         {({loading, error, data}) => {
           const userCategories =
             (data && data.GetUserCategoriesByUsername) || [];

@@ -3,6 +3,7 @@
 import * as React from 'react';
 import {Button, Divider} from 'antd';
 import {withRouter} from 'react-router-dom';
+import styled from 'styled-components';
 
 import HomeMeta from './HomeMeta';
 
@@ -42,6 +43,8 @@ function Home(props: Props) {
           query={QueryFindPublishedArticles.query}
           variables={{
             keyword: filterData.keyword || '',
+            limit: 5,
+            offset: 0,
           }}>
           {({loading, error, data}) => {
             const resdata =
@@ -91,14 +94,10 @@ function Home(props: Props) {
                 <HomeMeta />
                 <ArticleList data={resdata} />
 
+                {/* {data} */}
                 <Divider />
 
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    margin: '16px 0',
-                  }}>
+                <LoadMoreContainer>
                   {isNextAvailable ? (
                     <Button
                       onClick={() => {
@@ -107,15 +106,15 @@ function Home(props: Props) {
                             offset: resdata.length,
                           },
                           updateQuery: (prev, {fetchMoreResult}) => {
-                            if (
-                              fetchMoreResult &&
-                              fetchMoreResult.GetPublishedArticlesByCategory &&
-                              fetchMoreResult.GetPublishedArticlesByCategory
-                                .length < 5
-                            ) {
-                              setIsNextAvailable(false);
-                              return prev;
-                            }
+                            // if (
+                            //   fetchMoreResult &&
+                            //   fetchMoreResult.GetPublishedArticlesByCategory &&
+                            //   fetchMoreResult.GetPublishedArticlesByCategory
+                            //     .length < 5
+                            // ) {
+                            //   setIsNextAvailable(false);
+                            //   return prev;
+                            // }
 
                             const prevPublishedArticle =
                               prev && prev.GetPublishedArticlesByCategory
@@ -137,12 +136,12 @@ function Home(props: Props) {
                           },
                         });
                       }}>
-                      Load more...
+                      Load more... {resdata.length}
                     </Button>
                   ) : (
                     <span>No more items</span>
                   )}
-                </div>
+                </LoadMoreContainer>
               </>
             );
           }}
@@ -151,5 +150,11 @@ function Home(props: Props) {
     </Base>
   );
 }
+
+const LoadMoreContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+`;
 
 export default withRouter(Home);

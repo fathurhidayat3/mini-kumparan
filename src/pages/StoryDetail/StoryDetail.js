@@ -88,7 +88,7 @@ function StoryDetail(props: Props) {
 
               <Divider />
 
-              <div style={{marginTop: 36}}>
+              {/* <div style={{marginTop: 36}}>
                 <HeadingText type={'h3'}>Comments</HeadingText>
 
                 <CommentForm
@@ -108,7 +108,7 @@ function StoryDetail(props: Props) {
                   )}
               </div>
 
-              <Divider />
+              <Divider /> */}
             </>
           );
         }}

@@ -118,7 +118,7 @@ function DashboardArticle() {
       <Card style={{marginTop: 24}} bodyStyle={{padding: '0'}}>
         <QueryDashboardArticles
           query={QueryDashboardArticles.query}
-          variables={{category, status, keyword}}
+          variables={{category, status, keyword, limit: 5, offset: 0}}
           fetchPolicy={'cache-first'}
           update={(store, {data: {UpdateArticle}}: any) => {
             console.log('UpdateArticle >>>', UpdateArticle);

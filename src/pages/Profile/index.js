@@ -28,7 +28,7 @@ function Profile(props: any) {
       <CategoryContext.Provider value={{category, setCategory}}>
         <QueryGetProfileArticles
           query={QueryGetProfileArticles.query}
-          variables={{username, category}}>
+          variables={{username, category, limit: 5, offset: 0}}>
           {({loading, error, data}) => {
             if (loading || error) {
               return '';

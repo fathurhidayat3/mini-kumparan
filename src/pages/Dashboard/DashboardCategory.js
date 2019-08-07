@@ -35,7 +35,9 @@ function DashboardCategory() {
         <QueryDashboardCategories
           query={QueryDashboardCategories.query}
           variables={{
-            username: userdata && userdata.username,
+            userId: userdata && userdata.userId,
+            limit: 5,
+            offset: 0,
           }}
           fetchPolicy={'network-only'}>
           {({loading, error, data}) => {

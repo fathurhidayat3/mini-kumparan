@@ -27,7 +27,9 @@ export default function StoryCreateCategoryBox(props: Props) {
         <QueryDashboardCategories
           query={QueryDashboardCategories.query}
           variables={{
-            username: userdata.username,
+            userId: userdata && userdata.userId,
+            limit: 5,
+            offset: 0,
           }}>
           {({data}) => {
             // const categories = data && data.GetUserCategoriesByUsername;

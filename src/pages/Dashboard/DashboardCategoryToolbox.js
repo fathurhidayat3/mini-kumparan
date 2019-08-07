@@ -31,7 +31,7 @@ export default function DashboardCategoryToolbox() {
     <MutationCreateUserCategory
       mutation={MutationCreateUserCategory.mutation}
       variables={{
-        username: userdata && userdata.username,
+        userId: userdata && userdata.userId,
         categoryname,
         categoryslug,
       }}
