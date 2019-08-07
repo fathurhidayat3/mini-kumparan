@@ -53,7 +53,7 @@ export default function StoryCard({
           shape="square"
           size={100}
           // $FlowFixMe
-          src={`${process.env.REACT_APP_GQL_URL}${thumbnail}`}
+          src={thumbnail}
           style={{minWidth: 100, objectFit: 'cover'}}
           icon={'file-image'}
         />

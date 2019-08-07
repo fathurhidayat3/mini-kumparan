@@ -80,13 +80,17 @@ class Thumbnail extends React.Component<Props, State> {
     return (
       <>
         <Upload
-          name="file"
+          name="image"
           listType="picture-card"
           className="avatar-uploader"
           showUploadList={false}
           action={url}
           beforeUpload={beforeUpload}
-          onChange={this.handleChange}>
+          onChange={this.handleChange}
+          onSuccess={res => {
+            this.props.setThumbnail(res.url);
+            this.setState({imageUrl: res.url});
+          }}>
           {imageUrl ? (
             <img src={imageUrl} alt="avatar" style={{width: '100%'}} />
           ) : (

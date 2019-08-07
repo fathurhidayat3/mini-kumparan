@@ -43,8 +43,7 @@ function DashboardArticle() {
       // eslint-disable-next-line react/display-name
       render: thumbnail => (
         <img
-          // $FlowFixMe
-          src={`${process.env.REACT_APP_GQL_URL}${thumbnail}`}
+          src={thumbnail}
           style={{height: 50, width: 50}}
           alt={'story-thumbnail'}
         />
