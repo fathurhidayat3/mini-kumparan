@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-import {Button} from 'antd';
+import {Button, Divider} from 'antd';
 import {withRouter} from 'react-router-dom';
 
 import HomeMeta from './HomeMeta';
@@ -25,6 +25,8 @@ function Home(props: Props) {
     (pathname.split('/')[2] && pathname.split('/')[2].toUpperCase()) || '';
 
   const {filterData} = React.useContext(FilterContext);
+
+  const [isNextAvailable, setIsNextAvailable] = React.useState(true);
 
   return (
     <Base>
@@ -89,43 +91,57 @@ function Home(props: Props) {
                 <HomeMeta />
                 <ArticleList data={resdata} />
 
+                <Divider />
+
                 <div
                   style={{
                     display: 'flex',
                     justifyContent: 'center',
                     margin: '16px 0',
                   }}>
-                  <Button
-                    onClick={() => {
-                      fetchMore({
-                        variables: {
-                          offset: resdata.length,
-                        },
-                        updateQuery: (prev, {fetchMoreResult}): any => {
-                          if (!fetchMoreResult) return prev;
+                  {isNextAvailable ? (
+                    <Button
+                      onClick={() => {
+                        fetchMore({
+                          variables: {
+                            offset: resdata.length,
+                          },
+                          updateQuery: (prev, {fetchMoreResult}) => {
+                            if (
+                              fetchMoreResult &&
+                              fetchMoreResult.GetPublishedArticlesByCategory &&
+                              fetchMoreResult.GetPublishedArticlesByCategory
+                                .length < 5
+                            ) {
+                              setIsNextAvailable(false);
+                              return prev;
+                            }
 
-                          const prevPublishedArticle =
-                            prev && prev.GetPublishedArticlesByCategory
-                              ? prev.GetPublishedArticlesByCategory
-                              : [];
+                            const prevPublishedArticle =
+                              prev && prev.GetPublishedArticlesByCategory
+                                ? prev.GetPublishedArticlesByCategory
+                                : [];
 
-                          const morePublishedArticle =
-                            fetchMoreResult &&
-                            fetchMoreResult.GetPublishedArticlesByCategory
-                              ? fetchMoreResult.GetPublishedArticlesByCategory
-                              : [];
+                            const morePublishedArticle =
+                              fetchMoreResult &&
+                              fetchMoreResult.GetPublishedArticlesByCategory
+                                ? fetchMoreResult.GetPublishedArticlesByCategory
+                                : [];
 
-                          return {
-                            GetPublishedArticlesByCategory: [
-                              ...prevPublishedArticle,
-                              ...morePublishedArticle,
-                            ],
-                          };
-                        },
-                      });
-                    }}>
-                    Load more...
-                  </Button>
+                            return {
+                              GetPublishedArticlesByCategory: [
+                                ...prevPublishedArticle,
+                                ...morePublishedArticle,
+                              ],
+                            };
+                          },
+                        });
+                      }}>
+                      Load more...
+                    </Button>
+                  ) : (
+                    <span>No more items</span>
+                  )}
                 </div>
               </>
             );
