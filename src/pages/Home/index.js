@@ -47,7 +47,7 @@ function Home(props: Props) {
             const resdata =
               data && data.FindPublishedArticles
                 ? data.FindPublishedArticles
-                : null;
+                : [];
 
             return loading && resdata ? (
               <SkeletonLoaderList length={4} />
