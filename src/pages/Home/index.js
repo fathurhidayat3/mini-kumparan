@@ -1,7 +1,7 @@
 // @flow
 
 import * as React from 'react';
-
+import {Button} from 'antd';
 import {withRouter} from 'react-router-dom';
 
 import HomeMeta from './HomeMeta';
@@ -42,16 +42,28 @@ function Home(props: Props) {
             keyword: filterData.keyword || '',
           }}>
           {({loading, error, data}) => {
-            if (loading || error) {
-              return <SkeletonLoaderList length={4} />;
-            }
+            const resdata =
+              data && data.FindPublishedArticles
+                ? data.FindPublishedArticles
+                : null;
 
-            const resdata = data && data.FindPublishedArticles;
-
-            return (
+            return loading && resdata ? (
+              <SkeletonLoaderList length={4} />
+            ) : (
               <>
-                <HomeMeta />
-                <ArticleList data={resdata} />
+                <>
+                  <HomeMeta />
+                  <ArticleList data={resdata} />
+
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      margin: '16px 0',
+                    }}>
+                    {/* <Button>Load more...</Button> */}
+                  </div>
+                </>
               </>
             );
           }}
@@ -61,18 +73,60 @@ function Home(props: Props) {
           query={QueryGetPublishedArticles.query}
           variables={{
             category: filterData.category || categoryName,
+            limit: 5,
+            offset: 0,
           }}>
-          {({loading, error, data}) => {
-            if (loading || error) {
-              return <SkeletonLoaderList length={4} />;
-            }
+          {({loading, error, data, fetchMore}) => {
+            const resdata =
+              data && data.GetPublishedArticlesByCategory
+                ? data.GetPublishedArticlesByCategory
+                : [];
 
-            const resdata = data && data.GetPublishedArticlesByCategory;
-
-            return (
+            return loading && resdata ? (
+              <SkeletonLoaderList length={4} />
+            ) : (
               <>
                 <HomeMeta />
                 <ArticleList data={resdata} />
+
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    margin: '16px 0',
+                  }}>
+                  <Button
+                    onClick={() => {
+                      fetchMore({
+                        variables: {
+                          offset: resdata.length,
+                        },
+                        updateQuery: (prev, {fetchMoreResult}): any => {
+                          if (!fetchMoreResult) return prev;
+
+                          const prevPublishedArticle =
+                            prev && prev.GetPublishedArticlesByCategory
+                              ? prev.GetPublishedArticlesByCategory
+                              : [];
+
+                          const morePublishedArticle =
+                            fetchMoreResult &&
+                            fetchMoreResult.GetPublishedArticlesByCategory
+                              ? fetchMoreResult.GetPublishedArticlesByCategory
+                              : [];
+
+                          return {
+                            GetPublishedArticlesByCategory: [
+                              ...prevPublishedArticle,
+                              ...morePublishedArticle,
+                            ],
+                          };
+                        },
+                      });
+                    }}>
+                    Load more...
+                  </Button>
+                </div>
               </>
             );
           }}

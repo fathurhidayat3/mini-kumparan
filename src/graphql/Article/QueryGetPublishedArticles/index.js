@@ -9,8 +9,16 @@ import type {
 } from '../../types';
 
 const query = gql`
-  query QueryGetPublishedArticlesByCategory($category: String!) {
-    GetPublishedArticlesByCategory(category: $category) {
+  query QueryGetPublishedArticlesByCategory(
+    $category: String!
+    $offset: Int!
+    $limit: Int!
+  ) {
+    GetPublishedArticlesByCategory(
+      category: $category
+      offset: $offset
+      limit: $limit
+    ) {
       ...ArticleParts
     }
   }

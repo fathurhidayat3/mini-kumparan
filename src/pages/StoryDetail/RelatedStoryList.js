@@ -21,7 +21,7 @@ function RelatedStoryList(props: Props) {
     <RelatedStoryListContainer>
       <GetPublishedArticles
         query={GetPublishedArticles.query}
-        variables={{category: filterData.category}}>
+        variables={{category: filterData.category, offset: 0, limit: 5}}>
         {({loading, error, data}) => {
           if (loading || error) {
             return [0, 1, 2].map((item, index) => (
