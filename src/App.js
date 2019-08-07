@@ -6,13 +6,11 @@ import {ApolloProvider} from 'react-apollo';
 
 import 'antd/dist/antd.css';
 
-import apolloConfig from './graphql/apolloConfig';
+import apolloClient from './graphql/apolloClient';
 import Routes from './Routes';
 
 import AuthContext from './contexts/AuthContext';
 import FilterContext from './contexts/FilterContext';
-
-const client = apolloConfig;
 
 function App() {
   const [userData, setUserdata] = React.useState({});
@@ -29,7 +27,7 @@ function App() {
   }, []);
 
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={apolloClient}>
       <AuthContext.Provider
         value={{
           userdata: userData,
