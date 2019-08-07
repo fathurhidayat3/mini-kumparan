@@ -2,7 +2,7 @@ module.exports = {
   client: {
     service: {
       name: 'mini-kumparan',
-      url: 'http://127.0.0.1:9000/graphql',
+      url: 'http://192.168.169.123:9000/graphql',
     },
   },
 };

@@ -15,14 +15,14 @@ const query = gql`
       body
       status
       updatedAt
-      categories
+      categories {
+        categoryId
+        categoryname
+        categoryslug
+      }
       user {
         username
         fullname
-      }
-      comments {
-        fullname
-        message
       }
     }
   }

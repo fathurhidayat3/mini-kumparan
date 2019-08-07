@@ -90,6 +90,14 @@ export type QueryDashboardArticles_DashboardArticles_user = {|
   fullname: ?string,
 |};
 
+export type QueryDashboardArticles_DashboardArticles_categories = {|
+  __typename: "Category",
+  userId: ?string,
+  categoryId: ?string,
+  categoryname: ?string,
+  categoryslug: ?string,
+|};
+
 export type QueryDashboardArticles_DashboardArticles = {|
   __typename: "Article",
   id: ?string,
@@ -102,7 +110,7 @@ export type QueryDashboardArticles_DashboardArticles = {|
   body: ?string,
   status: ?string,
   updatedAt: ?string,
-  categories: ?Array<?string>,
+  categories: ?Array<?QueryDashboardArticles_DashboardArticles_categories>,
 |};
 
 export type QueryDashboardArticles = {|
@@ -113,6 +121,8 @@ export type QueryDashboardArticlesVariables = {|
   keyword: string,
   category: string,
   status: string,
+  limit: number,
+  offset: number,
 |};
 /* @flow */
 /* eslint-disable */
@@ -143,7 +153,9 @@ export type QueryFindPublishedArticles = {|
 |};
 
 export type QueryFindPublishedArticlesVariables = {|
-  keyword: string
+  keyword: string,
+  limit: number,
+  offset: number,
 |};
 /* @flow */
 /* eslint-disable */
@@ -159,10 +171,11 @@ export type QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug_user = {|
   username: ?string,
 |};
 
-export type QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug_comments = {|
-  __typename: "Comment",
-  fullname: ?string,
-  message: ?string,
+export type QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug_categories = {|
+  __typename: "Category",
+  categoryId: ?string,
+  categoryname: ?string,
+  categoryslug: ?string,
 |};
 
 export type QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug = {|
@@ -177,8 +190,7 @@ export type QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug = {|
   body: ?string,
   status: ?string,
   updatedAt: ?string,
-  categories: ?Array<?string>,
-  comments: ?Array<?QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug_comments>,
+  categories: ?Array<?QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug_categories>,
 |};
 
 export type QueryGetPublishedArticleBySlug = {|
@@ -231,8 +243,9 @@ export type QueryGetPublishedArticlesByCategoryVariables = {|
 
 export type MutationCreateUserCategory_CreateUserCategory = {|
   __typename: "Category",
-  username: ?string,
+  categoryId: ?string,
   categoryname: ?string,
+  categoryslug: ?string,
 |};
 
 export type MutationCreateUserCategory = {|
@@ -240,7 +253,7 @@ export type MutationCreateUserCategory = {|
 |};
 
 export type MutationCreateUserCategoryVariables = {|
-  username: string,
+  userId: string,
   categoryname: string,
   categoryslug: string,
 |};
@@ -254,7 +267,7 @@ export type MutationCreateUserCategoryVariables = {|
 
 export type QueryGetUserCategoriesByUsername_GetUserCategoriesByUsername = {|
   __typename: "Category",
-  username: ?string,
+  categoryId: ?string,
   categoryname: ?string,
   categoryslug: ?string,
 |};
@@ -264,7 +277,9 @@ export type QueryGetUserCategoriesByUsername = {|
 |};
 
 export type QueryGetUserCategoriesByUsernameVariables = {|
-  username: string
+  userId: string,
+  limit: number,
+  offset: number,
 |};
 /* @flow */
 /* eslint-disable */
@@ -337,6 +352,8 @@ export type QueryProfileArticles = {|
 export type QueryProfileArticlesVariables = {|
   username: string,
   category: string,
+  limit: number,
+  offset: number,
 |};
 /* @flow */
 /* eslint-disable */

@@ -9,8 +9,12 @@ import type {
 } from '../../types';
 
 const query = gql`
-  query QueryFindPublishedArticles($keyword: String!) {
-    FindPublishedArticles(keyword: $keyword) {
+  query QueryFindPublishedArticles(
+    $keyword: String!
+    $limit: Int!
+    $offset: Int!
+  ) {
+    FindPublishedArticles(keyword: $keyword, limit: $limit, offset: $offset) {
       ...ArticleParts
     }
   }

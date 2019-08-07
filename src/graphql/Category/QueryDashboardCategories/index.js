@@ -8,9 +8,17 @@ import type {
 } from '../../types';
 
 const query = gql`
-  query QueryGetUserCategoriesByUsername($username: String!) {
-    GetUserCategoriesByUsername(username: $username) {
-      username
+  query QueryGetUserCategoriesByUsername(
+    $userId: String!
+    $limit: Int!
+    $offset: Int!
+  ) {
+    GetUserCategoriesByUsername(
+      userId: $userId
+      limit: $limit
+      offset: $offset
+    ) {
+      categoryId
       categoryname
       categoryslug
     }

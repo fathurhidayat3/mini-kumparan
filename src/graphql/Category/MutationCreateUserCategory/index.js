@@ -9,19 +9,20 @@ import type {
 
 const mutation = gql`
   mutation MutationCreateUserCategory(
-    $username: String!
+    $userId: String!
     $categoryname: String!
     $categoryslug: String!
   ) {
     CreateUserCategory(
       category: {
-        username: $username
+        userId: $userId
         categoryname: $categoryname
         categoryslug: $categoryslug
       }
     ) {
-      username
+      categoryId
       categoryname
+      categoryslug
     }
   }
 `;

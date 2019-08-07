@@ -9,8 +9,18 @@ import type {
 } from '../../types';
 
 const query = gql`
-  query QueryProfileArticles($username: String!, $category: String!) {
-    ProfileArticles(username: $username, category: $category) {
+  query QueryProfileArticles(
+    $username: String!
+    $category: String!
+    $limit: Int!
+    $offset: Int!
+  ) {
+    ProfileArticles(
+      username: $username
+      category: $category
+      limit: $limit
+      offset: $offset
+    ) {
       articles {
         ...ArticleParts
         body

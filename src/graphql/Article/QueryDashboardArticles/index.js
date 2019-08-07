@@ -13,13 +13,26 @@ const query = gql`
     $keyword: String!
     $category: String!
     $status: String!
+    $limit: Int!
+    $offset: Int!
   ) {
-    DashboardArticles(keyword: $keyword, category: $category, status: $status) {
+    DashboardArticles(
+      keyword: $keyword
+      category: $category
+      status: $status
+      limit: $limit
+      offset: $offset
+    ) {
       ...ArticleParts
       body
       status
       updatedAt
-      categories
+      categories {
+        userId
+        categoryId
+        categoryname
+        categoryslug
+      }
     }
   }
   ${ArticleParts}
