@@ -6,13 +6,20 @@
 // GraphQL mutation operation: QCreateArticle
 // ====================================================
 
+export type QCreateArticle_CreateArticle_user = {|
+  __typename: "User",
+  fullname: ?string,
+|};
+
 export type QCreateArticle_CreateArticle = {|
   __typename: "Article",
   id: ?string,
   title: ?string,
-  body: ?string,
   slug: ?string,
   thumbnail: ?string,
+  createdAt: ?string,
+  totalComments: ?number,
+  user: ?QCreateArticle_CreateArticle_user,
 |};
 
 export type QCreateArticle = {|
@@ -36,16 +43,23 @@ export type QCreateArticleVariables = {|
 // GraphQL mutation operation: MutationUpdateArticle
 // ====================================================
 
+export type MutationUpdateArticle_UpdateArticle_user = {|
+  __typename: "User",
+  fullname: ?string,
+|};
+
 export type MutationUpdateArticle_UpdateArticle = {|
   __typename: "Article",
+  id: ?string,
   title: ?string,
   slug: ?string,
+  thumbnail: ?string,
+  createdAt: ?string,
+  totalComments: ?number,
+  user: ?MutationUpdateArticle_UpdateArticle_user,
   body: ?string,
   status: ?string,
-  categories: ?Array<?string>,
   userId: ?string,
-  id: ?string,
-  createdAt: ?string,
   updatedAt: ?string,
 |};
 
@@ -71,17 +85,24 @@ export type MutationUpdateArticleVariables = {|
 // GraphQL query operation: QueryDashboardArticles
 // ====================================================
 
+export type QueryDashboardArticles_DashboardArticles_user = {|
+  __typename: "User",
+  fullname: ?string,
+|};
+
 export type QueryDashboardArticles_DashboardArticles = {|
   __typename: "Article",
   id: ?string,
   title: ?string,
-  body: ?string,
-  categories: ?Array<?string>,
-  status: ?string,
   slug: ?string,
   thumbnail: ?string,
   createdAt: ?string,
+  totalComments: ?number,
+  user: ?QueryDashboardArticles_DashboardArticles_user,
+  body: ?string,
+  status: ?string,
   updatedAt: ?string,
+  categories: ?Array<?string>,
 |};
 
 export type QueryDashboardArticles = {|
@@ -98,13 +119,44 @@ export type QueryDashboardArticlesVariables = {|
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: QueryFindPublishedArticles
+// ====================================================
+
+export type QueryFindPublishedArticles_FindPublishedArticles_user = {|
+  __typename: "User",
+  fullname: ?string,
+|};
+
+export type QueryFindPublishedArticles_FindPublishedArticles = {|
+  __typename: "Article",
+  id: ?string,
+  title: ?string,
+  slug: ?string,
+  thumbnail: ?string,
+  createdAt: ?string,
+  totalComments: ?number,
+  user: ?QueryFindPublishedArticles_FindPublishedArticles_user,
+|};
+
+export type QueryFindPublishedArticles = {|
+  FindPublishedArticles: ?Array<?QueryFindPublishedArticles_FindPublishedArticles>
+|};
+
+export type QueryFindPublishedArticlesVariables = {|
+  keyword: string
+|};
+/* @flow */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: QueryGetPublishedArticleBySlug
 // ====================================================
 
 export type QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug_user = {|
   __typename: "User",
-  username: ?string,
   fullname: ?string,
+  username: ?string,
 |};
 
 export type QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug_comments = {|
@@ -118,14 +170,14 @@ export type QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug = {|
   id: ?string,
   title: ?string,
   slug: ?string,
-  body: ?string,
   thumbnail: ?string,
-  status: ?string,
   createdAt: ?string,
+  totalComments: ?number,
+  user: ?QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug_user,
+  body: ?string,
+  status: ?string,
   updatedAt: ?string,
   categories: ?Array<?string>,
-  user: ?QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug_user,
-  totalComments: ?number,
   comments: ?Array<?QueryGetPublishedArticleBySlug_GetPublishedArticleBySlug_comments>,
 |};
 
@@ -165,7 +217,9 @@ export type QueryGetPublishedArticlesByCategory = {|
 |};
 
 export type QueryGetPublishedArticlesByCategoryVariables = {|
-  category: string
+  category: string,
+  offset: number,
+  limit: number,
 |};
 /* @flow */
 /* eslint-disable */
@@ -246,22 +300,22 @@ export type MutationCreateCommentVariables = {|
 
 export type QueryProfileArticles_ProfileArticles_articles_user = {|
   __typename: "User",
+  fullname: ?string,
   userId: ?string,
   username: ?string,
-  fullname: ?string,
 |};
 
 export type QueryProfileArticles_ProfileArticles_articles = {|
   __typename: "Article",
   id: ?string,
   title: ?string,
-  body: ?string,
-  status: ?string,
   slug: ?string,
-  createdAt: ?string,
   thumbnail: ?string,
+  createdAt: ?string,
   totalComments: ?number,
   user: ?QueryProfileArticles_ProfileArticles_articles_user,
+  body: ?string,
+  status: ?string,
 |};
 
 export type QueryProfileArticles_ProfileArticles_user = {|
@@ -289,15 +343,15 @@ export type QueryProfileArticlesVariables = {|
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: QueryFindPublishedArticles
+// GraphQL fragment: ArticleParts
 // ====================================================
 
-export type QueryFindPublishedArticles_FindPublishedArticles_user = {|
+export type ArticleParts_user = {|
   __typename: "User",
   fullname: ?string,
 |};
 
-export type QueryFindPublishedArticles_FindPublishedArticles = {|
+export type ArticleParts = {|
   __typename: "Article",
   id: ?string,
   title: ?string,
@@ -305,15 +359,7 @@ export type QueryFindPublishedArticles_FindPublishedArticles = {|
   thumbnail: ?string,
   createdAt: ?string,
   totalComments: ?number,
-  user: ?QueryFindPublishedArticles_FindPublishedArticles_user,
-|};
-
-export type QueryFindPublishedArticles = {|
-  FindPublishedArticles: ?Array<?QueryFindPublishedArticles_FindPublishedArticles>
-|};
-
-export type QueryFindPublishedArticlesVariables = {|
-  keyword: string
+  user: ?ArticleParts_user,
 |};/* @flow */
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
