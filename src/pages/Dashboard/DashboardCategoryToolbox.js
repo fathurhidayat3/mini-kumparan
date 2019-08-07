@@ -24,18 +24,14 @@ export default function DashboardCategoryToolbox() {
     const value = e.target.value;
 
     setCategoryname(value.toUpperCase());
-    setCategoryslug(
-      `${userdata &&
-        userdata.userdata &&
-        userdata.userdata.username}-${value}`.toUpperCase()
-    );
+    setCategoryslug(`${userdata && userdata.username}-${value}`.toUpperCase());
   }
 
   return (
     <MutationCreateUserCategory
       mutation={MutationCreateUserCategory.mutation}
       variables={{
-        username: userdata && userdata.userdata && userdata.userdata.username,
+        username: userdata && userdata.username,
         categoryname,
         categoryslug,
       }}
@@ -43,8 +39,7 @@ export default function DashboardCategoryToolbox() {
         {
           query: QueryDashboardCategories.query,
           variables: {
-            username:
-              userdata && userdata.userdata && userdata.userdata.username,
+            username: userdata && userdata.username,
           },
         },
       ]}
